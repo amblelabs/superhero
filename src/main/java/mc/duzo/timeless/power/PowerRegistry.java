@@ -1,5 +1,6 @@
 package mc.duzo.timeless.power;
 
+import mc.duzo.timeless.power.impl.*;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.registry.Registry;
@@ -8,10 +9,6 @@ import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.power.impl.FlightPower;
-import mc.duzo.timeless.power.impl.HoverPower;
-import mc.duzo.timeless.power.impl.IceOverPower;
-import mc.duzo.timeless.power.impl.MaskTogglePower;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.ironman.IronManEntity;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
@@ -38,6 +35,7 @@ public class PowerRegistry {
         player.getWorld().spawnEntity(new IronManEntity(player.getServerWorld(), suit, player));
         suit.getSet().clear(player);
     }).build().register();
+    public static Power WEB_SWINGING = new WebSwingingPower().register();
 
     public static void init() {}
 }

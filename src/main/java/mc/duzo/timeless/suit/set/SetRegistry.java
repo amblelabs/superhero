@@ -1,5 +1,8 @@
 package mc.duzo.timeless.suit.set;
 
+import mc.duzo.timeless.suit.spiderman.SpiderManSuitItem;
+import mc.duzo.timeless.suit.spiderman.nwh.NWHSuit;
+import mc.duzo.timeless.suit.spiderman.nwh.client.NWHModel;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.registry.Registry;
@@ -21,15 +24,22 @@ public class SetRegistry {
         return Registry.register(REGISTRY, suit.id(), suit);
     }
 
+    // Iron Man
     public static SuitSet MARK_SEVEN;
     public static SuitSet MARK_FIVE;
     public static SuitSet MARK_THREE;
     public static SuitSet MARK_TWO;
 
+    // Spider Man
+    public static SuitSet NWH;
+
     public static void init() {
+        // Iron Man
         MARK_SEVEN = register(new RegisteringSuitSet(new MarkSevenSuit(), IronManSuitItem::new));
         MARK_FIVE = register(new RegisteringSuitSet(new MarkFiveSuit(), IronManSuitItem::new));
         MARK_THREE = register(new RegisteringSuitSet(new MarkThreeSuit(), IronManSuitItem::new));
         MARK_TWO = register(new RegisteringSuitSet(new MarkTwoSuit(), IronManSuitItem::new));
+        // Spider Man
+        NWH = register(new RegisteringSuitSet(new NWHSuit(), SpiderManSuitItem::new));
     }
 }
