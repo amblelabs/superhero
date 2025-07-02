@@ -1,9 +1,7 @@
 
 name: Publish Beta on Discord
 
-on:
-  push:
-    branches: [ "master" ]
+on: [ pull_request, workflow_dispatch, push ]
 
 jobs:
   build:
