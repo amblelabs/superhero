@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.power.PowerList;
+import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.batman.BatmanSuit;
 import mc.duzo.timeless.suit.batman.sixer.client.model.Batman66Model;
 import mc.duzo.timeless.suit.client.ClientSuit;
@@ -20,7 +21,7 @@ import mc.duzo.timeless.suit.set.SuitSet;
 
 public class Batman66Suit extends BatmanSuit {
     public Batman66Suit() {
-        super("66", PowerList.of());
+        super("66", PowerList.of(PowerRegistry.SUPER_STRENGTH));
     }
 
     @Override

@@ -2,6 +2,8 @@ package mc.duzo.timeless.power;
 
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.SimpleRegistry;
@@ -38,6 +40,12 @@ public class PowerRegistry {
         player.getWorld().spawnEntity(new IronManEntity(player.getServerWorld(), suit, player));
         suit.getSet().clear(player);
     }).build().register();
+    public static Power SUPER_STRENGTH = Power.Builder.create(new Identifier(Timeless.MOD_ID, "super_strength"))
+            .tick(player -> {
+                if (player.getServer().getTicks() % 20 != 0) return; // Run every second
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 22, 1, false, false));
+            })
+            .build().register();
 
     public static void init() {}
 }
