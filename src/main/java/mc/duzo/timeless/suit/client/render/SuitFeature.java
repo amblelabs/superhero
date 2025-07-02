@@ -1,5 +1,6 @@
 package mc.duzo.timeless.suit.client.render;
 
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -34,6 +35,8 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
 
         if (suit == null) return;
 
+        if (livingEntity.isInvisible() && !suit.isAlwaysVisible()) return;
+
         SuitSet set = suit.getSet();
         if (!(set.isWearing(livingEntity))) return; // todo this check every frame is bad
 
@@ -44,11 +47,19 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         model.copyFrom(context);
         model.setAngles(livingEntity, f, g, j, k, l);
 
-        model.render(livingEntity, j, matrixStack, consumer, i, 1, 1, 1, 1);
+        model.getCape().ifPresent(cape -> {
+            cape.visible = false;
+        });
+
+        model.render(livingEntity, h, matrixStack, consumer, i, 1, 1, 1, 1);
+
+        if (livingEntity instanceof AbstractClientPlayerEntity player) {
+            model.preRenderCape(matrixStack, consumer, player, i, h);
+        }
 
         if (model.emission().isPresent()) {
             VertexConsumer emissionConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCullZOffset(model.emission().get(), true));
-            model.render(livingEntity, j, matrixStack, emissionConsumer, LightmapTextureManager.MAX_LIGHT_COORDINATE, 1, 1, 1, 1);
+            model.render(livingEntity, h, matrixStack, emissionConsumer, LightmapTextureManager.MAX_LIGHT_COORDINATE, 1, 1, 1, 1);
         }
     }
 

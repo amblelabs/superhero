@@ -69,6 +69,7 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
 
         return count == target;
     }
+
     public boolean wear(LivingEntity entity, boolean playSounds) {
         if (hasArmor(entity)) return false;
 
@@ -80,6 +81,7 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
 
         return true;
     }
+
     public boolean wear(LivingEntity entity) {
         return this.wear(entity, true);
     }

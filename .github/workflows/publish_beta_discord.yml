@@ -1,7 +1,17 @@
+name: Automated donator builds
 
-name: Publish Beta on Discord
-
-on: [ pull_request, workflow_dispatch, push ]
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - src/**
+      - build.gradle
+      - gradle.properties
+      - settings.gradle
+      - gradle/**
+      - gradlew
+      - gradlew.bat
+      - versioning.gradle
 
 jobs:
   build:
@@ -28,8 +38,8 @@ jobs:
 
       - name: Build
         run: ./gradlew build
-        #env:
-        #  BETA: 1 # exclude assets if it's a beta dev build
+          #env:
+          #  BETA: 1 # exclude assets if it's a beta dev build
 
       - name: Publish artifacts
         uses: DrTheodor/discord-webhook-upload-action@v1.2

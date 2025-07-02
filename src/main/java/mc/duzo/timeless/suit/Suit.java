@@ -38,6 +38,14 @@ public abstract class Suit implements Identifiable, Translatable {
         return Optional.empty();
     }
 
+    /**
+     * whether this suit is always visible on the player
+     * eg when the player has the invisibility effect
+     */
+    public boolean isAlwaysVisible() {
+        return true;
+    }
+
     @Override
     public String getTranslationKey() {
         return this.id().getNamespace() + ".suit." + this.id().getPath();
