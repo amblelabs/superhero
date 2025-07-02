@@ -1,7 +1,8 @@
 package mc.duzo.timeless.suit.batman.sixer.client.model;
 
-import java.util.Optional;
-
+import mc.duzo.timeless.suit.client.ClientSuit;
+import mc.duzo.timeless.suit.client.render.SuitModel;
+import mc.duzo.timeless.suit.set.SetRegistry;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -11,9 +12,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.RotationAxis;
 
-import mc.duzo.timeless.suit.client.ClientSuit;
-import mc.duzo.timeless.suit.client.render.SuitModel;
-import mc.duzo.timeless.suit.set.SetRegistry;
+import java.util.Optional;
 
 public class Batman66Model extends SuitModel {
     private final ModelPart root;
@@ -112,7 +111,7 @@ public class Batman66Model extends SuitModel {
 
     @Override
     protected void renderCape(MatrixStack stack, VertexConsumer consumer, AbstractClientPlayerEntity player, int light, float tickDelta) {
-        stack.translate(0, 0, -0.25);
+        stack.translate(0, 0, (player.isSneaking() ? -0.125 : -0.25));
         this.cape.render(stack, consumer, light, OverlayTexture.DEFAULT_UV);
     }
 
