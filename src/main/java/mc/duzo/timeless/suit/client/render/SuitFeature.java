@@ -1,5 +1,6 @@
 package mc.duzo.timeless.suit.client.render;
 
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -44,7 +45,15 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         model.copyFrom(context);
         model.setAngles(livingEntity, f, g, j, k, l);
 
+        model.getCape().ifPresent(cape -> {
+            cape.visible = false;
+        });
+
         model.render(livingEntity, h, matrixStack, consumer, i, 1, 1, 1, 1);
+
+        if (livingEntity instanceof AbstractClientPlayerEntity player) {
+            model.preRenderCape(matrixStack, consumer, player, i, h);
+        }
 
         if (model.emission().isPresent()) {
             VertexConsumer emissionConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCullZOffset(model.emission().get(), true));

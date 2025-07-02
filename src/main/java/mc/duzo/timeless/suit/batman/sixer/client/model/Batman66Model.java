@@ -1,5 +1,8 @@
 package mc.duzo.timeless.suit.batman.sixer.client.model;
 
+import mc.duzo.timeless.suit.client.ClientSuit;
+import mc.duzo.timeless.suit.client.render.SuitModel;
+import mc.duzo.timeless.suit.set.SetRegistry;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -7,12 +10,9 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
-import mc.duzo.timeless.suit.client.ClientSuit;
-import mc.duzo.timeless.suit.client.render.SuitModel;
-import mc.duzo.timeless.suit.set.SetRegistry;
+import java.util.Optional;
 
 public class Batman66Model extends SuitModel {
     private final ModelPart root;
@@ -76,13 +76,7 @@ public class Batman66Model extends SuitModel {
 
     @Override
     public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
-        this.cape.visible = false;
         this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
-
-        if (entity instanceof AbstractClientPlayerEntity player) {
-            this.cape.visible = true;
-            this.renderCape(matrices, vertexConsumers, player, light, tickDelta);
-        }
     }
 
     @Override
@@ -110,37 +104,15 @@ public class Batman66Model extends SuitModel {
         matrices.pop();
     }
 
-    private void renderCape(MatrixStack stack, VertexConsumer consumer, AbstractClientPlayerEntity player, int light, float tickDelta) {
-        stack.push();
-        stack.translate(0.0F, 0.0F, 0.125F);
-        double d = MathHelper.lerp(tickDelta, player.prevCapeX, player.capeX) - MathHelper.lerp((double)tickDelta, player.prevX, player.getX());
-        double e = MathHelper.lerp(tickDelta, player.prevCapeY, player.capeY) - MathHelper.lerp((double)tickDelta, player.prevY, player.getY());
-        double m = MathHelper.lerp(tickDelta, player.prevCapeZ, player.capeZ) - MathHelper.lerp((double)tickDelta, player.prevZ, player.getZ());
-        float n = MathHelper.lerpAngleDegrees(tickDelta, player.prevBodyYaw, player.bodyYaw);
-        double o = (double)MathHelper.sin(n * ((float)Math.PI / 180F));
-        double p = (double)(-MathHelper.cos(n * ((float)Math.PI / 180F)));
-        float q = (float)e * 10.0F;
-        q = MathHelper.clamp(q, -6.0F, 32.0F);
-        float r = (float)(d * o + m * p) * 100.0F;
-        r = MathHelper.clamp(r, 0.0F, 150.0F);
-        float s = (float)(d * p - m * o) * 100.0F;
-        s = MathHelper.clamp(s, -20.0F, 20.0F);
-        if (r < 0.0F) {
-            r = 0.0F;
-        }
+    @Override
+    public Optional<ModelPart> getCape() {
+        return Optional.of(this.cape);
+    }
 
-        float t = MathHelper.lerp(tickDelta, player.prevStrideDistance, player.strideDistance);
-        q += MathHelper.sin(MathHelper.lerp(tickDelta, player.prevHorizontalSpeed, player.horizontalSpeed) * 6.0F) * 32.0F * t;
-        if (player.isInSneakingPose()) {
-            q += 25.0F;
-        }
-
-        stack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(6.0F + r / 2.0F + q));
-        stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(s / 2.0F));
-        stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F - s / 2.0F));
+    @Override
+    protected void renderCape(MatrixStack stack, VertexConsumer consumer, AbstractClientPlayerEntity player, int light, float tickDelta) {
         stack.translate(0, 0, -0.25);
         this.cape.render(stack, consumer, light, OverlayTexture.DEFAULT_UV);
-        stack.pop();
     }
 
     @Override
