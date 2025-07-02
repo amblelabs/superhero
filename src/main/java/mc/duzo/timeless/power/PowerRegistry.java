@@ -46,6 +46,7 @@ public class PowerRegistry {
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 22, 1, false, false));
             })
             .build().register();
+    public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();
 
     public static void init() {}
 }

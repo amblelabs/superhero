@@ -21,7 +21,7 @@ import mc.duzo.timeless.suit.set.SuitSet;
 
 public class Batman66Suit extends BatmanSuit {
     public Batman66Suit() {
-        super("66", PowerList.of(PowerRegistry.SUPER_STRENGTH));
+        super("66", PowerList.of(PowerRegistry.SUPER_STRENGTH, PowerRegistry.SWIFT_SNEAK));
     }
 
     @Override
