@@ -35,6 +35,8 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
 
         if (suit == null) return;
 
+        if (livingEntity.isInvisible() && !suit.isAlwaysVisible()) return;
+
         SuitSet set = suit.getSet();
         if (!(set.isWearing(livingEntity))) return; // todo this check every frame is bad
 
