@@ -7,6 +7,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
 import mc.duzo.timeless.suit.client.ClientSuit;
@@ -21,6 +22,7 @@ public class Batman66Model extends SuitModel {
     private final ModelPart rightArm;
     private final ModelPart body;
     private final ModelPart head;
+    private final ModelPart cape;
     private ClientSuit parent;
 
     public Batman66Model(ModelPart root) {
@@ -32,6 +34,7 @@ public class Batman66Model extends SuitModel {
         this.leftArm = this.getChild("LeftArm").orElseThrow();
         this.body = this.getChild("Body").orElseThrow();
         this.head = this.getChild("Head").orElseThrow();
+        this.cape = this.getChild("Cape").orElseThrow();
     }
 
     public Batman66Model() {
@@ -41,22 +44,19 @@ public class Batman66Model extends SuitModel {
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();
-        ModelPartData Head = modelPartData.addChild("Head", ModelPartBuilder.create().uv(32, 0).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.51F))
-                .uv(4, 0).mirrored().cuboid(-1.0F, -2.7F, -4.6F, 2.0F, 1.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        ModelPartData Head = modelPartData.addChild("Head", ModelPartBuilder.create().uv(32, 0).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.51F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
         ModelPartData MainHatLayer_r1 = Head.addChild("MainHatLayer_r1", ModelPartBuilder.create().uv(0, 0).mirrored().cuboid(0.0F, -2.0F, -1.5F, 0.0F, 4.0F, 3.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(-4.81F, -9.21F, 0.51F, 0.0F, 0.0873F, -0.2182F));
 
         ModelPartData MainHatLayer_r2 = Head.addChild("MainHatLayer_r2", ModelPartBuilder.create().uv(0, 0).cuboid(0.0F, -2.0F, -1.5F, 0.0F, 4.0F, 3.0F, new Dilation(0.0F)), ModelTransform.of(4.81F, -9.21F, 0.51F, 0.0F, -0.0873F, 0.2182F));
 
-        ModelPartData MainHatLayer_r3 = Head.addChild("MainHatLayer_r3", ModelPartBuilder.create().uv(4, 0).mirrored().cuboid(-1.0F, -0.5F, 0.0F, 2.0F, 1.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(2.3F, -5.2F, -4.6F, 0.0F, 0.0F, -0.3491F));
-
-        ModelPartData MainHatLayer_r4 = Head.addChild("MainHatLayer_r4", ModelPartBuilder.create().uv(4, 0).cuboid(-1.0F, -0.5F, 0.0F, 2.0F, 1.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-2.3F, -5.2F, -4.6F, 0.0F, 0.0F, 0.3491F));
-
         ModelPartData Body = modelPartData.addChild("Body", ModelPartBuilder.create().uv(16, 32).cuboid(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.351F))
                 .uv(24, 0).cuboid(-3.5F, 3.5F, -2.4F, 8.0F, 3.0F, 0.0F, new Dilation(0.0F))
                 .uv(0, 16).cuboid(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.51F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
-        ModelPartData BodyLayer_r1 = Body.addChild("BodyLayer_r1", ModelPartBuilder.create().uv(102, 101).cuboid(-4.0F, -11.5F, -1.0F, 8.0F, 23.0F, 1.0F, new Dilation(0.36F)), ModelTransform.of(0.0F, 11.1381F, 2.8516F, 0.0436F, 0.0F, 0.0F));
+        ModelPartData Cape = Body.addChild("Cape", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.1381F, 2.8516F));
+
+        ModelPartData BodyLayer_r1 = Cape.addChild("BodyLayer_r1", ModelPartBuilder.create().uv(102, 101).cuboid(-4.0F, -11.5F, -1.0F, 8.0F, 23.0F, 1.0F, new Dilation(0.36F)), ModelTransform.of(0.0F, 11.0F, 0.0F, 0.0436F, 0.0F, 0.0F));
 
         ModelPartData RightArm = modelPartData.addChild("RightArm", ModelPartBuilder.create().uv(48, 48).mirrored().cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.35F)).mirrored(false)
                 .uv(55, 16).mirrored().cuboid(-0.5F, 9.1F, 1.5F, 0.0F, 1.0F, 2.0F, new Dilation(0.0F)).mirrored(false)
@@ -76,7 +76,13 @@ public class Batman66Model extends SuitModel {
 
     @Override
     public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
+        this.cape.visible = false;
         this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
+
+        if (entity instanceof AbstractClientPlayerEntity player) {
+            this.cape.visible = true;
+            this.renderCape(matrices, vertexConsumers, player, light, tickDelta);
+        }
     }
 
     @Override
@@ -104,6 +110,38 @@ public class Batman66Model extends SuitModel {
         matrices.pop();
     }
 
+    private void renderCape(MatrixStack stack, VertexConsumer consumer, AbstractClientPlayerEntity player, int light, float tickDelta) {
+        stack.push();
+        stack.translate(0.0F, 0.0F, 0.125F);
+        double d = MathHelper.lerp(tickDelta, player.prevCapeX, player.capeX) - MathHelper.lerp((double)tickDelta, player.prevX, player.getX());
+        double e = MathHelper.lerp(tickDelta, player.prevCapeY, player.capeY) - MathHelper.lerp((double)tickDelta, player.prevY, player.getY());
+        double m = MathHelper.lerp(tickDelta, player.prevCapeZ, player.capeZ) - MathHelper.lerp((double)tickDelta, player.prevZ, player.getZ());
+        float n = MathHelper.lerpAngleDegrees(tickDelta, player.prevBodyYaw, player.bodyYaw);
+        double o = (double)MathHelper.sin(n * ((float)Math.PI / 180F));
+        double p = (double)(-MathHelper.cos(n * ((float)Math.PI / 180F)));
+        float q = (float)e * 10.0F;
+        q = MathHelper.clamp(q, -6.0F, 32.0F);
+        float r = (float)(d * o + m * p) * 100.0F;
+        r = MathHelper.clamp(r, 0.0F, 150.0F);
+        float s = (float)(d * p - m * o) * 100.0F;
+        s = MathHelper.clamp(s, -20.0F, 20.0F);
+        if (r < 0.0F) {
+            r = 0.0F;
+        }
+
+        float t = MathHelper.lerp(tickDelta, player.prevStrideDistance, player.strideDistance);
+        q += MathHelper.sin(MathHelper.lerp(tickDelta, player.prevHorizontalSpeed, player.horizontalSpeed) * 6.0F) * 32.0F * t;
+        if (player.isInSneakingPose()) {
+            q += 25.0F;
+        }
+
+        stack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(6.0F + r / 2.0F + q));
+        stack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(s / 2.0F));
+        stack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F - s / 2.0F));
+        stack.translate(0, 0, -0.25);
+        this.cape.render(stack, consumer, light, OverlayTexture.DEFAULT_UV);
+        stack.pop();
+    }
 
     @Override
     public ClientSuit getSuit() {

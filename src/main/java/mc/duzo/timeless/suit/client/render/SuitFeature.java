@@ -44,11 +44,11 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         model.copyFrom(context);
         model.setAngles(livingEntity, f, g, j, k, l);
 
-        model.render(livingEntity, j, matrixStack, consumer, i, 1, 1, 1, 1);
+        model.render(livingEntity, h, matrixStack, consumer, i, 1, 1, 1, 1);
 
         if (model.emission().isPresent()) {
             VertexConsumer emissionConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCullZOffset(model.emission().get(), true));
-            model.render(livingEntity, j, matrixStack, emissionConsumer, LightmapTextureManager.MAX_LIGHT_COORDINATE, 1, 1, 1, 1);
+            model.render(livingEntity, h, matrixStack, emissionConsumer, LightmapTextureManager.MAX_LIGHT_COORDINATE, 1, 1, 1, 1);
         }
     }
 
