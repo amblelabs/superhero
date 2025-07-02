@@ -1,7 +1,8 @@
 package mc.duzo.timeless.suit.ironman.mk5;
 
-import dev.drtheo.scheduler.api.Scheduler;
 import dev.drtheo.scheduler.api.TimeUnit;
+import dev.drtheo.scheduler.api.common.Scheduler;
+import dev.drtheo.scheduler.api.common.TaskStage;
 import mc.duzo.animation.DuzoAnimationMod;
 import mc.duzo.animation.registry.client.TrackerRegistry;
 
@@ -49,7 +50,7 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
         DuzoAnimationMod.play(player, Register.Trackers.SUIT, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close"));
         DuzoAnimationMod.play(player, TrackerRegistry.PLAYER, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close_player"));
 
-        Scheduler.get().runTaskLater(() -> toCasePost(player, force), TimeUnit.SECONDS, (long) (8.038f));
+        Scheduler.get().runTaskLater(() -> toCasePost(player, force), TaskStage.END_SERVER_TICK, TimeUnit.SECONDS, (long) (8.038f));
         return true;
     }
     private static void toCasePost(ServerPlayerEntity player, boolean force) {
