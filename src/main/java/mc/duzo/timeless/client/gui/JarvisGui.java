@@ -19,7 +19,6 @@ import mc.duzo.timeless.power.impl.MaskTogglePower;
 import mc.duzo.timeless.suit.Suit;
 
 public class JarvisGui {
-    private static final Identifier HUD = new Identifier(Timeless.MOD_ID, "textures/gui/jarvis/hud.png");
     private static final int ALPHA_GRAY = ColorHelper.Argb.getArgb(125, 255, 255, 255);
 
     public static void render(DrawContext context, float delta) {

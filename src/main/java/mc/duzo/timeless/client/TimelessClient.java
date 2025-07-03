@@ -6,10 +6,13 @@ import mc.duzo.animation.api.AnimationEvents;
 import mc.duzo.animation.generic.AnimationInfo;
 import mc.duzo.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.animation.registry.AnimationRegistry;
+import mc.duzo.timeless.client.gui.UtilityBeltGui;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
@@ -37,8 +40,10 @@ public class TimelessClient implements ClientModInitializer {
 
         HudRenderCallback.EVENT.register((stack, delta) -> {
             JarvisGui.render(stack, delta);
+            UtilityBeltGui.render(stack, delta);
         });
     }
+
 
     public static class ClientRegister {
         public static void init() {
