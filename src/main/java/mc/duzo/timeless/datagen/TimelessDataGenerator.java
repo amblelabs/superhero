@@ -44,30 +44,30 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
 
             provider.addTranslation("itemGroup." + Timeless.MOD_ID, "Timeless Heroes");
 
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_seven_helmet", "Mk. 7 Iron Man Helmet");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_seven_chestplate", "Mk. 7 Iron Man Chestplate");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_seven_leggings", "Mk. 7 Iron Man Leggings");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_seven_boots", "Mk. 7 Iron Man Boots");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_seven_helmet", "Mk. 7 Iron Man Helmet");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_seven_chestplate", "Mk. 7 Iron Man Chestplate");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_seven_leggings", "Mk. 7 Iron Man Leggings");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_seven_boots", "Mk. 7 Iron Man Boots");
 
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_five_helmet", "Mk. 5 Iron Man Helmet");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_five_chestplate", "Mk. 5 Iron Man Chestplate");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_five_leggings", "Mk. 5 Iron Man Leggings");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_five_boots", "Mk. 5 Iron Man Boots");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_five_helmet", "Mk. 5 Iron Man Helmet");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_five_chestplate", "Mk. 5 Iron Man Chestplate");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_five_leggings", "Mk. 5 Iron Man Leggings");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_five_boots", "Mk. 5 Iron Man Boots");
 
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_three_helmet", "Mk. 3 Iron Man Helmet");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_three_chestplate", "Mk. 3 Iron Man Chestplate");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_three_leggings", "Mk. 3 Iron Man Leggings");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_three_boots", "Mk. 3 Iron Man Boots");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_three_helmet", "Mk. 3 Iron Man Helmet");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_three_chestplate", "Mk. 3 Iron Man Chestplate");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_three_leggings", "Mk. 3 Iron Man Leggings");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_three_boots", "Mk. 3 Iron Man Boots");
 
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_two_helmet", "Mk. 2 (Prototype) Iron Man Helmet");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_two_chestplate", "Mk. 2 (Prototype) Iron Man Chestplate");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_two_leggings", "Mk. 2 (Prototype) Iron Man Leggings");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".iron_man_mark_two_boots", "Mk. 2 (Prototype) Iron Man Boots");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_two_helmet", "Mk. 2 (Prototype) Iron Man Helmet");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_two_chestplate", "Mk. 2 (Prototype) Iron Man Chestplate");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_two_leggings", "Mk. 2 (Prototype) Iron Man Leggings");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_two_boots", "Mk. 2 (Prototype) Iron Man Boots");
 
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".batman_66_helmet", "Batman Mask (66)");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".batman_66_chestplate", "Batman Chestplate (66)");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".batman_66_leggings", "Batman Leggings (66)");
-            provider.addTranslation("itemGroup." + Timeless.MOD_ID + ".batman_66_boots", "Batman Boots (66)");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".batman_66_helmet", "Batman Mask (66)");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".batman_66_chestplate", "Batman Chestplate (66)");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".batman_66_leggings", "Batman Leggings (66)");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".batman_66_boots", "Batman Boots (66)");
 
             return provider;
         })));
