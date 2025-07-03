@@ -3,6 +3,7 @@ package mc.duzo.timeless.power.impl;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -37,7 +38,7 @@ public class FlightPower extends Power {
     public void tick(ServerPlayerEntity player) {
         player.fallDistance = 0;
 
-        if (player.isOnGround() || !(hasFlight(player))) {
+        if (player.isOnGround() || player.isTouchingWater()|| !(hasFlight(player))) {
             if (isFlying(player)) setIsFlying(player, false);
             return;
         }

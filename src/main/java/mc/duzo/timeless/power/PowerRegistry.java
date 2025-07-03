@@ -1,5 +1,6 @@
 package mc.duzo.timeless.power;
 
+import mc.duzo.timeless.power.impl.*;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -10,10 +11,6 @@ import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.power.impl.FlightPower;
-import mc.duzo.timeless.power.impl.HoverPower;
-import mc.duzo.timeless.power.impl.IceOverPower;
-import mc.duzo.timeless.power.impl.MaskTogglePower;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.ironman.IronManEntity;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
@@ -34,6 +31,7 @@ public class PowerRegistry {
     public static Power JARVIS = Power.Builder.create(new Identifier(Timeless.MOD_ID, "jarvis")).build().register();
     public static Power MASK_TOGGLE = new MaskTogglePower().register();
     public static Power ICES_OVER = new IceOverPower().register();
+    public static Power RAINS_OVER = new RainOverPower().register();
     public static Power SENTRY = Power.Builder.create(new Identifier(Timeless.MOD_ID, "sentry")).run((player) -> {
         if (!(Suit.findSuit(player).orElse(null) instanceof IronManSuit suit)) return;
 

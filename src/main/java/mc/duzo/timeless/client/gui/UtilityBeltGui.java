@@ -18,7 +18,6 @@ public class UtilityBeltGui {
 
     public static void render(DrawContext context, float delta) {
         MinecraftClient client = MinecraftClient.getInstance();
-        Window window = client.getWindow();
         int scaledWidth = context.getScaledWindowWidth();
         int scaledHeight = context.getScaledWindowHeight();
 
