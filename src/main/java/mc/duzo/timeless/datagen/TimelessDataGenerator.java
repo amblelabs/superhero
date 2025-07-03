@@ -2,6 +2,9 @@ package mc.duzo.timeless.datagen;
 
 import dev.amble.lib.datagen.lang.AmbleLanguageProvider;
 import dev.amble.lib.datagen.lang.LanguageType;
+import mc.duzo.timeless.core.TimelessBlocks;
+import mc.duzo.timeless.core.TimelessItems;
+import mc.duzo.timeless.core.TimelessSounds;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
 import mc.duzo.timeless.suit.ironman.IronManSuitItem;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -11,7 +14,6 @@ import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.datagen.provider.model.TimelessModelProvider;
 import mc.duzo.timeless.datagen.provider.sound.BasicSoundProvider;
-import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
 
@@ -39,8 +41,8 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
                 provider.addTranslation(suit.getTranslationKey(), convertToName(suit.id().getPath()));
             }
 
-            provider.translateItems(Register.Items.class);
-            provider.translateBlocks(Register.Blocks.class);
+            provider.translateItems(TimelessItems.class);
+            provider.translateBlocks(TimelessBlocks.class);
 
             provider.addTranslation("itemGroup." + Timeless.MOD_ID, "Timeless Heroes");
 
@@ -77,12 +79,12 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider((((output, registriesFuture) -> {
             BasicSoundProvider provider = new BasicSoundProvider(output);
 
-            provider.addSound("thruster", Register.Sounds.THRUSTER);
-            provider.addSound("mark5_noises", Register.Sounds.MARK5_NOISES);
-            provider.addSound("ironman_step", Register.Sounds.IRONMAN_STEP);
-            provider.addSound("ironman_mask", Register.Sounds.IRONMAN_MASK);
-            provider.addSound("ironman_powerup", Register.Sounds.IRONMAN_POWERUP);
-            provider.addSound("ironman_powerdown", Register.Sounds.IRONMAN_POWERDOWN);
+            provider.addSound("thruster", TimelessSounds.THRUSTER);
+            provider.addSound("mark5_noises", TimelessSounds.MARK5_NOISES);
+            provider.addSound("ironman_step", TimelessSounds.IRONMAN_STEP);
+            provider.addSound("ironman_mask", TimelessSounds.IRONMAN_MASK);
+            provider.addSound("ironman_powerup", TimelessSounds.IRONMAN_POWERUP);
+            provider.addSound("ironman_powerdown", TimelessSounds.IRONMAN_POWERDOWN);
 
             return provider;
         })));

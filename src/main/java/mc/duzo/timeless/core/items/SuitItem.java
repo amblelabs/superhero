@@ -1,4 +1,4 @@
-package mc.duzo.timeless.suit.item;
+package mc.duzo.timeless.core.items;
 
 import mc.duzo.animation.registry.Identifiable;
 

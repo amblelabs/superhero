@@ -3,7 +3,6 @@ package mc.duzo.timeless.power.impl;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -17,7 +16,7 @@ import mc.duzo.timeless.network.s2c.UpdateFlyingStatusS2CPacket;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
-import mc.duzo.timeless.suit.item.SuitItem;
+import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.util.ServerKeybind;
 
 public class FlightPower extends Power {

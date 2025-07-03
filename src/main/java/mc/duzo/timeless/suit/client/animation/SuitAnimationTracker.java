@@ -2,10 +2,10 @@ package mc.duzo.timeless.suit.client.animation;
 
 import mc.duzo.animation.generic.AnimationTracker;
 
+import mc.duzo.timeless.core.TimelessTrackers;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.registry.Register;
 
 public class SuitAnimationTracker extends AnimationTracker<SuitAnimationHolder> {
     public SuitAnimationTracker() {
@@ -14,6 +14,6 @@ public class SuitAnimationTracker extends AnimationTracker<SuitAnimationHolder> 
 
 
     public static SuitAnimationTracker getInstance() {
-        return Register.Trackers.SUIT;
+        return TimelessTrackers.SUIT;
     }
 }

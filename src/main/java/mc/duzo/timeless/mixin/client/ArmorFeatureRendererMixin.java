@@ -11,7 +11,7 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.suit.item.SuitItem;
+import mc.duzo.timeless.core.items.SuitItem;
 
 @Mixin(ArmorFeatureRenderer.class)
 public class ArmorFeatureRendererMixin {
