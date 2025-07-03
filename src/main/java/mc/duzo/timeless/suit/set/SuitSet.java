@@ -76,7 +76,7 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
         this.values().forEach(item -> this.wear(entity, item));
 
         if (playSounds && this.suit.getEquipSound().isPresent()) {
-            entity.getWorld().playSound(null, entity.getBlockPos(), this.suit.getEquipSound().orElse(null), entity.getSoundCategory(), 1.0F, 1.0F);
+            entity.getWorld().playSound(null, entity.getBlockPos(), this.suit.getEquipSound().orElse(null), entity.getSoundCategory(), 0.5F, 1.0F);
         }
 
         return true;
@@ -92,7 +92,7 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
         this.values().forEach(item -> entity.equipStack(item.getSlotType(), ItemStack.EMPTY));
 
         if (playSounds && this.suit.getUnequipSound().isPresent()) {
-            entity.getWorld().playSound(null, entity.getBlockPos(), this.suit.getUnequipSound().orElse(null), entity.getSoundCategory(), 1.0F, 1.0F);
+            entity.getWorld().playSound(null, entity.getBlockPos(), this.suit.getUnequipSound().orElse(null), entity.getSoundCategory(), 0.5F, 1.0F);
         }
 
         return true;
