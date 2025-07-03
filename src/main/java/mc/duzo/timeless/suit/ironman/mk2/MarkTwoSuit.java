@@ -25,7 +25,7 @@ public class MarkTwoSuit extends IronManSuit {
     public MarkTwoSuit() {
         super("mark_two");
 
-        this.powers = PowerList.of(PowerRegistry.RAINS_OVER, PowerRegistry.ICES_OVER, PowerRegistry.FLIGHT, PowerRegistry.JARVIS, PowerRegistry.MASK_TOGGLE );
+        this.powers = PowerList.of(PowerRegistry.ICES_OVER, PowerRegistry.FLIGHT, PowerRegistry.JARVIS, PowerRegistry.MASK_TOGGLE );
     }
 
     @Override

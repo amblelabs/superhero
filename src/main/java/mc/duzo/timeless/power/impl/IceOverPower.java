@@ -22,14 +22,28 @@ public class IceOverPower extends Power {
 
     @Override
     public void tick(ServerPlayerEntity player) {
-        if (player.getY() < 180) return;
+        double y = player.getY();
 
-        player.addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, 5 * 20, 1));
+        if (y < 180) return;
 
-        if (player.getY() > 210 && FlightPower.hasFlight(player)) {
-            FlightPower.setFlight(player, false);
+        int freezeSeverity = (int) Math.min((y - 180) / 2, 140);
+        int witherAmplifier = (int) Math.min((y - 180) / 15, 2);
+
+        player.setFrozenTicks(player.getFrozenTicks() + freezeSeverity);
+
+        player.addStatusEffect(new StatusEffectInstance(
+                StatusEffects.WITHER,
+                60,
+                witherAmplifier,
+                false,
+                true
+        ));
+
+        if (y > 220 && FlightPower.hasFlight(player)) {
+           FlightPower.setFlight(player, false);
         }
     }
+
 
     @Override
     public void onLoad(ServerPlayerEntity player) {
