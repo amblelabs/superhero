@@ -2,12 +2,12 @@ package mc.duzo.timeless.suit.ironman;
 
 import java.util.Optional;
 
+import mc.duzo.timeless.core.TimelessSounds;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
-import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.Suit;
 
 public abstract class IronManSuit extends Suit implements AutomaticSuitEnglish {
@@ -40,17 +40,17 @@ public abstract class IronManSuit extends Suit implements AutomaticSuitEnglish {
 
     @Override
     public SoundEvent getStepSound() {
-        return Register.Sounds.IRONMAN_STEP;
+        return TimelessSounds.IRONMAN_STEP;
     }
 
     @Override
     public Optional<SoundEvent> getEquipSound() {
-        return Optional.of(Register.Sounds.IRONMAN_POWERUP);
+        return Optional.of(TimelessSounds.IRONMAN_POWERUP);
     }
 
     @Override
     public Optional<SoundEvent> getUnequipSound() {
-        return Optional.of(Register.Sounds.IRONMAN_POWERDOWN);
+        return Optional.of(TimelessSounds.IRONMAN_POWERDOWN);
     }
 
     public abstract int getVerticalFlightModifier(boolean isSprinting);

@@ -10,7 +10,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.suit.item.SuitItem;
+import mc.duzo.timeless.core.items.SuitItem;
 
 public record UsePowerC2SPacket(int power) implements FabricPacket {
     public static final PacketType<UsePowerC2SPacket> TYPE = PacketType.create(new Identifier(Timeless.MOD_ID, "use_power"), UsePowerC2SPacket::new);

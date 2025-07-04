@@ -1,5 +1,6 @@
 package mc.duzo.timeless.block.entity;
 
+import mc.duzo.timeless.core.TimelessBlockEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -10,8 +11,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
@@ -21,7 +20,7 @@ public class SuitApplicationBlockEntity extends BlockEntity implements BlockEnti
     private int cooldown;
 
     public SuitApplicationBlockEntity(BlockPos pos, BlockState state) {
-        super(Register.BlockEntities.SUIT_APPLICATION_BE, pos, state);
+        super(TimelessBlockEntityTypes.SUIT_APPLICATION_BE, pos, state);
     }
 
     @Override

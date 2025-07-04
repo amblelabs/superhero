@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.Power;
-import mc.duzo.timeless.suit.item.SuitItem;
+import mc.duzo.timeless.core.items.SuitItem;
 
 public class HoverPower extends Power {
     private final Identifier id;

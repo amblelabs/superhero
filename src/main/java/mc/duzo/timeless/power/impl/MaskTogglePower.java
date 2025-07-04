@@ -2,6 +2,8 @@ package mc.duzo.timeless.power.impl;
 
 import mc.duzo.animation.DuzoAnimationMod;
 
+import mc.duzo.timeless.core.TimelessSounds;
+import mc.duzo.timeless.core.TimelessTrackers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -11,9 +13,8 @@ import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.Power;
-import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
-import mc.duzo.timeless.suit.item.SuitItem;
+import mc.duzo.timeless.core.items.SuitItem;
 
 public class MaskTogglePower extends Power {
     private final Identifier id;
@@ -25,7 +26,7 @@ public class MaskTogglePower extends Power {
     @Override
     public boolean run(ServerPlayerEntity player) {
         setMask(player, !hasMask(player), true);
-        player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.IRONMAN_MASK, SoundCategory.PLAYERS, 0.25f, 1f);
+        player.getWorld().playSound(null, player.getBlockPos(), TimelessSounds.IRONMAN_MASK, SoundCategory.PLAYERS, 0.25f, 1f);
 
         return true;
     }
@@ -41,7 +42,7 @@ public class MaskTogglePower extends Power {
             if (suit == null) return;
             Identifier anim = suit.getMaskAnimation(val);
             if (anim == null) return;
-            DuzoAnimationMod.play(player, Register.Trackers.SUIT, anim);
+            DuzoAnimationMod.play(player, TimelessTrackers.SUIT, anim);
 
             SoundEvent sound = val ? suit.getEquipSound().orElse(null) : suit.getUnequipSound().orElse(null);
             if (sound != null) player.playSound(sound, SoundCategory.PLAYERS, 1f, 1f);
