@@ -154,6 +154,15 @@ public class JarvisGui {
                 line(context, 0d, bottom, range, false);
 
                 line(context, player.getY(), bottom, range, true);
+
+                if (player.getY() > 165) {
+                    long time = client.world != null ? client.world.getTime() : 0;
+
+                    String i = "⚠";
+                    if ((time / 10) % 2 == 0) {
+                        context.drawTextWithShadow(client.textRenderer, i, width() - 58 - client.textRenderer.getWidth(i), 65, 0xFFFFFF);
+                    }
+                }
             }
 
             private static void line(DrawContext context, double y, int bottom, int range, boolean isPrimary) {

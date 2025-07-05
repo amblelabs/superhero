@@ -40,7 +40,7 @@ public class TimelessClient implements ClientModInitializer {
 
         HudRenderCallback.EVENT.register((stack, delta) -> {
             JarvisGui.render(stack, delta);
-            UtilityBeltGui.render(stack, delta);
+            //UtilityBeltGui.render(stack, delta);
         });
     }
 
