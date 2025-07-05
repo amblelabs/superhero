@@ -26,7 +26,9 @@ public class IronManEntityRenderer extends EntityRenderer<IronManEntity> {
     public void render(IronManEntity entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
 
-        this.updateModel(entity);
+        Suit suit = entity.getSuit();
+        SuitModel model = suit.toClient().model().get();
+
         VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(model.texture()));
 
         matrices.push();
@@ -35,7 +37,7 @@ public class IronManEntityRenderer extends EntityRenderer<IronManEntity> {
         matrices.multiply(RotationAxis.NEGATIVE_Y.rotationDegrees(entity.getYaw()));
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180));
 
-        model.render(entity, tickDelta, matrices, consumer, light, 1, 1, 1, 1); // todo - the model appears to be global, meaning all transforms to one get applied to all. needs fixing ASAP
+        model.render(entity, tickDelta, matrices, consumer, light, 1, 1, 1, 1);
 
         if (model.emission().isPresent()) {
             VertexConsumer emissionConsumer = vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCullZOffset(model.emission().get(), true));
@@ -44,6 +46,7 @@ public class IronManEntityRenderer extends EntityRenderer<IronManEntity> {
 
         matrices.pop();
     }
+
     private void updateModel(IronManEntity entity) {
         if (this.suit != entity.getSuit()) {
             this.suit = entity.getSuit();

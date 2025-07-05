@@ -7,6 +7,7 @@ import mc.duzo.animation.generic.AnimationInfo;
 import mc.duzo.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.animation.registry.AnimationRegistry;
 import mc.duzo.timeless.client.gui.UtilityBeltGui;
+import mc.duzo.timeless.client.render.entity.BatmobileEntityRenderer;
 import mc.duzo.timeless.core.TimelessEntityTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -104,6 +105,7 @@ public class TimelessClient implements ClientModInitializer {
         public static class Renderers {
             public static void init() {
                 EntityRendererRegistry.register(TimelessEntityTypes.IRON_MAN, IronManEntityRenderer::new);
+                EntityRendererRegistry.register(TimelessEntityTypes.BAT_MOBILE, BatmobileEntityRenderer::new);
             }
         }
     }
