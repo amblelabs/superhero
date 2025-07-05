@@ -1,5 +1,6 @@
 package mc.duzo.timeless.suit.set;
 
+import mc.duzo.timeless.suit.moonknight.marc.MarcSuit;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.registry.Registry;
@@ -28,7 +29,7 @@ public class SetRegistry {
     public static SuitSet MARK_THREE;
     public static SuitSet MARK_TWO;
     public static SuitSet BATMAN_66;
-
+    public static SuitSet MOON_KNIGHT_MARC;
     public static void init() {
         // Iron Man
         MARK_SEVEN = register(new RegisteringSuitSet(new MarkSevenSuit(), IronManSuitItem::new));
@@ -38,5 +39,6 @@ public class SetRegistry {
 
         // Batman
         BATMAN_66 = register(new RegisteringSuitSet(new Batman66Suit(), BatmanSuitItem::new));
+        MOON_KNIGHT_MARC = register(new RegisteringSuitSet(new MarcSuit(), BatmanSuitItem::new));
     }
 }

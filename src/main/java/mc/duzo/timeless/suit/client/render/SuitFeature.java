@@ -58,8 +58,8 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         }
 
         if (model.emission().isPresent()) {
-            VertexConsumer emissionConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutoutNoCullZOffset(model.emission().get(), true));
-            model.render(livingEntity, h, matrixStack, emissionConsumer, LightmapTextureManager.MAX_LIGHT_COORDINATE, 1, 1, 1, 1);
+            VertexConsumer emissionConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getBeaconBeam(model.emission().get(), true));
+            model.render(livingEntity, h, matrixStack, emissionConsumer, 0xf000f0, 1, 1, 1, 1);
         }
     }
 
