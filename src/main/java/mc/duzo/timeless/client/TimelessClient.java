@@ -7,6 +7,7 @@ import mc.duzo.animation.generic.AnimationInfo;
 import mc.duzo.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.animation.registry.AnimationRegistry;
 import mc.duzo.timeless.client.gui.UtilityBeltGui;
+import mc.duzo.timeless.core.TimelessEntityTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
@@ -20,7 +21,6 @@ import mc.duzo.timeless.client.gui.JarvisGui;
 import mc.duzo.timeless.client.keybind.TimelessKeybinds;
 import mc.duzo.timeless.client.network.ClientNetwork;
 import mc.duzo.timeless.client.render.entity.IronManEntityRenderer;
-import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.client.ClientSuitRegistry;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
@@ -103,7 +103,7 @@ public class TimelessClient implements ClientModInitializer {
 
         public static class Renderers {
             public static void init() {
-                EntityRendererRegistry.register(Register.Entities.IRON_MAN, IronManEntityRenderer::new);
+                EntityRendererRegistry.register(TimelessEntityTypes.IRON_MAN, IronManEntityRenderer::new);
             }
         }
     }

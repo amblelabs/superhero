@@ -1,18 +1,18 @@
 package mc.duzo.timeless.client.sounds.thruster;
 
+import mc.duzo.timeless.core.TimelessSounds;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 
 import mc.duzo.timeless.client.sounds.PositionedLoopingSound;
-import mc.duzo.timeless.registry.Register;
 
 public class ThrusterSound extends PositionedLoopingSound {
     private final AbstractClientPlayerEntity player;
 
     public ThrusterSound(AbstractClientPlayerEntity player) {
-        super(Register.Sounds.THRUSTER, SoundCategory.PLAYERS, player.getBlockPos(), 1f, 1f);
+        super(TimelessSounds.THRUSTER, SoundCategory.PLAYERS, player.getBlockPos(), 1f, 1f);
 
         this.player = player;
     }

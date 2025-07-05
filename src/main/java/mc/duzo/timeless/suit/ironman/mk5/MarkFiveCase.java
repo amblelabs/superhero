@@ -6,6 +6,9 @@ import dev.drtheo.scheduler.api.common.TaskStage;
 import mc.duzo.animation.DuzoAnimationMod;
 import mc.duzo.animation.registry.client.TrackerRegistry;
 
+import mc.duzo.timeless.core.TimelessItems;
+import mc.duzo.timeless.core.TimelessSounds;
+import mc.duzo.timeless.core.TimelessTrackers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,7 +21,6 @@ import net.minecraft.world.World;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
-import mc.duzo.timeless.registry.Register;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 
@@ -45,9 +47,9 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
         }
 
 
-        player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
+        player.getWorld().playSound(null, player.getBlockPos(), TimelessSounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
 
-        DuzoAnimationMod.play(player, Register.Trackers.SUIT, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close"));
+        DuzoAnimationMod.play(player, TimelessTrackers.SUIT, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close"));
         DuzoAnimationMod.play(player, TrackerRegistry.PLAYER, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close_player"));
 
         Scheduler.get().runTaskLater(() -> toCasePost(player, force), TaskStage.END_SERVER_TICK, TimeUnit.SECONDS, (long) (8.038f));
@@ -59,19 +61,19 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
         }
 
         getSet().clear(player);
-        player.getInventory().offerOrDrop(new ItemStack(Register.Items.MARK_FIVE_CASE));
+        player.getInventory().offerOrDrop(new ItemStack(TimelessItems.MARK_FIVE_CASE));
     }
 
     public static boolean fromCase(ServerPlayerEntity player, boolean force) {
         if (!force) {
             if (!player.isOnGround()) return false; // not on ground
-            if (!player.getMainHandStack().isOf(Register.Items.MARK_FIVE_CASE)) return false; // not holding
+            if (!player.getMainHandStack().isOf(TimelessItems.MARK_FIVE_CASE)) return false; // not holding
             if (SuitSet.hasArmor(player)) return false; // already wearing
         }
 
-        player.getWorld().playSound(null, player.getBlockPos(), Register.Sounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
+        player.getWorld().playSound(null, player.getBlockPos(), TimelessSounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
 
-        DuzoAnimationMod.play(player, Register.Trackers.SUIT, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_open"));
+        DuzoAnimationMod.play(player, TimelessTrackers.SUIT, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_open"));
         DuzoAnimationMod.play(player, TrackerRegistry.PLAYER, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_open_player"));
 
         player.setStackInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
