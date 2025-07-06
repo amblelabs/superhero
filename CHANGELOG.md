@@ -3,3 +3,4 @@
 - Bat Radio | by [@MaketendoDev](https://github.com/MaketendoDev) ([#42](https://github.com/duzos/superhero/pull/42))
 - ci: remove spotless | by [@duzos](https://github.com/duzos) ([#44](https://github.com/duzos/superhero/pull/44))
 - fix: all superhero items are now in the item group | by [@duzos](https://github.com/duzos) ([#43](https://github.com/duzos/superhero/pull/43))
+- feat: suits now render on armour stands | by [@duzos](https://github.com/duzos) ([#45](https://github.com/duzos/superhero/pull/45))
