@@ -1,9 +1,9 @@
 package mc.duzo.timeless.suit.client.render;
 
-import java.util.Optional;
-
 import mc.duzo.animation.generic.AnimationInfo;
-
+import mc.duzo.timeless.suit.client.ClientSuit;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumer;
@@ -11,21 +11,25 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
-import mc.duzo.timeless.suit.client.ClientSuit;
-import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
-import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
+import java.util.Optional;
 
 public abstract class SuitModel extends EntityModel<LivingEntity> {
     /**
-     * This will be called to render the model, perform all adjustments here and render the model using the proper method.
+     * This will be called to render the entire model, perform all adjustments here and render the model using the proper method.
      */
     public abstract void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha);
     public abstract void renderArm(boolean isRight, AbstractClientPlayerEntity player, int i, MatrixStack matrices, VertexConsumer buffer, int light, int i1, int i2, int i3, int i4);
+
+    /**
+     * Sets the visibility of the model parts for the given slot.
+     */
+    public abstract void setVisibilityForSlot(EquipmentSlot slot);
 
     /**
      * This is not the method you want to override for rendering the model.

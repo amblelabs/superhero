@@ -5,6 +5,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Colors;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.Direction;
@@ -26,7 +27,7 @@ public class JarvisGui {
         if (player == null) return;
         if (client.gameRenderer.getCamera().isThirdPerson()) return;
 
-        Suit suit = Suit.findSuit(player).orElse(null);
+        Suit suit = Suit.findSuit(player, EquipmentSlot.HEAD).orElse(null);
         if (suit == null) return;
         if (!(suit.hasPower(PowerRegistry.JARVIS))) return;
         if (suit.hasPower(PowerRegistry.MASK_TOGGLE) && !(MaskTogglePower.hasMask(player))) return;

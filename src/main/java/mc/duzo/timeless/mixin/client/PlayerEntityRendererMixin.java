@@ -1,5 +1,6 @@
 package mc.duzo.timeless.mixin.client;
 
+import net.minecraft.entity.EquipmentSlot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -35,7 +36,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
     @Inject(method = "renderArm" , at = @At("HEAD"), cancellable = true)
     private void timeless$renderArm(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci){
-        Suit suit = Suit.findSuit(player).orElse(null);
+        Suit suit = Suit.findSuit(player, EquipmentSlot.CHEST).orElse(null);
         if (suit == null) return;
         ClientSuit clientSuit = suit.toClient();
         if (!(clientSuit.hasModel())) return;
