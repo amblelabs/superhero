@@ -1,5 +1,7 @@
 package mc.duzo.timeless.suit.client.render;
 
+import mc.duzo.timeless.core.items.SuitItem;
+import mc.duzo.timeless.suit.Suit;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
@@ -15,10 +17,6 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 
-import mc.duzo.timeless.suit.Suit;
-import mc.duzo.timeless.core.items.SuitItem;
-import mc.duzo.timeless.suit.set.SuitSet;
-
 public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         extends FeatureRenderer<T, M> {
 
@@ -31,19 +29,27 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
 
     @Override
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l) {
-        this.updateModel(findSuit(livingEntity));
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (slot.getType() != EquipmentSlot.Type.ARMOR) continue;
+
+            matrixStack.push();
+            this.renderPart(matrixStack, vertexConsumerProvider, i, livingEntity, f, g, h, j, k, l, slot);
+            matrixStack.pop();
+        }
+    }
+
+    private void renderPart(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, T livingEntity, float f, float g, float h, float j, float k, float l, EquipmentSlot slot) {
+        this.updateModel(findSuit(livingEntity, slot));
 
         if (suit == null) return;
 
         if (livingEntity.isInvisible() && !suit.isAlwaysVisible()) return;
 
-        SuitSet set = suit.getSet();
-        if (!(set.isWearing(livingEntity))) return; // todo this check every frame is bad
-
         VertexConsumer consumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(model.texture()));
 
         BipedEntityModel<?> context = (BipedEntityModel<?>) this.getContextModel();
 
+        model.setVisibilityForSlot(slot);
         model.copyFrom(context);
         model.setAngles(livingEntity, f, g, j, k, l);
 
@@ -53,7 +59,7 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
 
         model.render(livingEntity, h, matrixStack, consumer, i, 1, 1, 1, 1);
 
-        if (livingEntity instanceof AbstractClientPlayerEntity player) {
+        if (livingEntity instanceof AbstractClientPlayerEntity player && slot == EquipmentSlot.CHEST) {
             model.preRenderCape(matrixStack, consumer, player, i, h);
         }
 
@@ -72,8 +78,8 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         }
     }
 
-    private static Suit findSuit(LivingEntity entity) {
-        ItemStack chest = entity.getEquippedStack(EquipmentSlot.CHEST);
+    private static Suit findSuit(LivingEntity entity, EquipmentSlot slot) {
+        ItemStack chest = entity.getEquippedStack(slot);
         if (!(chest.getItem() instanceof SuitItem item)) return null;
 
         return item.getSuit();

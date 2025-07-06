@@ -1,0 +1,35 @@
+"C: Textures":
+  - changed-files:
+      - any-glob-to-any-file: 'src/main/resources/assets/*/textures/**/*.png'
+
+"C: Structures":
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/main/resources/data/*/structures/**/*.nbt'
+
+#"Changes: UI":
+#  - changed-files:
+#      - any-glob-to-any-file: '**/*.xml*'
+
+#"Changes: Shaders":
+#  - changed-files:
+#      - any-glob-to-any-file: '**/*.glsl'
+
+"A: Datagen":
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/main/java/mc/duzo/timeless/datagen/**/*.java'
+
+"A: Admin Tooling":
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/main/java/mc/duzo/timeless/core/commands/**/*.java'
+
+"C: Audio":
+  - changed-files:
+      - any-glob-to-any-file: 'src/main/resources/assets/*/sounds/**/*.ogg'
+
+"C: No Java":
+  - changed-files:
+      # Equiv to any-glob-to-all as long as this has one matcher. If ALL changed files are not Java files, then apply label.
+      - all-globs-to-all-files: "!src/main/java/**/*.java"

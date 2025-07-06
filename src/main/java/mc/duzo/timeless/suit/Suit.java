@@ -1,27 +1,33 @@
 package mc.duzo.timeless.suit;
 
-import java.util.Optional;
-
 import mc.duzo.animation.registry.Identifiable;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.sound.SoundEvent;
-
+import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.datagen.provider.lang.Translatable;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.ClientSuitRegistry;
-import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.suit.set.SuitSet;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.sound.SoundEvent;
+
+import java.util.Optional;
 
 public abstract class Suit implements Identifiable, Translatable {
-    public static Optional<Suit> findSuit(LivingEntity entity) {
-        if (!(entity.getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof SuitItem item)) return Optional.empty();
+    public static Optional<Suit> findSuit(LivingEntity entity, EquipmentSlot slot) {
+        if (!(entity.getEquippedStack(slot).getItem() instanceof SuitItem item)) return Optional.empty();
         return Optional.ofNullable(item.getSuit());
+    }
+
+    public static Optional<Suit> findSuit(LivingEntity entity) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            Optional<Suit> suit = findSuit(entity, slot);
+            if (suit.isPresent()) return suit;
+        }
+        return Optional.empty();
     }
 
     public abstract boolean isBinding();

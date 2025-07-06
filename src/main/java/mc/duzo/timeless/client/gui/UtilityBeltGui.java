@@ -1,16 +1,14 @@
 package mc.duzo.timeless.client.gui;
 
-import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.power.PowerRegistry;
-import mc.duzo.timeless.power.impl.FlightPower;
-import mc.duzo.timeless.power.impl.HoverPower;
-import mc.duzo.timeless.power.impl.MaskTogglePower;
 import mc.duzo.timeless.suit.Suit;
+import mc.duzo.timeless.suit.batman.BatmanSuit;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.util.Window;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
+
+import mc.duzo.timeless.Timeless;
 
 public class UtilityBeltGui {
 
@@ -23,6 +21,10 @@ public class UtilityBeltGui {
 
         ClientPlayerEntity player = client.player;
         if (player == null) return;
+
+        Suit suit = Suit.findSuit(player, EquipmentSlot.LEGS).orElse(null);
+        if (suit == null) return;
+        if (!(suit instanceof BatmanSuit)) return;
 
         int i = scaledWidth / 2;
 

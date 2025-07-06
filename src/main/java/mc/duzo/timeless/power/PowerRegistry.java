@@ -1,6 +1,5 @@
 package mc.duzo.timeless.power;
 
-import mc.duzo.timeless.power.impl.*;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -11,6 +10,7 @@ import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.power.impl.*;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.ironman.IronManEntity;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
@@ -29,7 +29,7 @@ public class PowerRegistry {
     public static Power FLIGHT = new FlightPower().register();
     public static Power HOVER = new HoverPower().register();
     public static Power JARVIS = Power.Builder.create(new Identifier(Timeless.MOD_ID, "jarvis")).build().register();
-    public static Power MASK_TOGGLE = new MaskTogglePower().register();
+    public static MaskTogglePower MASK_TOGGLE = new MaskTogglePower().register();
     public static Power ICES_OVER = new IceOverPower().register();
     public static Power RAINS_OVER = new RainOverPower().register();
     public static Power SENTRY = Power.Builder.create(new Identifier(Timeless.MOD_ID, "sentry")).run((player) -> {

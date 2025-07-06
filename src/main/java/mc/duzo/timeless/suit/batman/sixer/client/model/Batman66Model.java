@@ -1,19 +1,19 @@
 package mc.duzo.timeless.suit.batman.sixer.client.model;
 
-import java.util.Optional;
-
+import mc.duzo.timeless.suit.client.ClientSuit;
+import mc.duzo.timeless.suit.client.render.SuitModel;
+import mc.duzo.timeless.suit.set.SetRegistry;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.RotationAxis;
 
-import mc.duzo.timeless.suit.client.ClientSuit;
-import mc.duzo.timeless.suit.client.render.SuitModel;
-import mc.duzo.timeless.suit.set.SetRegistry;
+import java.util.Optional;
 
 public class Batman66Model extends SuitModel {
     private final ModelPart root;
@@ -76,8 +76,44 @@ public class Batman66Model extends SuitModel {
     }
 
     @Override
+    public void setVisibilityForSlot(EquipmentSlot slot) {
+        switch (slot) {
+            case HEAD -> {
+                this.head.visible = true;
+                this.body.visible = false;
+                this.leftArm.visible = false;
+                this.rightArm.visible = false;
+                this.leftLeg.visible = false;
+                this.rightLeg.visible = false;
+            }
+            case CHEST -> {
+                this.head.visible = false;
+                this.body.visible = true;
+                this.leftArm.visible = true;
+                this.rightArm.visible = true;
+                this.leftLeg.visible = false;
+                this.rightLeg.visible = false;
+            }
+            case LEGS, FEET -> {
+                this.head.visible = false;
+                this.body.visible = false;
+                this.leftArm.visible = false;
+                this.rightArm.visible = false;
+                this.leftLeg.visible = true;
+                this.rightLeg.visible = true;
+            }
+        }
+    }
+
+    @Override
     public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
+        matrices.push();
+        if (!(entity instanceof AbstractClientPlayerEntity)) {
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180f));
+        }
+
         this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
+        matrices.pop();
     }
 
     @Override

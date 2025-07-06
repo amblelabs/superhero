@@ -65,7 +65,8 @@ public abstract class SuitItem extends ArmorItem implements Identifiable {
             ItemStack stack = entity.getEquippedStack(EquipmentSlot.CHEST);
 
             if (stack == null) return null;
-            if (!(stack.getItem() instanceof SuitItem)) return null;
+            if (!(stack.getItem() instanceof SuitItem item)) return null;
+            if (!item.getSuit().getSet().isWearing(entity)) return null;
 
             return stack.getOrCreateSubNbt("SuitData");
         }

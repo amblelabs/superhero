@@ -8,6 +8,7 @@ import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
@@ -348,6 +349,35 @@ public abstract class GenericIronManModel extends SuitModel {
         this.leftLeg.pivotX -= this.body.roll * 3f * 3.2f;
     }
 
+    @Override
+    public void setVisibilityForSlot(EquipmentSlot slot) {
+        switch (slot) {
+            case HEAD -> {
+                this.head.visible = true;
+                this.body.visible = false;
+                this.leftArm.visible = false;
+                this.rightArm.visible = false;
+                this.leftLeg.visible = false;
+                this.rightLeg.visible = false;
+            }
+            case CHEST -> {
+                this.head.visible = false;
+                this.body.visible = true;
+                this.leftArm.visible = true;
+                this.rightArm.visible = true;
+                this.leftLeg.visible = false;
+                this.rightLeg.visible = false;
+            }
+            case LEGS, FEET -> {
+                this.head.visible = false;
+                this.body.visible = false;
+                this.leftArm.visible = false;
+                this.rightArm.visible = false;
+                this.leftLeg.visible = true;
+                this.rightLeg.visible = true;
+            }
+        }
+    }
 
     @Override
     public void renderArm(boolean isRight, AbstractClientPlayerEntity player, int i, MatrixStack matrices, VertexConsumer buffer, int light, int i1, int i2, int i3, int i4) {

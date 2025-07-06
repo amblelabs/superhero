@@ -6,9 +6,6 @@ import dev.drtheo.scheduler.api.common.TaskStage;
 import mc.duzo.animation.DuzoAnimationMod;
 import mc.duzo.animation.registry.client.TrackerRegistry;
 
-import mc.duzo.timeless.core.TimelessItems;
-import mc.duzo.timeless.core.TimelessSounds;
-import mc.duzo.timeless.core.TimelessTrackers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,6 +17,9 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.core.TimelessItems;
+import mc.duzo.timeless.core.TimelessSounds;
+import mc.duzo.timeless.core.TimelessTrackers;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;

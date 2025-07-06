@@ -2,15 +2,13 @@ package mc.duzo.timeless.datagen;
 
 import dev.amble.lib.datagen.lang.AmbleLanguageProvider;
 import dev.amble.lib.datagen.lang.LanguageType;
-import mc.duzo.timeless.core.TimelessBlocks;
-import mc.duzo.timeless.core.TimelessItems;
-import mc.duzo.timeless.core.TimelessSounds;
-import mc.duzo.timeless.suit.ironman.IronManSuit;
-import mc.duzo.timeless.suit.ironman.IronManSuitItem;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.core.TimelessBlocks;
+import mc.duzo.timeless.core.TimelessItems;
+import mc.duzo.timeless.core.TimelessSounds;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.datagen.provider.model.TimelessModelProvider;
 import mc.duzo.timeless.datagen.provider.sound.BasicSoundProvider;
@@ -45,6 +43,16 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
             provider.translateBlocks(TimelessBlocks.class);
 
             provider.addTranslation("itemGroup." + Timeless.MOD_ID, "Timeless Heroes");
+            provider.addTranslation("key.categories." + Timeless.MOD_ID, "Suit Actions");
+
+            // Keybinds
+
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_1", "Action 1");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_2", "Action 2");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_3", "Action 3");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_4", "Action 4");
+
+            // Items
 
             provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_seven_helmet", "Mk. 7 Iron Man Helmet");
             provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_seven_chestplate", "Mk. 7 Iron Man Chestplate");
@@ -80,7 +88,7 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
             BasicSoundProvider provider = new BasicSoundProvider(output);
 
             provider.addSound("thruster", TimelessSounds.THRUSTER);
-            provider.addSound("mark5_noises", TimelessSounds.MARK5_NOISES);
+            provider.addSound("mark_5_noises", TimelessSounds.MARK5_NOISES);
             provider.addSound("ironman_step", TimelessSounds.IRONMAN_STEP);
             provider.addSound("ironman_mask", TimelessSounds.IRONMAN_MASK);
             provider.addSound("ironman_powerup", TimelessSounds.IRONMAN_POWERUP);
