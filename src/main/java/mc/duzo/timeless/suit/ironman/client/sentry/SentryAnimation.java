@@ -4,13 +4,13 @@ import java.util.Optional;
 
 import dev.drtheo.scheduler.api.TimeUnit;
 
+import mc.duzo.timeless.client.render.TimelessAnimations;
 import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.client.render.entity.animation.AnimationHelper;
 import net.minecraft.client.render.entity.animation.Keyframe;
 import net.minecraft.client.render.entity.animation.Transformation;
 import net.minecraft.entity.player.PlayerEntity;
 
-import mc.duzo.timeless.client.TimelessClient;
 import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
@@ -49,7 +49,7 @@ public class SentryAnimation {
         if (open != wasOpen) {
             System.out.println(open);
 
-            SuitAnimationTracker.getInstance().add(this.cached.getUuid(), (open) ? TimelessClient.ClientRegister.Animations.Suits.IronMan.BACK_OPEN.get() : TimelessClient.ClientRegister.Animations.Suits.IronMan.BACK_CLOSE.get());
+            SuitAnimationTracker.getInstance().add(this.cached.getUuid(), (open) ? TimelessAnimations.Suits.IronMan.BACK_OPEN.get() : TimelessAnimations.Suits.IronMan.BACK_CLOSE.get());
             wasOpen = open;
         }
     }
