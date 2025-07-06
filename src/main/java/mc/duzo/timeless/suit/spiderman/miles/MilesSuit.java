@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 
 public class MilesSuit extends SpidermanSuit {
     public MilesSuit() {
-        super("miles", PowerList.of(PowerRegistry.SUPER_STRENGTH, PowerRegistry.SWIFT_SNEAK));
+        super("miles", PowerList.of(PowerRegistry.WALL_CLIMB, PowerRegistry.SUPER_STRENGTH, PowerRegistry.SWIFT_SNEAK));
     }
 
     @Override
@@ -30,7 +30,7 @@ public class MilesSuit extends SpidermanSuit {
     @Environment(EnvType.CLIENT)
     @Override
     protected ClientSuit createClient() {
-        AnimationInfo info = new AnimationInfo(AnimationInfo.RenderType.FIRST_LAYER, null, AnimationInfo.Movement.ALLOW, null);
+        AnimationInfo info = new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, null);
 
         return new ClientSuit(this) {
             @Override
