@@ -2,10 +2,12 @@ package mc.duzo.timeless.core;
 
 import dev.amble.lib.container.impl.ItemGroupContainer;
 import dev.amble.lib.itemgroup.AItemGroup;
-import mc.duzo.timeless.Timeless;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+
+import mc.duzo.timeless.Timeless;
 
 public class TimelessItemGroups implements ItemGroupContainer {
     public static final AItemGroup GROUP = AItemGroup.builder(new Identifier(Timeless.MOD_ID, "group"))

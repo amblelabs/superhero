@@ -1,11 +1,10 @@
 package mc.duzo.timeless.power.impl;
 
-import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.power.Power;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+
+import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.power.Power;
 
 public class RainOverPower extends Power {
     private final Identifier id;

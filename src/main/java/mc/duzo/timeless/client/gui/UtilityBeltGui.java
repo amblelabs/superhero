@@ -1,16 +1,11 @@
 package mc.duzo.timeless.client.gui;
 
-import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.power.PowerRegistry;
-import mc.duzo.timeless.power.impl.FlightPower;
-import mc.duzo.timeless.power.impl.HoverPower;
-import mc.duzo.timeless.power.impl.MaskTogglePower;
-import mc.duzo.timeless.suit.Suit;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.util.Window;
 import net.minecraft.util.Identifier;
+
+import mc.duzo.timeless.Timeless;
 
 public class UtilityBeltGui {
 

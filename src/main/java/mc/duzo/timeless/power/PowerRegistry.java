@@ -1,6 +1,5 @@
 package mc.duzo.timeless.power;
 
-import mc.duzo.timeless.power.impl.*;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -11,6 +10,7 @@ import net.minecraft.registry.SimpleRegistry;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.power.impl.*;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.ironman.IronManEntity;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
