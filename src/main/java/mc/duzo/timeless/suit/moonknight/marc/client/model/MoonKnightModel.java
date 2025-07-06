@@ -197,7 +197,7 @@ public class MoonKnightModel extends SuitModel {
 			c += 2.0F;
 		}
 
-		matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(6.0F + k / 2.0F + q));
+		matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(player.isFallFlying() ? 22.5f : 6.0F + k / 2.0F + q));
 		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(s / 2.0F));
 		matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(s / 2.0F));
 

@@ -4,9 +4,14 @@ import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.core.items.SuitMaterial;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.datagen.provider.model.AutomaticModel;
+import mc.duzo.timeless.power.impl.GlidePower;
 import mc.duzo.timeless.suit.Suit;
+import net.fabricmc.fabric.api.entity.event.v1.FabricElytraItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvents;
@@ -14,7 +19,7 @@ import net.minecraft.util.Util;
 
 import java.util.EnumMap;
 
-public class MoonKnightSuitItem extends SuitItem implements AutomaticModel, AutomaticSuitEnglish {
+public class MoonKnightSuitItem extends SuitItem implements AutomaticModel, AutomaticSuitEnglish, FabricElytraItem {
     public MoonKnightSuitItem(Suit suit, Type type) {
         super(suit, MoonKnightMaterial.INSTANCE, type, new FabricItemSettings().maxCount(1));
     }
