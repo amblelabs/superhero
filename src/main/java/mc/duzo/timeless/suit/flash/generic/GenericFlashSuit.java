@@ -1,12 +1,11 @@
 package mc.duzo.timeless.suit.flash.generic;
 
 import mc.duzo.animation.generic.AnimationInfo;
-import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.power.PowerRegistry;
-import mc.duzo.timeless.suit.batman.sixer.client.model.Batman66Model;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitModel;
+import mc.duzo.timeless.suit.client.render.generic.SteveSuitModel;
 import mc.duzo.timeless.suit.flash.FlashSuit;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
@@ -21,7 +20,7 @@ import java.util.function.Supplier;
 // todo - i dont know any flash lore so this is just generic placeholder
 public class GenericFlashSuit extends FlashSuit {
 	public GenericFlashSuit() {
-		super(new Identifier(Timeless.MOD_ID, "generic_flash"), PowerList.of(PowerRegistry.SUPER_SPEED));
+		super("generic", PowerList.of(PowerRegistry.SUPER_SPEED));
 	}
 
 	@Override
@@ -37,7 +36,7 @@ public class GenericFlashSuit extends FlashSuit {
 		return new ClientSuit(this) {
 			@Override
 			public Supplier<SuitModel> model() {
-				return Batman66Model::new; // TODO - create a flash model
+				return () -> new SteveSuitModel(this);
 			}
 
 			@Override
