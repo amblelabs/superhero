@@ -43,15 +43,17 @@ public abstract class TogglePower<T extends EquipSoundSupplier> extends Power {
 					.map(s -> getSuitClass().cast(s))
 					.orElse(null);
 			if (suit == null) return;
-			Identifier anim = getAnimation(val, suit);
-			if (anim == null) return;
-			DuzoAnimationMod.play(player, TimelessTrackers.SUIT, anim);
 
 			SoundEvent sound = val ? suit.getEquipSound().orElse(null) : suit.getUnequipSound().orElse(null);
 			if (sound != null) player.playSound(sound, SoundCategory.PLAYERS, 1f, 1f);
 
 			sound = getSound(suit).orElse(null);
 			if (sound != null) player.getWorld().playSound(null, player.getBlockPos(), sound, SoundCategory.PLAYERS, 0.25f, 1f);
+
+			Identifier anim = getAnimation(val, suit);
+			if (anim == null) return;
+
+			DuzoAnimationMod.play(player, TimelessTrackers.SUIT, anim);
 		}
 	}
 
