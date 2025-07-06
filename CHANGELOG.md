@@ -1,0 +1,2 @@
+- fix/translatables-keybind | by [@MaketendoDev](https://github.com/MaketendoDev) ([#40](https://github.com/duzos/superhero/pull/40))
+- Batman 66 Suit | by [@duzos](https://github.com/duzos) ([#38](https://github.com/duzos/superhero/pull/38))

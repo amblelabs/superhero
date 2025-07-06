@@ -5,14 +5,21 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Automated Dev Builds
+name: Automated donator builds
 
 on:
   workflow_dispatch:
   push:
-    branches:
-      - 'feat/**'
-      - 'main'
+    paths:
+      - src/**
+      - build.gradle
+      - gradle.properties
+      - settings.gradle
+      - gradle/**
+      - gradlew
+      - gradlew.bat
+      - versioning.gradle
+
 jobs:
   build:
 
@@ -27,10 +34,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        
-    - name: Make Gradle Wrapper Executable
-      if: ${{ runner.os != 'Windows' }}
-      run: chmod +x ./gradlew
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
@@ -50,9 +53,20 @@ jobs:
       with:
         url: ${{ secrets.DEV_BUILDS }}
         file: 'build/libs/*'
-        username: BETA BUILDS
-        avatar: 'https://mc-heads.net/avatar/duzo'
+        username: tony stank
+        avatar: 'https://img.asmedia.epimg.net/resizer/v2/5R475RB4FZAOJIDICEZLRYLDZM.jpg?auth=e8fe4ea252b5bf7424148eb36e30055f04fc07cd4b2cb88e8f94bee7b8346ac0&width=1472&height=1104&smart=true'
         commit: '> :sparkles: [%MESSAGE%](<%LINK%>) by [%AUTHOR%](<%AUTHOR_LINK%>)'
         message: |
-          <:new1:1253371736510959636><:new2:1253371805734015006> New `${{ github.repository }}` dev build `#${{ github.run_number }}`:
+          <:new1:1253371736510959636><:new2:1253371805734015006> New `Timeless Heroes` dev build `#${{ github.run_number }}`:
           %COMMITS%
+
+    # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
+    # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
+    #
+    # - name: Setup Gradle
+    #   uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+    #   with:
+    #     gradle-version: '8.5'
+    #
+    # - name: Build with Gradle 8.5
+    #   run: gradle build
