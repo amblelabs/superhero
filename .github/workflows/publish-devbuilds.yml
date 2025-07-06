@@ -53,8 +53,8 @@ jobs:
       with:
         url: ${{ secrets.DEV_BUILDS }}
         file: 'build/libs/*'
-        username: george washington
-        avatar: 'https://i.imgur.com/uiFqrQh.png'
+        username: tony stank
+        avatar: 'https://img.asmedia.epimg.net/resizer/v2/5R475RB4FZAOJIDICEZLRYLDZM.jpg?auth=e8fe4ea252b5bf7424148eb36e30055f04fc07cd4b2cb88e8f94bee7b8346ac0&width=1472&height=1104&smart=true'
         commit: '> :sparkles: [%MESSAGE%](<%LINK%>) by [%AUTHOR%](<%AUTHOR_LINK%>)'
         message: |
           <:new1:1253371736510959636><:new2:1253371805734015006> New `Timeless Heroes` dev build `#${{ github.run_number }}`:
