@@ -26,6 +26,7 @@ public class Timeless implements ModInitializer {
         TimelessBlockEntityTypes.init();
         TimelessEntityTypes.init();
         TimelessSounds.init();
+        TimelessItems.init();
 
         TimelessCommands.init();
 
