@@ -265,6 +265,9 @@ public class MarkFiveModel extends SuitModel {
                 this.rotateParts(player);
                 matrices.translate(0f, -0.2f, 0f);
             }
+        } else {
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180f));
+            matrices.translate(0f, -0.2f, 0f);
         }
 
         matrices.scale(1.0125f, 1.0125f, 1.0125f);
