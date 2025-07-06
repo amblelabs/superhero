@@ -5,3 +5,4 @@
 - fix: all superhero items are now in the item group | by [@duzos](https://github.com/duzos) ([#43](https://github.com/duzos/superhero/pull/43))
 - feat: suits now render on armour stands | by [@duzos](https://github.com/duzos) ([#45](https://github.com/duzos/superhero/pull/45))
 - refactor(power): make everything more generic | by [@duzos](https://github.com/duzos) ([#47](https://github.com/duzos/superhero/pull/47))
+- refactor(register): No more inner class from the ClientRegister | by [@duzos](https://github.com/duzos) ([#48](https://github.com/duzos/superhero/pull/48))
