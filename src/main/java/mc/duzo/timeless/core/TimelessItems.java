@@ -27,7 +27,7 @@ public class TimelessItems extends ItemContainer {
     public static void init() {
         ItemGroupEvents.MODIFY_ENTRIES_ALL.register((group, entries) -> {
             if (group == TimelessItemGroups.GROUP) {
-                for (SuitSet set : SetRegistry.REGISTRY) {;
+                for (SuitSet set : SetRegistry.REGISTRY) {
                     if (!Objects.equals(set.id().getNamespace(), Timeless.MOD_ID)) continue;
 
                     for (var item : set.values()) {
