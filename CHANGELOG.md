@@ -1,3 +1,4 @@
 - fix/translatables-keybind | by [@MaketendoDev](https://github.com/MaketendoDev) ([#40](https://github.com/duzos/superhero/pull/40))
 - Batman 66 Suit | by [@duzos](https://github.com/duzos) ([#38](https://github.com/duzos/superhero/pull/38))
 - Bat Radio | by [@MaketendoDev](https://github.com/MaketendoDev) ([#42](https://github.com/duzos/superhero/pull/42))
+- ci: remove spotless | by [@duzos](https://github.com/duzos) ([#44](https://github.com/duzos/superhero/pull/44))
