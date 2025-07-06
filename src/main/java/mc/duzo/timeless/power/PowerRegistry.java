@@ -30,6 +30,7 @@ public class PowerRegistry {
     public static Power HOVER = new HoverPower().register();
     public static Power JARVIS = Power.Builder.create(new Identifier(Timeless.MOD_ID, "jarvis")).build().register();
     public static MaskTogglePower MASK_TOGGLE = new MaskTogglePower().register();
+    public static Power GLIDE_POWER = new GlidePower().register();
     public static Power ICES_OVER = new IceOverPower().register();
     public static Power RAINS_OVER = new RainOverPower().register();
     public static Power SENTRY = Power.Builder.create(new Identifier(Timeless.MOD_ID, "sentry")).run((player) -> {

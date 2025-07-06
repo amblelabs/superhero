@@ -3,25 +3,35 @@ package mc.duzo.timeless.suit.moonknight.marc.client.model;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 import mc.duzo.timeless.suit.set.SetRegistry;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 
 public class MoonKnightModel extends SuitModel {
 	private ClientSuit parent;
+	private ModelPart cape;
 
 	private final ModelPart root;
-	public final ModelPart Head;
-	public final ModelPart Body;
-	public final ModelPart RightArm;
-	public final ModelPart LeftArm;
-	public final ModelPart RightLeg;
-	public final ModelPart LeftLeg;
+	private final ModelPart Head;
+	private final ModelPart Body;
+	private final ModelPart RightArm;
+	private final ModelPart LeftArm;
+	private final ModelPart RightLeg;
+	private final ModelPart LeftLeg;
+	private final ModelPart MoonCape;
+	private final ModelPart bone4;
+	private final ModelPart bone5;
+	private final ModelPart bone6;
+	private final ModelPart bone7;
+	private final ModelPart bone8;
+	private final ModelPart bone9;
+	private final ModelPart bone10;
+	private final ModelPart bone11;
 	public MoonKnightModel(ModelPart root) {
 		this.root = root.getChild("root");
 		this.Head = this.root.getChild("Head");
@@ -30,6 +40,15 @@ public class MoonKnightModel extends SuitModel {
 		this.LeftArm = this.root.getChild("LeftArm");
 		this.RightLeg = this.root.getChild("RightLeg");
 		this.LeftLeg = this.root.getChild("LeftLeg");
+		this.MoonCape = this.root.getChild("MoonCape");
+		this.bone4 = this.MoonCape.getChild("bone4");
+		this.bone5 = this.bone4.getChild("bone5");
+		this.bone6 = this.bone5.getChild("bone6");
+		this.bone7 = this.bone6.getChild("bone7");
+		this.bone8 = this.MoonCape.getChild("bone8");
+		this.bone9 = this.bone8.getChild("bone9");
+		this.bone10 = this.bone9.getChild("bone10");
+		this.bone11 = this.bone10.getChild("bone11");
 	}
 
 	public MoonKnightModel() {
@@ -41,104 +60,110 @@ public class MoonKnightModel extends SuitModel {
 		ModelPartData modelPartData = modelData.getRoot();
 		ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
 
-		ModelPartData Head = root.addChild("Head", ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.001F))
-				.uv(32, 0).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.35F)), ModelTransform.pivot(0.0F, -24.0F, 0.0F));
+		ModelPartData Head = root.addChild("Head", ModelPartBuilder.create().uv(0, 84).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.001F))
+				.uv(73, 82).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.35F)), ModelTransform.pivot(0.0F, -24.0F, 0.0F));
 
-		ModelPartData Body = root.addChild("Body", ModelPartBuilder.create().uv(16, 16).cuboid(-4.0F, -0.2F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.0F))
-				.uv(16, 32).cuboid(-4.0F, -0.2F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.35F)), ModelTransform.pivot(0.0F, -24.0F, 0.0F));
+		ModelPartData Body = root.addChild("Body", ModelPartBuilder.create().uv(33, 84).cuboid(-4.0F, -0.2F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.0F))
+				.uv(58, 99).cuboid(-4.0F, -0.2F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.35F)), ModelTransform.pivot(0.0F, -24.0F, 0.0F));
 
-		ModelPartData RightArm = root.addChild("RightArm", ModelPartBuilder.create().uv(40, 16).cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.0F))
-				.uv(40, 32).cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(-5.0F, -22.0F, 0.0F));
+		ModelPartData RightArm = root.addChild("RightArm", ModelPartBuilder.create().uv(34, 101).cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.0F))
+				.uv(49, 116).cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(-5.0F, -22.0F, 0.0F));
 
-		ModelPartData LeftArm = root.addChild("LeftArm", ModelPartBuilder.create().uv(32, 48).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.0F))
-				.uv(48, 48).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(5.0F, -22.0F, 0.0F));
+		ModelPartData LeftArm = root.addChild("LeftArm", ModelPartBuilder.create().uv(106, 82).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.0F))
+				.uv(64, 116).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(5.0F, -22.0F, 0.0F));
 
-		ModelPartData RightLeg = root.addChild("RightLeg", ModelPartBuilder.create().uv(0, 16).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.0F))
-				.uv(0, 32).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(-1.9F, -12.0F, 0.0F));
+		ModelPartData RightLeg = root.addChild("RightLeg", ModelPartBuilder.create().uv(83, 99).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.0F))
+				.uv(0, 101).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(-1.9F, -12.0F, 0.0F));
 
-		ModelPartData LeftLeg = root.addChild("LeftLeg", ModelPartBuilder.create().uv(16, 48).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.0F))
-				.uv(0, 48).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(1.9F, -12.0F, 0.0F));
-		return TexturedModelData.of(modelData, 64, 64);
+		ModelPartData LeftLeg = root.addChild("LeftLeg", ModelPartBuilder.create().uv(100, 99).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.0F))
+				.uv(17, 101).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(1.9F, -12.0F, 0.0F));
+
+		ModelPartData MoonCape = root.addChild("MoonCape", ModelPartBuilder.create().uv(73, 0).cuboid(-6.0F, -0.5F, -1.0F, 12.0F, 1.0F, 20.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -23.5F, 3.0F, -1.5708F, 0.0F, 0.0F));
+
+		ModelPartData bone4 = MoonCape.addChild("bone4", ModelPartBuilder.create(), ModelTransform.pivot(-4.9319F, 0.0F, 9.7537F));
+
+		ModelPartData cube_r1 = bone4.addChild("cube_r1", ModelPartBuilder.create().uv(0, 0).cuboid(6.0F, 0.0F, -7.0F, 16.0F, 0.0F, 20.0F, new Dilation(0.0095F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.4363F, 0.0F));
+
+		ModelPartData bone5 = bone4.addChild("bone5", ModelPartBuilder.create(), ModelTransform.pivot(11.3424F, 0.0F, -0.0572F));
+
+		ModelPartData cube_r2 = bone5.addChild("cube_r2", ModelPartBuilder.create().uv(0, 42).cuboid(6.0F, 0.0F, -7.0F, 16.0F, 0.0F, 20.0F, new Dilation(0.02F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 0.9599F, 0.0F));
+
+		ModelPartData bone6 = bone5.addChild("bone6", ModelPartBuilder.create(), ModelTransform.pivot(12.2635F, 0.0F, -1.4047F));
+
+		ModelPartData cube_r3 = bone6.addChild("cube_r3", ModelPartBuilder.create().uv(73, 22).cuboid(6.0F, 0.0F, -1.0F, 16.0F, 0.0F, 14.0F, new Dilation(0.0095F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 1.8326F, 0.0F));
+
+		ModelPartData bone7 = bone6.addChild("bone7", ModelPartBuilder.create(), ModelTransform.pivot(-1.3953F, 0.0F, -12.9189F));
+
+		ModelPartData cube_r4 = bone7.addChild("cube_r4", ModelPartBuilder.create().uv(73, 52).cuboid(6.0F, 0.0F, -1.0F, 16.0F, 0.0F, 14.0F, new Dilation(0.015F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 2.0944F, 0.0F));
+
+		ModelPartData bone8 = MoonCape.addChild("bone8", ModelPartBuilder.create(), ModelTransform.pivot(4.9319F, 0.0F, 9.7537F));
+
+		ModelPartData cube_r5 = bone8.addChild("cube_r5", ModelPartBuilder.create().uv(0, 21).cuboid(-22.0F, 0.0F, -7.0F, 16.0F, 0.0F, 20.0F, new Dilation(0.0095F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -0.4363F, 0.0F));
+
+		ModelPartData bone9 = bone8.addChild("bone9", ModelPartBuilder.create(), ModelTransform.pivot(-11.3424F, 0.0F, -0.0572F));
+
+		ModelPartData cube_r6 = bone9.addChild("cube_r6", ModelPartBuilder.create().uv(0, 63).cuboid(-22.0F, 0.0F, -7.0F, 16.0F, 0.0F, 20.0F, new Dilation(0.02F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -0.9599F, 0.0F));
+
+		ModelPartData bone10 = bone9.addChild("bone10", ModelPartBuilder.create(), ModelTransform.pivot(-12.2635F, 0.0F, -1.4047F));
+
+		ModelPartData cube_r7 = bone10.addChild("cube_r7", ModelPartBuilder.create().uv(73, 37).cuboid(-22.0F, 0.0F, -1.0F, 16.0F, 0.0F, 14.0F, new Dilation(0.0095F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -1.8326F, 0.0F));
+
+		ModelPartData bone11 = bone10.addChild("bone11", ModelPartBuilder.create(), ModelTransform.pivot(1.3953F, 0.0F, -12.9189F));
+
+		ModelPartData cube_r8 = bone11.addChild("cube_r8", ModelPartBuilder.create().uv(73, 67).cuboid(-22.0F, 0.0F, -1.0F, 16.0F, 0.0F, 14.0F, new Dilation(0.015F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -2.0944F, 0.0F));
+		return TexturedModelData.of(modelData, 256, 256);
 	}
 
 	@Override
 	public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
+		if (!(entity instanceof AbstractClientPlayerEntity player)) return;
+
+		this.cape = this.MoonCape;
+
+		this.MoonCape.visible = false;
+
 		matrices.push();
 		matrices.translate(0, -1.5f, 0);
 		this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 		matrices.pop();
 
-		// Draw a wide upside down L-shaped cape
 		matrices.push();
-		matrices.translate(-0.5f, -0.1f, 0);
 
-		VertexConsumer capeConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers().getBuffer(RenderLayer.getDebugFilledBox());
+		double d = MathHelper.lerp(tickDelta, player.prevCapeX, player.capeX) - MathHelper.lerp(tickDelta, player.prevX, player.getX());
+		double e = MathHelper.lerp(tickDelta, player.prevCapeY, player.capeY) - MathHelper.lerp(tickDelta, player.prevY, player.getY());
+		double m = MathHelper.lerp(tickDelta, player.prevCapeZ, player.capeZ) - MathHelper.lerp(tickDelta, player.prevZ, player.getZ());
+		float n = MathHelper.lerpAngleDegrees(tickDelta, player.prevBodyYaw, player.bodyYaw);
+		double o = MathHelper.sin(n * ((float)Math.PI / 180F));
+		double p = -MathHelper.cos(n * ((float)Math.PI / 180F));
+		float q = (float)e * 10.0F;
+		float j = 0;
+		float c = 0;
+		q = MathHelper.clamp(q, -6.0F, 32.0F);
+		float k = (float)(d * o + m * p) * 100.0F;
+		k = MathHelper.clamp(k, 0.0F, 150.0F);
+		float s = (float)(d * p - m * o) * 100.0F;
+		s = MathHelper.clamp(s, -20.0F, 20.0F);
+		if (k < 0.0F) {
+			k = 0.0F;
+		}
 
-		// L shape parameters
-		float capeWidth = 1.0f;
-		float capeHeight = 1.1f;
-		float capeThickness = 0.05f;
-		float lBarWidth = 0.3f; // width of the vertical bar of the L
+		float t = MathHelper.lerp(tickDelta, player.prevStrideDistance, player.strideDistance);
+		q += MathHelper.sin(MathHelper.lerp(tickDelta, player.prevHorizontalSpeed, player.horizontalSpeed) * 6.0F) * 32.0F * t;
+		if (player.isInSneakingPose()) {
+			q += 25.0F;
+			j += 1.5F;
+			c += 2.0F;
+		}
 
-		// Draw the vertical bar (left side)
-		capeConsumer.vertex(matrices.peek().getPositionMatrix(), 0f, 0f, 0f)
-				.color(255, 255, 255, 255)
-				.texture(0f, 0f)
-				.overlay(OverlayTexture.DEFAULT_UV)
-				.light(light)
-				.normal(matrices.peek().getNormalMatrix(), 0, 0, 1)
-				.next();
-		capeConsumer.vertex(matrices.peek().getPositionMatrix(), lBarWidth, 0f, 0f)
-				.color(255, 255, 255, 255)
-				.texture(1f, 0f)
-				.overlay(OverlayTexture.DEFAULT_UV)
-				.light(light)
-				.normal(matrices.peek().getNormalMatrix(), 0, 0, 1)
-				.next();
-		capeConsumer.vertex(matrices.peek().getPositionMatrix(), lBarWidth, capeHeight, 0f)
-				.color(255, 255, 255, 255)
-				.texture(1f, 1f)
-				.overlay(OverlayTexture.DEFAULT_UV)
-				.light(light)
-				.normal(matrices.peek().getNormalMatrix(), 0, 0, 1)
-				.next();
-		capeConsumer.vertex(matrices.peek().getPositionMatrix(), 0f, capeHeight, 0f)
-				.color(255, 255, 255, 255)
-				.texture(0f, 1f)
-				.overlay(OverlayTexture.DEFAULT_UV)
-				.light(light)
-				.normal(matrices.peek().getNormalMatrix(), 0, 0, 1)
-				.next();
+		matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(6.0F + k / 2.0F + q));
+		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(s / 2.0F));
+		matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(s / 2.0F));
 
-		// Draw the horizontal bar (bottom)
-		capeConsumer.vertex(matrices.peek().getPositionMatrix(), lBarWidth, capeHeight - capeThickness, 0f)
-				.color(255, 255, 255, 255)
-				.texture(0f, 0f)
-				.overlay(OverlayTexture.DEFAULT_UV)
-				.light(light)
-				.normal(matrices.peek().getNormalMatrix(), 0, 0, 1)
-				.next();
-		capeConsumer.vertex(matrices.peek().getPositionMatrix(), capeWidth, capeHeight - capeThickness, 0f)
-				.color(255, 255, 255, 255)
-				.texture(1f, 0f)
-				.overlay(OverlayTexture.DEFAULT_UV)
-				.light(light)
-				.normal(matrices.peek().getNormalMatrix(), 0, 0, 1)
-				.next();
-		capeConsumer.vertex(matrices.peek().getPositionMatrix(), capeWidth, capeHeight, 0f)
-				.color(255, 255, 255, 255)
-				.texture(1f, 1f)
-				.overlay(OverlayTexture.DEFAULT_UV)
-				.light(light)
-				.normal(matrices.peek().getNormalMatrix(), 0, 0, 1)
-				.next();
-		capeConsumer.vertex(matrices.peek().getPositionMatrix(), lBarWidth, capeHeight, 0f)
-				.color(255, 255, 255, 255)
-				.texture(0f, 1f)
-				.overlay(OverlayTexture.DEFAULT_UV)
-				.light(light)
-				.normal(matrices.peek().getNormalMatrix(), 0, 0, 1)
-				.next();
+
+		this.cape.visible = true;
+		this.cape.pivotY = 0.5f + j;
+		this.cape.pivotZ = 2f - c;
+		this.cape.render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
 
 		matrices.pop();
 	}
