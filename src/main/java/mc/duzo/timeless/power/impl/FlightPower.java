@@ -1,5 +1,13 @@
 package mc.duzo.timeless.power.impl;
 
+import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.core.items.SuitItem;
+import mc.duzo.timeless.network.Network;
+import mc.duzo.timeless.network.s2c.UpdateFlyingStatusS2CPacket;
+import mc.duzo.timeless.power.Power;
+import mc.duzo.timeless.suit.Suit;
+import mc.duzo.timeless.suit.api.FlightSuit;
+import mc.duzo.timeless.util.ServerKeybind;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -9,15 +17,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
-
-import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.core.items.SuitItem;
-import mc.duzo.timeless.network.Network;
-import mc.duzo.timeless.network.s2c.UpdateFlyingStatusS2CPacket;
-import mc.duzo.timeless.power.Power;
-import mc.duzo.timeless.suit.Suit;
-import mc.duzo.timeless.suit.ironman.IronManSuit;
-import mc.duzo.timeless.util.ServerKeybind;
 
 public class FlightPower extends Power {
     private final Identifier id;
@@ -146,8 +145,8 @@ public class FlightPower extends Power {
             Network.toTracking(new UpdateFlyingStatusS2CPacket(player.getUuid(), val), (ServerPlayerEntity) player);
     }
 
-    public static IronManSuit getSuit(PlayerEntity player) { // todo not assume IronManSuit
-        if (!(Suit.findSuit(player).orElse(null) instanceof IronManSuit suit)) return null;
+    public static FlightSuit getSuit(PlayerEntity player) {
+        if (!(Suit.findSuit(player).orElse(null) instanceof FlightSuit suit)) return null;
 
         return suit;
     }
