@@ -1,5 +1,6 @@
 package mc.duzo.timeless.mixin;
 
+import net.minecraft.entity.EquipmentSlot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,7 +24,7 @@ public abstract class EntityMixin {
         Entity entity = (Entity)(Object)this;
         if (!(entity instanceof PlayerEntity player)) return;
 
-        Suit suit = Suit.findSuit(player).orElse(null);
+        Suit suit = Suit.findSuit(player, EquipmentSlot.LEGS).orElse(Suit.findSuit(player, EquipmentSlot.FEET).orElse(null));
         if (suit == null) return;
 
         this.playSound(suit.getStepSound(), 0.2f, player.getRandom().nextBetween(9, 11) / 10f);

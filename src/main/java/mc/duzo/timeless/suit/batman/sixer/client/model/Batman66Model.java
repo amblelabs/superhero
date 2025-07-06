@@ -9,6 +9,7 @@ import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.RotationAxis;
 
@@ -72,6 +73,36 @@ public class Batman66Model extends SuitModel {
 
         ModelPartData LeftLeg = modelPartData.addChild("LeftLeg", ModelPartBuilder.create().uv(0, 48).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.35F)), ModelTransform.pivot(1.9F, 12.0F, 0.0F));
         return TexturedModelData.of(modelData, 128, 128);
+    }
+
+    @Override
+    public void setVisibilityForSlot(EquipmentSlot slot) {
+        switch (slot) {
+            case HEAD -> {
+                this.head.visible = true;
+                this.body.visible = false;
+                this.leftArm.visible = false;
+                this.rightArm.visible = false;
+                this.leftLeg.visible = false;
+                this.rightLeg.visible = false;
+            }
+            case CHEST -> {
+                this.head.visible = false;
+                this.body.visible = true;
+                this.leftArm.visible = true;
+                this.rightArm.visible = true;
+                this.leftLeg.visible = false;
+                this.rightLeg.visible = false;
+            }
+            case LEGS, FEET -> {
+                this.head.visible = false;
+                this.body.visible = false;
+                this.leftArm.visible = false;
+                this.rightArm.visible = false;
+                this.leftLeg.visible = true;
+                this.rightLeg.visible = true;
+            }
+        }
     }
 
     @Override
