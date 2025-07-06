@@ -45,12 +45,7 @@ public class PowerRegistry {
             })
             .build().register();
     public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();
-    public static Power SUPER_SPEED = Power.Builder.create(new Identifier(Timeless.MOD_ID, "super_speed"))
-            .tick(player -> {
-                if (player.getServer().getTicks() % 20 != 0) return; // Run every second
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 22, 10, false, false));
-            })
-            .build().register();
+    public static Power SUPER_SPEED = new SpeedPower().register();
 
     public static void init() {}
 }
