@@ -1,11 +1,13 @@
 package mc.duzo.timeless.core;
 
 import dev.amble.lib.container.impl.SoundContainer;
-import mc.duzo.timeless.Timeless;
+
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+
+import mc.duzo.timeless.Timeless;
 
 public class TimelessSounds implements SoundContainer {
     public static final SoundEvent THRUSTER = SoundEvent.of(new Identifier(Timeless.MOD_ID, "thruster"));

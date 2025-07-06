@@ -6,12 +6,10 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.util.Colors;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 
-import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.power.impl.FlightPower;
 import mc.duzo.timeless.power.impl.HoverPower;

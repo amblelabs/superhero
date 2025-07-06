@@ -2,15 +2,13 @@ package mc.duzo.timeless.datagen;
 
 import dev.amble.lib.datagen.lang.AmbleLanguageProvider;
 import dev.amble.lib.datagen.lang.LanguageType;
-import mc.duzo.timeless.core.TimelessBlocks;
-import mc.duzo.timeless.core.TimelessItems;
-import mc.duzo.timeless.core.TimelessSounds;
-import mc.duzo.timeless.suit.ironman.IronManSuit;
-import mc.duzo.timeless.suit.ironman.IronManSuitItem;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.core.TimelessBlocks;
+import mc.duzo.timeless.core.TimelessItems;
+import mc.duzo.timeless.core.TimelessSounds;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.datagen.provider.model.TimelessModelProvider;
 import mc.duzo.timeless.datagen.provider.sound.BasicSoundProvider;

@@ -9,9 +9,9 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 
+import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.Suit;
-import mc.duzo.timeless.core.items.SuitItem;
 
 @Mixin(EnchantmentHelper.class)
 public class EnchantmentHelperMixin {

@@ -1,6 +1,5 @@
 package mc.duzo.timeless.block.entity;
 
-import mc.duzo.timeless.core.TimelessBlockEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -11,6 +10,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import mc.duzo.timeless.core.TimelessBlockEntityTypes;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;

@@ -7,9 +7,9 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
+import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
-import mc.duzo.timeless.core.items.SuitItem;
 
 /**
  * A version of SuitSet which registers its components, eg suit + items

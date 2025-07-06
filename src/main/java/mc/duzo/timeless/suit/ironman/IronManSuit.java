@@ -2,11 +2,11 @@ package mc.duzo.timeless.suit.ironman;
 
 import java.util.Optional;
 
-import mc.duzo.timeless.core.TimelessSounds;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.core.TimelessSounds;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.suit.Suit;
 

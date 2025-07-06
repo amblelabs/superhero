@@ -11,12 +11,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.network.Network;
 import mc.duzo.timeless.network.s2c.UpdateFlyingStatusS2CPacket;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
-import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.util.ServerKeybind;
 
 public class FlightPower extends Power {

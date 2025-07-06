@@ -10,8 +10,8 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.core.items.SuitItem;
+import mc.duzo.timeless.suit.Suit;
 
 public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identifiable {
     protected final Suit suit;

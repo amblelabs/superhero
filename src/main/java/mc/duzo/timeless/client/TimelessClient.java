@@ -6,21 +6,19 @@ import mc.duzo.animation.api.AnimationEvents;
 import mc.duzo.animation.generic.AnimationInfo;
 import mc.duzo.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.animation.registry.AnimationRegistry;
-import mc.duzo.timeless.client.gui.UtilityBeltGui;
-import mc.duzo.timeless.core.TimelessEntityTypes;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.client.gui.JarvisGui;
+import mc.duzo.timeless.client.gui.UtilityBeltGui;
 import mc.duzo.timeless.client.keybind.TimelessKeybinds;
 import mc.duzo.timeless.client.network.ClientNetwork;
 import mc.duzo.timeless.client.render.entity.IronManEntityRenderer;
+import mc.duzo.timeless.core.TimelessEntityTypes;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.client.ClientSuitRegistry;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;

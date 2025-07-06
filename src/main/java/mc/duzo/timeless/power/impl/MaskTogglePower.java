@@ -2,8 +2,6 @@ package mc.duzo.timeless.power.impl;
 
 import mc.duzo.animation.DuzoAnimationMod;
 
-import mc.duzo.timeless.core.TimelessSounds;
-import mc.duzo.timeless.core.TimelessTrackers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -12,9 +10,11 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.core.TimelessSounds;
+import mc.duzo.timeless.core.TimelessTrackers;
+import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.suit.ironman.IronManSuit;
-import mc.duzo.timeless.core.items.SuitItem;
 
 public class MaskTogglePower extends Power {
     private final Identifier id;
