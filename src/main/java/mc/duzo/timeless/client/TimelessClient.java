@@ -8,11 +8,13 @@ import mc.duzo.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.animation.registry.AnimationRegistry;
 import mc.duzo.timeless.client.gui.UtilityBeltGui;
 import mc.duzo.timeless.core.TimelessEntityTypes;
+import mc.duzo.timeless.suit.moonknight.cape.client.animations.CapeAnimations;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -82,9 +84,18 @@ public class TimelessClient implements ClientModInitializer {
                     }
                 }
 
+                public static class Capes {
+                    public static final Supplier<CapeAnimations> CAPE_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "moonknight_cape_open"), CapeAnimations.CAPE_OPEN, new AnimationInfo(AnimationInfo.RenderType.NONE, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
+                    public static final Supplier<CapeAnimations> CAPE_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "moonknight_cape_close"), CapeAnimations.CAPE_CLOSE, new AnimationInfo(AnimationInfo.RenderType.NONE, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
+
+                    public static void init() {
+
+                    }
+                }
                 public static void init() {
                     IronMan.init();
                     MarkFive.init();
+                    Capes.init();
 
                     AnimationEvents.FIND_ANIMATION_INFO.register(player -> {
                         Suit suit = Suit.findSuit(player).orElse(null);

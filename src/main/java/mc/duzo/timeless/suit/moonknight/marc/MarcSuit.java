@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 
 public class MarcSuit extends MoonKnightSuit {
     public MarcSuit() {
-        super("marc", PowerList.of(PowerRegistry.SUPER_STRENGTH, PowerRegistry.SWIFT_SNEAK, PowerRegistry.HOVER));
+        super("marc", PowerList.of(PowerRegistry.SUPER_STRENGTH, PowerRegistry.SWIFT_SNEAK, PowerRegistry.GLIDE_POWER));
     }
 
     @Override

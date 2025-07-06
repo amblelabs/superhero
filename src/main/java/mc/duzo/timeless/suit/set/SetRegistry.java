@@ -1,5 +1,6 @@
 package mc.duzo.timeless.suit.set;
 
+import mc.duzo.timeless.suit.moonknight.item.MoonKnightSuitItem;
 import mc.duzo.timeless.suit.moonknight.marc.MarcSuit;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
@@ -39,6 +40,6 @@ public class SetRegistry {
 
         // Batman
         BATMAN_66 = register(new RegisteringSuitSet(new Batman66Suit(), BatmanSuitItem::new));
-        MOON_KNIGHT_MARC = register(new RegisteringSuitSet(new MarcSuit(), BatmanSuitItem::new));
+        MOON_KNIGHT_MARC = register(new RegisteringSuitSet(new MarcSuit(), MoonKnightSuitItem::new));
     }
 }
