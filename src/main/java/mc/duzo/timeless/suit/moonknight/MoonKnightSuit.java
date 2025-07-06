@@ -4,13 +4,14 @@ import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.suit.Suit;
+import mc.duzo.timeless.suit.api.CapedSuit;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 
-public abstract class MoonKnightSuit extends Suit implements AutomaticSuitEnglish {
+public abstract class MoonKnightSuit extends Suit implements AutomaticSuitEnglish, CapedSuit {
     private final Identifier id;
     protected final PowerList powers;
 
@@ -64,5 +65,15 @@ public abstract class MoonKnightSuit extends Suit implements AutomaticSuitEnglis
     @Override
     public Optional<SoundEvent> getUnequipSound() {
         return Optional.of(SoundEvents.ITEM_ARMOR_EQUIP_LEATHER);
+    }
+
+    @Override
+    public Identifier getCapeAnimation(boolean isOpening) {
+        return new Identifier(Timeless.MOD_ID, "moonknight_cape_" + (isOpening ? "open" : "close"));
+    }
+
+    @Override
+    public Optional<SoundEvent> getCapeSound() {
+        return Optional.empty();
     }
 }

@@ -8,6 +8,7 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
@@ -32,6 +33,7 @@ public class MoonKnightModel extends SuitModel {
 	private final ModelPart bone9;
 	private final ModelPart bone10;
 	private final ModelPart bone11;
+
 	public MoonKnightModel(ModelPart root) {
 		this.root = root.getChild("root");
 		this.Head = this.root.getChild("Head");
@@ -115,6 +117,44 @@ public class MoonKnightModel extends SuitModel {
 	}
 
 	@Override
+	public void setVisibilityForSlot(EquipmentSlot slot) {
+		switch (slot) {
+			case HEAD -> {
+				this.Head.visible = true;
+				this.Body.visible = false;
+				this.LeftArm.visible = false;
+				this.RightArm.visible = false;
+				this.LeftLeg.visible = false;
+				this.RightLeg.visible = false;
+			}
+			case CHEST -> {
+				this.Head.visible = false;
+				this.Body.visible = true;
+				this.LeftArm.visible = true;
+				this.RightArm.visible = true;
+				this.LeftLeg.visible = false;
+				this.RightLeg.visible = false;
+			}
+			case LEGS, FEET -> {
+				this.Head.visible = false;
+				this.Body.visible = false;
+				this.LeftArm.visible = false;
+				this.RightArm.visible = false;
+				this.LeftLeg.visible = true;
+				this.RightLeg.visible = true;
+			}
+			default -> {
+				this.Head.visible = false;
+				this.Body.visible = false;
+				this.LeftArm.visible = false;
+				this.RightArm.visible = false;
+				this.LeftLeg.visible = false;
+				this.RightLeg.visible = false;
+			}
+		}
+	}
+
+	@Override
 	public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
 		if (!(entity instanceof AbstractClientPlayerEntity player)) return;
 
@@ -126,6 +166,8 @@ public class MoonKnightModel extends SuitModel {
 		matrices.translate(0, -1.5f, 0);
 		this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 		matrices.pop();
+
+		if (!this.Body.visible) return;
 
 		matrices.push();
 

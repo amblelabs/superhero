@@ -12,6 +12,7 @@ import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveAnimation
 import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveCaseAnimation;
 import mc.duzo.timeless.suit.client.animation.impl.ironman.mk5.MarkFiveMaskAnimation;
 import mc.duzo.timeless.suit.ironman.client.sentry.SentryAnimation;
+import mc.duzo.timeless.suit.moonknight.cape.client.animations.CapeAnimations;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Supplier;
@@ -32,6 +33,11 @@ public class TimelessAnimations {
 	public static final Supplier<MarkFiveMaskAnimation> GENERIC_IRONMAN_MASK_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_mask_close"), GenericIronManAnimations.MASK_CLOSE, new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
 	public static final Supplier<SuitAnimationHolder> GENERIC_IRONMAN_BACK_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_back_open"), SentryAnimation.SUIT_OPEN, new AnimationInfo(AnimationInfo.RenderType.ALL, AnimationInfo.Perspective.THIRD_PERSON_BACK, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL), false));
 	public static final Supplier<SuitAnimationHolder> GENERIC_IRONMAN_BACK_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_back_close"), SentryAnimation.SUIT_OPEN2, new AnimationInfo(AnimationInfo.RenderType.ALL, AnimationInfo.Perspective.THIRD_PERSON_BACK, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL), false));
+
+
+	// MOON KNIGHT
+	public static final Supplier<SuitAnimationHolder> MOONKNIGHT_CAPE_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "moonknight_cape_open"), CapeAnimations.CAPE_OPEN, new AnimationInfo(AnimationInfo.RenderType.NONE, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
+	public static final Supplier<SuitAnimationHolder> MOONKNIGHT_CAPE_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "moonknight_cape_close"), CapeAnimations.CAPE_CLOSE, new AnimationInfo(AnimationInfo.RenderType.NONE, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
 
 	public static void init() {
 		AnimationEvents.FIND_ANIMATION_INFO.register(player -> {
