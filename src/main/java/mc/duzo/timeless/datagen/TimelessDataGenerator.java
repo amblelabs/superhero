@@ -45,6 +45,16 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
             provider.translateBlocks(TimelessBlocks.class);
 
             provider.addTranslation("itemGroup." + Timeless.MOD_ID, "Timeless Heroes");
+            provider.addTranslation("key.categories." + Timeless.MOD_ID, "Suit Actions");
+
+            // Keybinds
+
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_1", "Action 1");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_2", "Action 2");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_3", "Action 3");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_4", "Action 4");
+
+            // Items
 
             provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_seven_helmet", "Mk. 7 Iron Man Helmet");
             provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_seven_chestplate", "Mk. 7 Iron Man Chestplate");
