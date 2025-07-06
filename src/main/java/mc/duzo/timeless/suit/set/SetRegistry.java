@@ -1,5 +1,7 @@
 package mc.duzo.timeless.suit.set;
 
+import mc.duzo.timeless.suit.flash.generic.GenericFlashSuit;
+import mc.duzo.timeless.suit.flash.item.FlashSuitItem;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.registry.Registry;
@@ -28,6 +30,7 @@ public class SetRegistry {
     public static SuitSet MARK_THREE;
     public static SuitSet MARK_TWO;
     public static SuitSet BATMAN_66;
+    public static SuitSet FLASH;
 
     public static void init() {
         // Iron Man
@@ -38,5 +41,8 @@ public class SetRegistry {
 
         // Batman
         BATMAN_66 = register(new RegisteringSuitSet(new Batman66Suit(), BatmanSuitItem::new));
+
+        // Flash
+        FLASH = register(new RegisteringSuitSet(new GenericFlashSuit(), FlashSuitItem::new));
     }
 }
