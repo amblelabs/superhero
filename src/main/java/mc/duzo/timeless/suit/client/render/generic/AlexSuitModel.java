@@ -6,6 +6,7 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -135,5 +136,29 @@ public class AlexSuitModel extends SuitModel {
 	@Override
 	public ModelPart getPart() {
 		return root;
+	}
+
+	@Override
+	public void copyFrom(BipedEntityModel<?> model) {
+		super.copyFrom(model);
+
+		this.head.copyTransform(model.head);
+		this.body.copyTransform(model.body);
+		this.leftArm.copyTransform(model.leftArm);
+		this.leftLeg.copyTransform(model.leftLeg);
+		this.rightArm.copyTransform(model.rightArm);
+		this.rightLeg.copyTransform(model.rightLeg);
+	}
+
+	@Override
+	public void copyTo(BipedEntityModel<?> model) {
+		super.copyTo(model);
+
+		model.head.copyTransform(this.head);
+		model.body.copyTransform(this.body);
+		model.leftArm.copyTransform(this.leftArm);
+		model.leftLeg.copyTransform(this.leftLeg);
+		model.rightArm.copyTransform(this.rightArm);
+		model.rightLeg.copyTransform(this.rightLeg);
 	}
 }
