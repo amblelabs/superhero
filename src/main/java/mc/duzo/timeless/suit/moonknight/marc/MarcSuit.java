@@ -1,10 +1,9 @@
 package mc.duzo.timeless.suit.moonknight.marc;
 
 import mc.duzo.animation.generic.AnimationInfo;
+import mc.duzo.animation.generic.VisibilityList;
 import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.power.PowerRegistry;
-import mc.duzo.timeless.suit.batman.BatmanSuit;
-import mc.duzo.timeless.suit.batman.sixer.client.model.Batman66Model;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 import mc.duzo.timeless.suit.moonknight.MoonKnightSuit;
@@ -32,7 +31,7 @@ public class MarcSuit extends MoonKnightSuit {
     @Environment(EnvType.CLIENT)
     @Override
     protected ClientSuit createClient() {
-        AnimationInfo info = new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, null);
+        AnimationInfo info = new AnimationInfo(VisibilityList.none(), null, AnimationInfo.Movement.ALLOW, null);
 
         return new ClientSuit(this) {
             @Override
