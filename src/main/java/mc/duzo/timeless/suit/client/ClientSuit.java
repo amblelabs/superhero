@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import mc.duzo.animation.generic.AnimationInfo;
+import mc.duzo.animation.generic.VisibilityList;
 import mc.duzo.animation.registry.Identifiable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -59,6 +60,6 @@ public abstract class ClientSuit implements Identifiable {
     }
 
     public AnimationInfo getAnimationInfo(LivingEntity entity) {
-        return new AnimationInfo(AnimationInfo.RenderType.ALL, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED);
+        return new AnimationInfo(VisibilityList.all(), null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED);
     }
 }
