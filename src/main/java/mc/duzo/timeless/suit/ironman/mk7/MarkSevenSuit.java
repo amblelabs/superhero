@@ -1,7 +1,5 @@
 package mc.duzo.timeless.suit.ironman.mk7;
 
-import mc.duzo.animation.generic.AnimationInfo;
-import mc.duzo.animation.generic.VisibilityList;
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.power.PowerRegistry;
@@ -13,7 +11,6 @@ import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Supplier;
@@ -40,18 +37,10 @@ public class MarkSevenSuit extends IronManSuit {
     @Environment(EnvType.CLIENT)
     @Override
     protected ClientSuit createClient() {
-        AnimationInfo info = new AnimationInfo(VisibilityList.headOnly(), null, AnimationInfo.Movement.ALLOW, null);
-
         return new ClientSuit(this) {
             @Override
             public Supplier<SuitModel> model() {
                 return MarkSevenModel::new;
-            }
-
-            @Override
-            public AnimationInfo getAnimationInfo(LivingEntity entity) {
-                if (!(getSet().isWearing(entity))) return null;
-                return info;
             }
         };
     }
