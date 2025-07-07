@@ -3,7 +3,10 @@ package mc.duzo.timeless.power;
 import mc.duzo.animation.registry.Identifiable;
 import mc.duzo.timeless.datagen.provider.lang.Translatable;
 import mc.duzo.timeless.suit.Suit;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -21,6 +24,10 @@ public abstract class Power implements Identifiable, Translatable {
 
     public abstract boolean run(ServerPlayerEntity player);
     public abstract void tick(ServerPlayerEntity player);
+    @Environment(EnvType.CLIENT)
+    public void tick(AbstractClientPlayerEntity player) {
+
+    }
     public abstract void onLoad(ServerPlayerEntity player);
 
     @Override
