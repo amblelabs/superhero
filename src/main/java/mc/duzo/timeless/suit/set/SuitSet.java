@@ -1,17 +1,16 @@
 package mc.duzo.timeless.suit.set;
 
-import java.util.HashMap;
-import java.util.function.BiFunction;
-
 import mc.duzo.animation.registry.Identifiable;
-
+import mc.duzo.timeless.core.items.SuitItem;
+import mc.duzo.timeless.suit.Suit;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-import mc.duzo.timeless.core.items.SuitItem;
-import mc.duzo.timeless.suit.Suit;
+import java.util.HashMap;
+import java.util.function.BiFunction;
 
 public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identifiable {
     protected final Suit suit;
@@ -68,6 +67,13 @@ public class SuitSet extends HashMap<ArmorItem.Type, SuitItem> implements Identi
         }
 
         return count == target;
+    }
+
+    public boolean isWearing(LivingEntity entity, EquipmentSlot slot) {
+        ItemStack stack = entity.getEquippedStack(slot);
+        if (stack == null || stack.isEmpty()) return false;
+
+        return this.containsValue(stack.getItem());
     }
 
     public boolean wear(LivingEntity entity, boolean playSounds) {
