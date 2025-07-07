@@ -46,6 +46,7 @@ public class FlightPower extends Power {
 
         player.setVelocity(change);
         player.velocityModified = true;
+        player.sidewaysSpeed = getMovementMultiplier(ServerKeybind.get(player).isMovingLeft(), ServerKeybind.get(player).isMovingRight());
 
         if (change.y > 0 || (ServerKeybind.get(player).isJumping()))
             this.createParticles(player);
@@ -57,33 +58,47 @@ public class FlightPower extends Power {
         setIsFlying(player, isFlying(player));
     }
 
+    private static float getMovementMultiplier(boolean positive, boolean negative) {
+        if (positive == negative) {
+            return 0.0F;
+        } else {
+            return positive ? 1.0F : -1.0F;
+        }
+    }
+
     private Vec3d getVelocity(ServerPlayerEntity player) {
         Vec3d change = new Vec3d(0, 0, 0);
 
         ServerKeybind.Keymap map = ServerKeybind.get(player);
-        change = change.add(getVelocityFor(player, map.isMovingForward(), 0));
-        change = change.add(getVelocityFor(player, map.isMovingBackward(), 180));
-        change = change.add(getVelocityFor(player, map.isMovingRight(), 270));
-        change = change.add(getVelocityFor(player, map.isMovingLeft(), 90));
-        change = change.add(getVerticalVelocity(player));
+        change = change.add(getVelocityFor(player, map.isMovingForward(), 0, true));
+        change = change.add(getVelocityFor(player, map.isMovingBackward(), 180, true));
 
-        Vec3d current = player.getVelocity();
-        change = change.add(current.x, 0, current.z);
+        change = new Vec3d(change.x, (map.isMovingForward() || map.isMovingBackward()) ? change.y : Math.max(change.y, 0.08), change.z);
+
+        if (player.getServer().getTicks() % 20 == 0) {
+            System.out.println(change);
+        }
 
         return change;
     }
-    private Vec3d getVelocityFor(ServerPlayerEntity player, boolean shouldRun, double angle) {
+
+    private Vec3d getVelocityFor(ServerPlayerEntity player, boolean shouldRun, double angle, boolean includeY) {
         if (!shouldRun) return Vec3d.ZERO;
 
-        Vec3d change = new Vec3d(0, 0, 0);
+        player.limitFallDistance();
+        // Calculate the direction vector based on where the player is looking
+        Vec3d lookVec = player.getRotationVector();
+        double speed = 0.8; // You can adjust this value for desired speed
 
-        Vec3d look = player.getRotationVector().rotateY((float) Math.toRadians(angle));
+        // If the player is sneaking, reduce speed (optional)
+        if (player.isSneaking()) {
+            speed *= 0.5;
+        }
 
-        double multiplier = (getSuit(player).getHorizontalFlightModifier(player.isSprinting()) / 100f);
-        change = change.add(look.x * multiplier, 0, look.z * multiplier);
-
-        return change;
+        // Return the velocity vector in the direction the player is looking
+        return new Vec3d(lookVec.x * speed, lookVec.y * speed, lookVec.z * speed).rotateY((float) Math.toRadians(angle));
     }
+
     private Vec3d getVerticalVelocity(ServerPlayerEntity player) {
         Vec3d change = new Vec3d(0, 0, 0);
 
