@@ -38,7 +38,6 @@ public class RangItem extends Item {
         }
 
         ItemCooldownManager cooldownManager = user.getItemCooldownManager();
-        System.out.println(world.getMoonPhase());
         cooldownManager.set(this, world.isNight() && world.getMoonPhase() > 0 ? 10 : 20);
 
         return TypedActionResult.success(itemStack, world.isClient());

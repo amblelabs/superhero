@@ -1,6 +1,8 @@
 package mc.duzo.timeless.suit.moonknight.marc.client.model;
 
+import mc.duzo.animation.DuzoAnimationMod;
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.power.impl.GlidePower;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 import mc.duzo.timeless.suit.set.SetRegistry;
@@ -168,6 +170,8 @@ public class MoonKnightModel extends SuitModel {
 		this.cape = this.MoonCape;
 
 		this.MoonCape.visible = false;
+		this.bone4.visible = true;//GlidePower.hasGlide(player);
+		this.bone8.visible = true;//GlidePower.hasGlide(player);
 
 		matrices.push();
 		matrices.translate(0, -1.5f, 0);
