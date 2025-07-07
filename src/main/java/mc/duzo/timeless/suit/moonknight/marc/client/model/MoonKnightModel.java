@@ -1,8 +1,10 @@
 package mc.duzo.timeless.suit.moonknight.marc.client.model;
 
+import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 import mc.duzo.timeless.suit.set.SetRegistry;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.*;
@@ -10,6 +12,7 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.Random;
@@ -169,6 +172,8 @@ public class MoonKnightModel extends SuitModel {
 		matrices.push();
 		matrices.translate(0, -1.5f, 0);
 		this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
+
+
 		matrices.pop();
 
 		if (!this.Body.visible) return;
@@ -185,12 +190,12 @@ public class MoonKnightModel extends SuitModel {
 		float j = 0;
 		float c = 0;
 		q = MathHelper.clamp(q, -6.0F, 32.0F);
-		float k = (float)(d * o + m * p) * 100.0F;
-		k = MathHelper.clamp(k, 0.0F, 150.0F);
+		float z = (float)(d * o + m * p) * 100.0F;
+		z = MathHelper.clamp(z, 0.0F, 150.0F);
 		float s = (float)(d * p - m * o) * 100.0F;
 		s = MathHelper.clamp(s, -20.0F, 20.0F);
-		if (k < 0.0F) {
-			k = 0.0F;
+		if (z < 0.0F) {
+			z = 0.0F;
 		}
 
 		float t = MathHelper.lerp(tickDelta, player.prevStrideDistance, player.strideDistance);
@@ -201,7 +206,7 @@ public class MoonKnightModel extends SuitModel {
 			c += 2.0F;
 		}
 
-		matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(player.isFallFlying() ? 22.5f : 6.0F + k / 2.0F + q));
+		matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(player.isFallFlying() ? 22.5f : 6.0F + z / 2.0F + q));
 		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(s / 2.0F));
 		matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(s / 2.0F));
 
@@ -212,6 +217,117 @@ public class MoonKnightModel extends SuitModel {
 		this.cape.render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
 
 		matrices.pop();
+/*
+		VertexConsumer vertexConsumer = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers().getBuffer(RenderLayer.getEntityCutoutNoCullZOffset(new Identifier(Timeless.MOD_ID, "textures/suit/moon_knight_marc.png")));
+
+		matrices.push();
+		matrices.translate(0, -0.25f, 0);
+		matrices.scale(0.5f, 0.5f, 0.5f);
+		int subdivisions = 8;
+		float step = 1.0f / subdivisions;
+		float start = -0.5f;
+		float end = 0.5f;
+
+		for (int face = 0; face < 6; face++) {
+			// Face vertex indices for each face
+			int[][] faceVerts = {
+					{0, 1, 2, 3}, // back
+					{5, 4, 7, 6}, // front
+					{4, 0, 3, 7}, // left
+					{1, 5, 6, 2}, // right
+					{3, 2, 6, 7}, // top
+					{4, 5, 1, 0}  // bottom
+			};
+			float[][] positions = {
+					{start, start, start}, {end, start, start}, {end, end, start}, {start, end, start}, // back
+					{start, start, end}, {end, start, end}, {end, end, end}, {start, end, end}          // front
+			};
+			float[][] normals = {
+					{0, 0, -1}, {0, 0, 1}, {-1, 0, 0}, {1, 0, 0}, {0, 1, 0}, {0, -1, 0}
+			};
+
+			// For each face, subdivide into 8x8 quads
+			for (int i = 0; i < subdivisions; i++) {
+				for (int jalapeno = 0; jalapeno < subdivisions; jalapeno++) {
+					// Compute the 4 corners of the quad in (u, v) space
+					float u1 = i * step;
+					float v1 = jalapeno * step;
+					float u0 = (i + 1) * step;
+					float v0 = (jalapeno + 1) * step;
+
+					// Map (u, v) to 3D positions for each face
+					float[][] quad = new float[4][3];
+					float[][] uv = {
+							{u1, v1}, {u0, v1}, {u0, v0}, {u1, v0}
+					};
+
+					for (int k = 0; k < 4; k++) {
+						float u = uv[k][0];
+						float v = uv[k][1];
+						switch (face) {
+							case 0: // back
+								quad[k][0] = start + (end - start) * u;
+								quad[k][1] = start + (end - start) * v;
+								quad[k][2] = start;
+								break;
+							case 1: // front
+								quad[k][0] = end - (end - start) * u;
+								quad[k][1] = start + (end - start) * v;
+								quad[k][2] = end;
+								break;
+							case 2: // left
+								quad[k][0] = start;
+								quad[k][1] = start + (end - start) * v;
+								quad[k][2] = end - (end - start) * u;
+								break;
+							case 3: // right
+								quad[k][0] = end;
+								quad[k][1] = start + (end - start) * v;
+								quad[k][2] = start + (end - start) * u;
+								break;
+							case 4: // top
+								quad[k][0] = start + (end - start) * u;
+								quad[k][1] = end;
+								quad[k][2] = start + (end - start) * v;
+								break;
+							case 5: // bottom
+								quad[k][0] = start + (end - start) * u;
+								quad[k][1] = start;
+								quad[k][2] = end - (end - start) * v;
+								break;
+						}
+					}
+
+					// UVs for each quad: map each subdivision to a single pixel in the texture
+					float uPixel = i;
+					float vPixel = jalapeno;
+					float[][] quadUVs = {
+							{(8 + uPixel + 1) / 256.0f, (92 + vPixel + 1) / 256.0f},
+							{(8 + uPixel) / 256.0f, (92 + vPixel + 1) / 256.0f},
+							{(8 + uPixel) / 256.0f, (92 + vPixel) / 256.0f},
+							{(8 + uPixel + 1) / 256.0f, (92 + vPixel) / 256.0f}
+					};
+
+					for (int k = 0; k < 4; k++) {
+                        // Calculate a progressive shade for each face (0 = darkest, 5 = brightest)
+						float shade = 0.4f + 0.12f * face; // range: 0.4 to 1.0
+						int color = (int)(shade * 255);
+						float randomAlpha = Random.create().nextBoolean() ? 1.0f : 0.0f;
+						vertexConsumer.vertex(
+										matrices.peek().getPositionMatrix(),
+										quad[k][0], quad[k][1], quad[k][2]
+								)
+								.color(color, color, color, (int)(alpha * 255))
+								.texture(quadUVs[k][0], quadUVs[k][1])
+								.overlay(OverlayTexture.DEFAULT_UV)
+								.light(light)
+								.normal(matrices.peek().getNormalMatrix(), normals[face][0], normals[face][1], normals[face][2])
+								.next();
+					}
+				}
+			}
+		}
+		matrices.pop();*/
 	}
 
 	@Override
