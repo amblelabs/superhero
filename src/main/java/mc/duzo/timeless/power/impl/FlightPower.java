@@ -7,7 +7,6 @@ import mc.duzo.timeless.network.s2c.UpdateFlyingStatusS2CPacket;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.api.FlightSuit;
-import mc.duzo.timeless.util.ServerKeybind;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -26,8 +25,12 @@ import net.minecraft.world.World;
 public class FlightPower extends Power {
     private final Identifier id;
 
+    public FlightPower(String suffix) {
+        this.id = new Identifier(Timeless.MOD_ID, "flight" + (suffix.isEmpty() ? "" : "_" + suffix));
+    }
+
     public FlightPower() {
-        this.id = new Identifier(Timeless.MOD_ID, "flight");
+        this("");
     }
 
     @Override
@@ -120,76 +123,6 @@ public class FlightPower extends Power {
     public void onLoad(ServerPlayerEntity player) {
         setFlight(player, hasFlight(player));
         setIsFlying(player, isFlying(player));
-    }
-
-    private static float getMovementMultiplier(boolean positive, boolean negative) {
-        if (positive == negative) {
-            return 0.0F;
-        } else {
-            return positive ? 1.0F : -1.0F;
-        }
-    }
-
-    private Vec3d getVelocity(ServerPlayerEntity player) {
-        Vec3d change = new Vec3d(0, 0, 0);
-
-        ServerKeybind.Keymap map = ServerKeybind.get(player);
-        change = change.add(getVelocityFor(player, map.isMovingForward(), 0, true));
-        change = change.add(getVelocityFor(player, map.isMovingBackward(), 180, true));
-
-        change = new Vec3d(change.x, (map.isMovingForward() || map.isMovingBackward()) ? change.y : Math.max(change.y, 0.08), change.z);
-
-        if (player.getServer().getTicks() % 20 == 0) {
-            System.out.println(change);
-        }
-
-        return change;
-    }
-
-    private Vec3d getVelocityFor(ServerPlayerEntity player, boolean shouldRun, double angle, boolean includeY) {
-        if (!shouldRun) return Vec3d.ZERO;
-
-        player.limitFallDistance();
-        // Calculate the direction vector based on where the player is looking
-        Vec3d lookVec = player.getRotationVector();
-        double speed = 0.8; // You can adjust this value for desired speed
-
-        // If the player is sneaking, reduce speed (optional)
-        if (player.isSneaking()) {
-            speed *= 0.5;
-        }
-
-        // Return the velocity vector in the direction the player is looking
-        return new Vec3d(lookVec.x * speed, lookVec.y * speed, lookVec.z * speed).rotateY((float) Math.toRadians(angle));
-    }
-
-    private Vec3d getVerticalVelocity(ServerPlayerEntity player) {
-        Vec3d change = new Vec3d(0, 0, 0);
-
-        if (ServerKeybind.get(player).isJumping()) {
-            boolean isPressingMovement = ServerKeybind.get(player).isMovingForward() || ServerKeybind.get(player).isMovingBackward() || ServerKeybind.get(player).isMovingRight() || ServerKeybind.get(player).isMovingLeft();
-            if (!(isPressingMovement) || !(player.isSprinting())) { // just move straight up
-                return change.add(0, (getSuit(player).getVerticalFlightModifier(player.isSprinting()) / 100f), 0).add(0, player.getVelocity().y, 0);
-            }
-
-            double multiplier = (getSuit(player).getHorizontalFlightModifier(player.isSprinting()) / 10f);
-
-            float i = -player.getPitch() / 90;
-            change = change.add(0, (i * (multiplier * ((i < 0) ? 1 : 1))), 0);
-
-            return change;
-        }
-
-        double yVelocity = player.getVelocity().y;
-
-        if (HoverPower.hasHover(player)) {
-            yVelocity = Math.max(yVelocity, 0.08); // todo seems to flicker movement downwards
-            if (player.isSneaking()) yVelocity = -0.25;
-        }
-
-        change = change.add(0, yVelocity, 0);
-
-        return change;
     }
 
     public static boolean hasFlight(PlayerEntity player) {

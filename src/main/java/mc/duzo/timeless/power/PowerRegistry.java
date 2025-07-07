@@ -27,6 +27,7 @@ public class PowerRegistry {
             .run(player -> MarkFiveCase.toCase(player, false))
             .build().register();
     public static Power FLIGHT = new FlightPower().register();
+    public static Power CONTROLLED_FLIGHT = new ControlledFlightPower().register();
     public static Power HOVER = new HoverPower().register();
     public static Power JARVIS = Power.Builder.create(new Identifier(Timeless.MOD_ID, "jarvis")).build().register();
     public static MaskTogglePower MASK_TOGGLE = new MaskTogglePower().register();
