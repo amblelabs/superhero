@@ -37,8 +37,8 @@ public class TimelessAnimations {
 
 
 	// MOON KNIGHT
-	public static final Supplier<SuitAnimationHolder> MOONKNIGHT_CAPE_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "moonknight_cape_open"), CapeAnimations.CAPE_OPEN, new AnimationInfo(AnimationInfo.RenderType.NONE, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
-	public static final Supplier<SuitAnimationHolder> MOONKNIGHT_CAPE_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "moonknight_cape_close"), CapeAnimations.CAPE_CLOSE, new AnimationInfo(AnimationInfo.RenderType.NONE, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
+	public static final Supplier<SuitAnimationHolder> MOONKNIGHT_CAPE_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "moonknight_cape_open"), CapeAnimations.CAPE_OPEN, new AnimationInfo(VisibilityList.none(), null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
+	public static final Supplier<SuitAnimationHolder> MOONKNIGHT_CAPE_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "moonknight_cape_close"), CapeAnimations.CAPE_CLOSE, new AnimationInfo(VisibilityList.none(), null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
 
 	public static void init() {
 		AnimationEvents.FIND_ANIMATION_INFO.register(player -> {
