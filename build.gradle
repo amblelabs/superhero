@@ -21,6 +21,18 @@ repositories {
         }
     }
 
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+
     maven { url "https://theo.is-a.dev/maven-repo/" }
 }
 
@@ -37,21 +49,14 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    // duzos animator
-    modImplementation files("libs/animator.jar")
-
-    modImplementation("com.github.amblelabs:modkit:${project.sakitus_version}") {
+    modImplementation("maven.modrinth:amblekit:${project.sakitus_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-
-    include(modImplementation("dev.drtheo:scheduler:${project.scheduler_version}")) {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-
 }
 
 processResources {
     inputs.property "version", project.version
+    filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version

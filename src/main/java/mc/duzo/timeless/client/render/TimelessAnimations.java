@@ -2,6 +2,7 @@ package mc.duzo.timeless.client.render;
 
 import mc.duzo.animation.api.AnimationEvents;
 import mc.duzo.animation.generic.AnimationInfo;
+import mc.duzo.animation.generic.VisibilityList;
 import mc.duzo.animation.player.holder.PlayerAnimationHolder;
 import mc.duzo.animation.registry.AnimationRegistry;
 import mc.duzo.timeless.Timeless;
@@ -29,10 +30,10 @@ public class TimelessAnimations {
 	public static final Supplier<MarkFiveMaskAnimation> MARK_FIVE_MASK_CLOSE = AnimationRegistry.instance().register(() -> new MarkFiveMaskAnimation(false));
 
 	// GENERIC IRON MAN
-	public static final Supplier<MarkFiveMaskAnimation> GENERIC_IRONMAN_MASK_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_mask_open"), GenericIronManAnimations.MASK_OPEN, new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
-	public static final Supplier<MarkFiveMaskAnimation> GENERIC_IRONMAN_MASK_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_mask_close"), GenericIronManAnimations.MASK_CLOSE, new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
-	public static final Supplier<SuitAnimationHolder> GENERIC_IRONMAN_BACK_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_back_open"), SentryAnimation.SUIT_OPEN, new AnimationInfo(AnimationInfo.RenderType.ALL, AnimationInfo.Perspective.THIRD_PERSON_BACK, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL), false));
-	public static final Supplier<SuitAnimationHolder> GENERIC_IRONMAN_BACK_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_back_close"), SentryAnimation.SUIT_OPEN2, new AnimationInfo(AnimationInfo.RenderType.ALL, AnimationInfo.Perspective.THIRD_PERSON_BACK, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL), false));
+	public static final Supplier<MarkFiveMaskAnimation> GENERIC_IRONMAN_MASK_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_mask_open"), GenericIronManAnimations.MASK_OPEN, new AnimationInfo(VisibilityList.headOnly(), null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
+	public static final Supplier<MarkFiveMaskAnimation> GENERIC_IRONMAN_MASK_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_mask_close"), GenericIronManAnimations.MASK_CLOSE, new AnimationInfo(VisibilityList.headOnly(), null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED), false));
+	public static final Supplier<SuitAnimationHolder> GENERIC_IRONMAN_BACK_OPEN = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_back_open"), SentryAnimation.SUIT_OPEN, new AnimationInfo(VisibilityList.all(), AnimationInfo.Perspective.THIRD_PERSON_BACK, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL), false));
+	public static final Supplier<SuitAnimationHolder> GENERIC_IRONMAN_BACK_CLOSE = AnimationRegistry.instance().register(() -> new SuitAnimationHolder(new Identifier(Timeless.MOD_ID, "ironman_generic_back_close"), SentryAnimation.SUIT_OPEN2, new AnimationInfo(VisibilityList.all(), AnimationInfo.Perspective.THIRD_PERSON_BACK, AnimationInfo.Movement.DISABLE, AnimationInfo.Transform.ALL), false));
 
 
 	// MOON KNIGHT
