@@ -8,3 +8,4 @@
 - refactor(register): No more inner class from the ClientRegister | by [@duzos](https://github.com/duzos) ([#48](https://github.com/duzos/superhero/pull/48))
 - feat(suit): per slot rendering | by [@duzos](https://github.com/duzos) ([#49](https://github.com/duzos/superhero/pull/49))
 - api: generic steve & alex models for suits | by [@duzos](https://github.com/duzos) ([#52](https://github.com/duzos/superhero/pull/52))
+- build(modkit): 1.1.9 | by [@duzos](https://github.com/duzos) ([#54](https://github.com/duzos/superhero/pull/54))
