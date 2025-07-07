@@ -1,15 +1,7 @@
 package mc.duzo.timeless.suit.ironman.mk5;
 
-import java.util.Optional;
-import java.util.function.Supplier;
-
 import mc.duzo.animation.generic.AnimationInfo;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Identifier;
-
+import mc.duzo.animation.generic.VisibilityList;
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.power.PowerRegistry;
@@ -19,6 +11,13 @@ import mc.duzo.timeless.suit.ironman.IronManSuit;
 import mc.duzo.timeless.suit.ironman.mk5.client.MarkFiveModel;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Identifier;
+
+import java.util.Optional;
+import java.util.function.Supplier;
 
 public class MarkFiveSuit extends IronManSuit {
     private final PowerList powers;
@@ -42,7 +41,7 @@ public class MarkFiveSuit extends IronManSuit {
     @Environment(EnvType.CLIENT)
     @Override
     protected ClientSuit createClient() {
-        AnimationInfo info = new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, null);
+        AnimationInfo info = new AnimationInfo(VisibilityList.headOnly(), null, AnimationInfo.Movement.ALLOW, null);
 
         return new ClientSuit(this) {
             @Override

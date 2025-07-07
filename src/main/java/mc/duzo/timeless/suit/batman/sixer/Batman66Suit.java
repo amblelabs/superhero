@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import mc.duzo.animation.generic.AnimationInfo;
+import mc.duzo.animation.generic.VisibilityList;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -32,7 +33,7 @@ public class Batman66Suit extends BatmanSuit {
     @Environment(EnvType.CLIENT)
     @Override
     protected ClientSuit createClient() {
-        AnimationInfo info = new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, null);
+        AnimationInfo info = new AnimationInfo(VisibilityList.headOnly(), null, AnimationInfo.Movement.ALLOW, null);
 
         return new ClientSuit(this) {
             @Override
