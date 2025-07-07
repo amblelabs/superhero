@@ -1,7 +1,5 @@
 package mc.duzo.timeless.suit.moonknight.marc;
 
-import mc.duzo.animation.generic.AnimationInfo;
-import mc.duzo.animation.generic.VisibilityList;
 import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.client.ClientSuit;
@@ -12,7 +10,6 @@ import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
 import java.util.Optional;
@@ -31,8 +28,6 @@ public class MarcSuit extends MoonKnightSuit {
     @Environment(EnvType.CLIENT)
     @Override
     protected ClientSuit createClient() {
-        AnimationInfo info = new AnimationInfo(VisibilityList.none(), null, AnimationInfo.Movement.ALLOW, null);
-
         return new ClientSuit(this) {
             @Override
             public Supplier<SuitModel> model() {
@@ -45,9 +40,8 @@ public class MarcSuit extends MoonKnightSuit {
             }
 
             @Override
-            public AnimationInfo getAnimationInfo(LivingEntity entity) {
-                if (!(getSet().isWearing(entity))) return null;
-                return info;
+            public boolean isHeadVisible() {
+                return false;
             }
         };
     }
