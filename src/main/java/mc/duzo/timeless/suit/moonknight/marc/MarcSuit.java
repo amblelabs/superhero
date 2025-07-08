@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 
 public class MarcSuit extends MoonKnightSuit {
     public MarcSuit() {
-        super("marc", PowerList.of(PowerRegistry.SUPER_STRENGTH, PowerRegistry.SWIFT_SNEAK, PowerRegistry.GLIDE_POWER));
+        super("marc", PowerList.of(PowerRegistry.SUPER_STRENGTH, PowerRegistry.SWIFT_SNEAK, PowerRegistry.GLIDE_POWER, PowerRegistry.MASK_TOGGLE));
     }
 
     @Override
@@ -41,7 +41,7 @@ public class MarcSuit extends MoonKnightSuit {
 
             @Override
             public boolean isHeadVisible() {
-                return false;
+                return true;
             }
         };
     }

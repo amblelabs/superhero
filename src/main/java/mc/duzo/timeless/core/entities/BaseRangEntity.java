@@ -54,7 +54,7 @@ public class BaseRangEntity extends ThrownItemEntity {
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = entityHitResult.getEntity();
-        entity.damage(this.getDamageSources().thrown(this, this.getOwner()), 3);
+        entity.damage(this.getDamageSources().thrown(this, this.getOwner()), 8);
     }
 
     protected void onCollision(HitResult hitResult) {

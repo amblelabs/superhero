@@ -40,4 +40,9 @@ public class MoonKnightSuitItem extends SuitItem implements AutomaticModel, Auto
 
         public static MoonKnightMaterial INSTANCE = new MoonKnightMaterial();
     }
+
+    @Override
+    public boolean useCustomElytra(LivingEntity entity, ItemStack chestStack, boolean tickElytra) {
+        return (entity instanceof PlayerEntity player && GlidePower.hasGlide(player)) && FabricElytraItem.super.useCustomElytra(entity, chestStack, tickElytra);
+    }
 }

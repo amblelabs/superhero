@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import dev.amble.lib.container.impl.ItemContainer;
 import dev.amble.lib.item.AItemSettings;
+import mc.duzo.timeless.core.items.MoonTotemItem;
 import mc.duzo.timeless.core.items.RangItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import org.jetbrains.annotations.Nullable;
@@ -20,6 +21,7 @@ public class TimelessItems extends ItemContainer {
     public static MarkFiveCase MARK_FIVE_CASE = new MarkFiveCase(new AItemSettings());
     public static BatRadioItem BAT_RADIO = new BatRadioItem(new AItemSettings());
     public static RangItem MOON_DART = new RangItem(new AItemSettings());
+    public static MoonTotemItem MOON_TOTEM = new MoonTotemItem(new AItemSettings());
 
     @Override
     public @Nullable ItemGroup getDefaultGroup() {

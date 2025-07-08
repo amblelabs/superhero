@@ -27,7 +27,7 @@ public class RangItem extends Item {
                 rangEntity.setItem(itemStack);
                 // Slightly offset each projectile's angle for a burst effect
                 float yawOffset = user.getYaw() /*+ (i - 1) * 5.0F*/; // -5, 0, +5 degrees
-                rangEntity.setVelocity(user, user.getPitch(), yawOffset, 0.0F, 1.5F, 1.0F);
+                rangEntity.setVelocity(user, user.getPitch(), yawOffset, 0.0F, 4F, 1.0F);
                 world.spawnEntity(rangEntity);
             //}
         }
