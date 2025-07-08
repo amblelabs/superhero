@@ -82,11 +82,11 @@ public class MoonTotemItem extends Item {
         ItemStack stack = context.getStack();
 
         if (stack.getItem() instanceof MoonTotemItem totemItem) {
-            if (context.getPlayer().getWorld().isClient()) {
-                MinecraftClient.getInstance().gameRenderer.showFloatingItem(context.getStack());
-            }
             NbtCompound nbt = stack.getOrCreateNbt();
             if (totemItem.shouldPulsate(nbt)) {
+                if (context.getPlayer().getWorld().isClient()) {
+                    MinecraftClient.getInstance().gameRenderer.showFloatingItem(context.getStack());
+                }
                 totemItem.setBloodMeter(0, nbt); // Reset blood meter on use
                 context.getPlayer().sendMessage(Text.literal("You are now the Champion of Khonshu, your blood meter is zero.")
                         .formatted(Formatting.GREEN, Formatting.BOLD), true);
@@ -106,11 +106,11 @@ public class MoonTotemItem extends Item {
         ItemStack stack = user.getMainHandStack();
 
         if (stack.getItem() instanceof MoonTotemItem totemItem) {
-            if (user.getWorld().isClient()) {
-                MinecraftClient.getInstance().gameRenderer.showFloatingItem(stack);
-            }
             NbtCompound nbt = stack.getOrCreateNbt();
             if (totemItem.shouldPulsate(nbt)) {
+                if (user.getWorld().isClient()) {
+                    MinecraftClient.getInstance().gameRenderer.showFloatingItem(stack);
+                }
                 totemItem.setBloodMeter(0, nbt); // Reset blood meter on use
                 user.sendMessage(Text.literal("You are now the Champion of Khonshu, your blood meter is zero.")
                         .formatted(Formatting.GREEN, Formatting.BOLD), true);
