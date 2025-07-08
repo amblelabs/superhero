@@ -10,3 +10,4 @@
 - api: generic steve & alex models for suits | by [@duzos](https://github.com/duzos) ([#52](https://github.com/duzos/superhero/pull/52))
 - build(modkit): 1.1.9 | by [@duzos](https://github.com/duzos) ([#54](https://github.com/duzos/superhero/pull/54))
 - chore: improve hiding of player parts to reduce overlap issues | by [@duzos](https://github.com/duzos) ([#57](https://github.com/amblelabs/superhero/pull/57))
+- Refactor Flight | by [@duzos](https://github.com/duzos) ([#58](https://github.com/amblelabs/superhero/pull/58))
