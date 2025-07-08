@@ -19,6 +19,8 @@ import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 public class PowerRegistry {
     public static final SimpleRegistry<Power> REGISTRY = FabricRegistryBuilder.createSimple(RegistryKey.<Power>ofRegistry(new Identifier(Timeless.MOD_ID, "power"))).buildAndRegister();
 
+    private static boolean hasJumped = false;
+
     public static <T extends Power> T register(T entry) {
         return Registry.register(REGISTRY, entry.id(), entry);
     }
@@ -44,6 +46,12 @@ public class PowerRegistry {
             .tick(player -> {
                 if (player.getServer().getTicks() % 20 != 0) return; // Run every second
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 22, 1, false, false));
+            })
+            .build().register();
+    public static Power SUPER_JUMP = Power.Builder.create(new Identifier(Timeless.MOD_ID, "super_jump"))
+            .tick(player -> {
+                if (player.getServer().getTicks() % 20 != 0) return; // Run every second
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 22, 3, false, false));
             })
             .build().register();
     public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();

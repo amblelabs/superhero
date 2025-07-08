@@ -73,18 +73,18 @@ public class MoonKnightModel extends SuitModel {
 
 		ModelPartData Head = root.addChild("Head", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
-		ModelPartData HeadTwo = Head.addChild("HeadTwo", ModelPartBuilder.create().uv(0, 84).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.001F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		ModelPartData HeadTwo = Head.addChild("HeadTwo", ModelPartBuilder.create().uv(0, 84).cuboid(-4.0F, -7.75F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.001F)), ModelTransform.pivot(0.0F, -0.25F, 0.0F));
 
-		ModelPartData Hat = Head.addChild("Hat", ModelPartBuilder.create().uv(73, 82).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.35F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		ModelPartData Hat = Head.addChild("Hat", ModelPartBuilder.create().uv(73, 82).cuboid(-4.0F, -7.75F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(0.35F)), ModelTransform.pivot(0.0F, -0.25F, 0.0F));
 
-		ModelPartData Body = root.addChild("Body", ModelPartBuilder.create().uv(33, 84).cuboid(-4.0F, -0.2F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.0F))
-				.uv(58, 99).cuboid(-4.0F, -0.2F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.35F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+		ModelPartData Body = root.addChild("Body", ModelPartBuilder.create().uv(33, 84).cuboid(-4.0F, 0.05F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.0F))
+				.uv(58, 99).cuboid(-4.0F, 0.05F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.35F)), ModelTransform.pivot(0.0F, -0.25F, 0.0F));
 
-		ModelPartData RightArm = root.addChild("RightArm", ModelPartBuilder.create().uv(34, 101).cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.0F))
-				.uv(49, 116).cuboid(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(-5.0F, 2.0F, 0.0F));
+		ModelPartData RightArm = root.addChild("RightArm", ModelPartBuilder.create().uv(34, 101).cuboid(-2.0F, -1.75F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.0F))
+				.uv(49, 116).cuboid(-2.0F, -1.75F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(-5.0F, 1.75F, 0.0F));
 
-		ModelPartData LeftArm = root.addChild("LeftArm", ModelPartBuilder.create().uv(106, 82).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.0F))
-				.uv(64, 116).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(5.0F, 2.0F, 0.0F));
+		ModelPartData LeftArm = root.addChild("LeftArm", ModelPartBuilder.create().uv(106, 82).cuboid(-1.0F, -1.75F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.0F))
+				.uv(64, 116).cuboid(-1.0F, -1.75F, -2.0F, 3.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(5.0F, 1.75F, 0.0F));
 
 		ModelPartData RightLeg = root.addChild("RightLeg", ModelPartBuilder.create().uv(83, 99).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.0F))
 				.uv(0, 101).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.34F)), ModelTransform.pivot(-1.9F, 12.0F, 0.0F));
@@ -127,8 +127,6 @@ public class MoonKnightModel extends SuitModel {
 		ModelPartData cube_r8 = bone11.addChild("cube_r8", ModelPartBuilder.create().uv(73, 67).cuboid(-22.0F, 0.0F, -1.0F, 16.0F, 0.0F, 14.0F, new Dilation(0.015F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, -2.0944F, 0.0F));
 		return TexturedModelData.of(modelData, 256, 256);
 	}
-
-
 	@Override
 	public void setVisibilityForSlot(EquipmentSlot slot) {
 		switch (slot) {
@@ -188,7 +186,7 @@ public class MoonKnightModel extends SuitModel {
 		this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 
 
-		if (!this.Body.visible) return;
+		if (!this.hasMoonKnightCape() || !this.Body.visible) return;
 
 		matrices.push();
 
@@ -349,6 +347,10 @@ public class MoonKnightModel extends SuitModel {
 		}
 
 		return this.parent;
+	}
+
+	public boolean hasMoonKnightCape() {
+		return true; // Marc has a cape
 	}
 
 	@Override

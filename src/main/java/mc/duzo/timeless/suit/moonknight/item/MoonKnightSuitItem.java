@@ -4,10 +4,12 @@ import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.core.items.SuitMaterial;
 import mc.duzo.timeless.datagen.provider.lang.AutomaticSuitEnglish;
 import mc.duzo.timeless.datagen.provider.model.AutomaticModel;
+import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.power.impl.GlidePower;
 import mc.duzo.timeless.suit.Suit;
 import net.fabricmc.fabric.api.entity.event.v1.FabricElytraItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -43,6 +45,13 @@ public class MoonKnightSuitItem extends SuitItem implements AutomaticModel, Auto
 
     @Override
     public boolean useCustomElytra(LivingEntity entity, ItemStack chestStack, boolean tickElytra) {
-        return (entity instanceof PlayerEntity player && GlidePower.hasGlide(player)) && FabricElytraItem.super.useCustomElytra(entity, chestStack, tickElytra);
+        if (entity instanceof PlayerEntity player) {
+            Suit suit = Suit.findSuit(player, EquipmentSlot.HEAD).orElse(null);
+            return GlidePower.hasGlide(player)
+                    && suit != null
+                    && suit.hasPower(PowerRegistry.GLIDE_POWER)
+                    && FabricElytraItem.super.useCustomElytra(entity, chestStack, tickElytra);
+        }
+        return false;
     }
 }
