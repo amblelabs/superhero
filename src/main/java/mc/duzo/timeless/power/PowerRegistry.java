@@ -46,6 +46,7 @@ public class PowerRegistry {
             })
             .build().register();
     public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();
+    public static Power SUPER_SPEED = new SpeedPower().register();
 
     public static void init() {}
 }

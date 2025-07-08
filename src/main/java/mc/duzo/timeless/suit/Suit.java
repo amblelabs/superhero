@@ -5,6 +5,7 @@ import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.datagen.provider.lang.Translatable;
 import mc.duzo.timeless.power.Power;
 import mc.duzo.timeless.power.PowerList;
+import mc.duzo.timeless.suit.api.EquipSoundSupplier;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.ClientSuitRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
@@ -16,7 +17,7 @@ import net.minecraft.sound.SoundEvent;
 
 import java.util.Optional;
 
-public abstract class Suit implements Identifiable, Translatable {
+public abstract class Suit implements Identifiable, Translatable, EquipSoundSupplier {
     public static Optional<Suit> findSuit(LivingEntity entity, EquipmentSlot slot) {
         if (!(entity.getEquippedStack(slot).getItem() instanceof SuitItem item)) return Optional.empty();
         return Optional.ofNullable(item.getSuit());
@@ -37,12 +38,6 @@ public abstract class Suit implements Identifiable, Translatable {
         return this.getPowers().contains(power);
     }
     public abstract SoundEvent getStepSound();
-    public Optional<SoundEvent> getEquipSound() {
-        return Optional.empty();
-    }
-    public Optional<SoundEvent> getUnequipSound() {
-        return Optional.empty();
-    }
 
     /**
      * whether this suit is always visible on the player
