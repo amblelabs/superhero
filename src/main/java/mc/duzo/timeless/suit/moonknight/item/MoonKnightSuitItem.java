@@ -59,7 +59,7 @@ public class MoonKnightSuitItem extends SuitItem implements AutomaticModel, Auto
     public void doVanillaElytraTick(LivingEntity entity, ItemStack chestStack) {
         FabricElytraItem.super.doVanillaElytraTick(entity, chestStack);
 
-        if (entity.isSprinting())
-            entity.addVelocity(entity.getRotationVec(1.0F).multiply(1.2));
+        if (entity instanceof PlayerEntity player && player.isSneaking())
+            entity.addVelocity(entity.getRotationVec(1.0F).normalize().multiply(0.08));
     }
 }
