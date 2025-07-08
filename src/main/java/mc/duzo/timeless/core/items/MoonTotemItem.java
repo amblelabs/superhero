@@ -1,6 +1,8 @@
 package mc.duzo.timeless.core.items;
 
+import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.set.SetRegistry;
+import mc.duzo.timeless.suit.set.SuitSet;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
@@ -21,8 +23,10 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Set;
 
 public class MoonTotemItem extends Item {
+    public static final List<SuitSet> MOON_KNIGHT_SET = List.of(SetRegistry.MOON_KNIGHT_MARC, SetRegistry.MOON_KNIGHT_JAKE, SetRegistry.MOON_KNIGHT_STEVEN);
     public static final int MAX_BLOOD_METER = 50; // Maximum blood meter value
 
     static {
@@ -83,17 +87,20 @@ public class MoonTotemItem extends Item {
 
         if (stack.getItem() instanceof MoonTotemItem totemItem) {
             NbtCompound nbt = stack.getOrCreateNbt();
+            PlayerEntity player = context.getPlayer();
             if (totemItem.shouldPulsate(nbt)) {
-                if (context.getPlayer().getWorld().isClient()) {
+                if (player.getWorld().isClient()) {
                     MinecraftClient.getInstance().gameRenderer.showFloatingItem(context.getStack());
                 }
                 totemItem.setBloodMeter(0, nbt); // Reset blood meter on use
-                context.getPlayer().sendMessage(Text.literal("You are now the Champion of Khonshu, your blood meter is zero.")
+                player.sendMessage(Text.literal("You are now the Champion of Khonshu, your blood meter is zero.")
                         .formatted(Formatting.GREEN, Formatting.BOLD), true);
-                SetRegistry.MOON_KNIGHT_MARC.wear(context.getPlayer());
+                this.getRandomMoonKnightSet(player).wear(player);
+                if (!player.getAbilities().creativeMode)
+                    stack.decrement(stack.getCount());
                 return ActionResult.CONSUME;
             } else {
-                context.getPlayer().sendMessage(Text.literal("The Moon Totem is not ready to be used yet.")
+                player.sendMessage(Text.literal("The Moon Totem is not ready to be used yet.")
                         .formatted(Formatting.RED, Formatting.BOLD), true);
                 return ActionResult.FAIL;
             }
@@ -114,7 +121,9 @@ public class MoonTotemItem extends Item {
                 totemItem.setBloodMeter(0, nbt); // Reset blood meter on use
                 user.sendMessage(Text.literal("You are now the Champion of Khonshu, your blood meter is zero.")
                         .formatted(Formatting.GREEN, Formatting.BOLD), true);
-                SetRegistry.MOON_KNIGHT_MARC.wear(user);
+                this.getRandomMoonKnightSet(user).wear(user);
+                if (!user.getAbilities().creativeMode)
+                    stack.decrement(stack.getCount());
                 return TypedActionResult.consume(stack);
             } else {
                 user.sendMessage(Text.literal("The Moon Totem is not ready to be used yet.")
@@ -163,5 +172,9 @@ public class MoonTotemItem extends Item {
                 .formatted(Formatting.RED, Formatting.BOLD));
         tooltip.add(Text.literal("Full Moon: " + isFullMoon)
                 .formatted(Formatting.RED, Formatting.BOLD));
+    }
+
+    public SuitSet getRandomMoonKnightSet(PlayerEntity player) {
+        return MOON_KNIGHT_SET.get(player.getRandom().nextInt(MOON_KNIGHT_SET.size()));
     }
 }

@@ -19,8 +19,6 @@ import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 public class PowerRegistry {
     public static final SimpleRegistry<Power> REGISTRY = FabricRegistryBuilder.createSimple(RegistryKey.<Power>ofRegistry(new Identifier(Timeless.MOD_ID, "power"))).buildAndRegister();
 
-    private static boolean hasJumped = false;
-
     public static <T extends Power> T register(T entry) {
         return Registry.register(REGISTRY, entry.id(), entry);
     }

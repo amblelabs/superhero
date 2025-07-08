@@ -3,6 +3,7 @@ package mc.duzo.timeless.suit.set;
 import mc.duzo.timeless.suit.moonknight.item.MoonKnightSuitItem;
 import mc.duzo.timeless.suit.moonknight.jake.JakeSuit;
 import mc.duzo.timeless.suit.moonknight.marc.MarcSuit;
+import mc.duzo.timeless.suit.moonknight.steven.StevenSuit;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
 import net.minecraft.registry.Registry;
@@ -33,6 +34,7 @@ public class SetRegistry {
     public static SuitSet BATMAN_66;
     public static SuitSet MOON_KNIGHT_MARC;
     public static SuitSet MOON_KNIGHT_JAKE;
+    public static SuitSet MOON_KNIGHT_STEVEN;
 
     public static void init() {
         // Iron Man
@@ -45,5 +47,6 @@ public class SetRegistry {
         BATMAN_66 = register(new RegisteringSuitSet(new Batman66Suit(), BatmanSuitItem::new));
         MOON_KNIGHT_MARC = register(new RegisteringSuitSet(new MarcSuit(), MoonKnightSuitItem::new));
         MOON_KNIGHT_JAKE = register(new RegisteringSuitSet(new JakeSuit(), MoonKnightSuitItem::new));
+        MOON_KNIGHT_STEVEN = register(new RegisteringSuitSet(new StevenSuit(), MoonKnightSuitItem::new));
     }
 }
