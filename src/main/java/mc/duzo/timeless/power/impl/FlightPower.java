@@ -61,40 +61,38 @@ public class FlightPower extends Power {
         World world = player.getWorld();
         boolean airborne = !player.isOnGround();
 
+        FlightSuit suit = getSuit(player);
+        if (suit == null) return;
+        float speed = (suit.getFlightSpeed(player.isSprinting())) / 100F;
+
+
         airborne &= !player.getAbilities().flying;
 
         if (airborne) {
             double gravity = 0;
-            boolean hovering = true;
 
-            if (!player.isTouchingWater()) {
-                if (hovering) {
-                    float scale = 1;
-                    float f = Math.max(scale, 1.0f);
-                    double vy = player.getVelocity().y;
+	        if (!player.isTouchingWater()) {
+	            float scale = suit.getHoverScale(); // how much the hover varies
+	            float f = Math.max(scale, 1.0f);
+	            double vy = player.getVelocity().y;
 
-                    if (vy < -0.125f * f) {
-                        player.setVelocity(player.getVelocity().add(0, 0.125f * f - gravity, 0));
-                    } else if (vy > 0.05f * f) {
-                        player.setVelocity(player.getVelocity().add(0, - (0.05f * f + gravity), 0));
-                    } else {
-                        if (f < 1.0f) {
-                            f = (1.0f - f) / 2.0f;
-                        }
-                        double newY = MathHelper.sin(player.age / 15.0f) * 0.025f * f - gravity;
-                        player.setVelocity(player.getVelocity().x, newY, player.getVelocity().z);
-                    }
-                } else if (player.getVelocity().y - gravity < 0) {
-                    player.setVelocity(player.getVelocity().add(0, 0.07 - gravity, 0));
-                }
+	            if (vy < -0.125f * f) {
+	                player.setVelocity(player.getVelocity().add(0, 0.125f * f - gravity, 0));
+	            } else if (vy > 0.05f * f) {
+	                player.setVelocity(player.getVelocity().add(0, - (0.05f * f + gravity), 0));
+	            } else {
+	                if (f < 1.0f) {
+	                    f = (1.0f - f) / 2.0f;
+	                }
+	                double newY = MathHelper.sin(player.age / 15.0f) * 0.025f * f - gravity;
+	                player.setVelocity(player.getVelocity().x, newY, player.getVelocity().z);
+	            }
             }
 
             if (world.isClient() && (player instanceof ClientPlayerEntity local)) {
-                float speedMul = 1 / 0.1f;
-                if (hovering) speedMul *= 0.2f;
-                /*if (Vars.SPEEDING.get(player)) {
-                    speedMul *= Vars.SPEED.get(player) * 1.1f;
-                }*/
+                float speedMul = speed / 0.1f;
+	            speedMul *= 0.2f;
+
                 if (player.isSprinting()) speedMul *= 1.2f;
 
                 float strafe = player.sidewaysSpeed;
@@ -105,15 +103,14 @@ public class FlightPower extends Power {
                         forward
                 );
 
-                // travel method applies motion based on this input :contentReference[oaicite:1]{index=1}
                 player.updateVelocity(0.075F * speedMul, moveInput);
                 float adjusted = 1.0f + (speedMul - 1.0f) / 3.0f;
                 if (local.input.jumping) {
-                    double addY = (hovering ? 0.2f : 0.125f) * adjusted - gravity;
+                    double addY = 0.2f * adjusted - gravity;
                     player.setVelocity(player.getVelocity().add(0, addY, 0));
                 }
                 if (local.input.sneaking) {
-                    player.setVelocity(player.getVelocity().add(0, -(hovering ? 0.125f : 0.075f) * adjusted, 0));
+                    player.setVelocity(player.getVelocity().add(0, -0.125f * adjusted, 0));
                 }
             }
         }

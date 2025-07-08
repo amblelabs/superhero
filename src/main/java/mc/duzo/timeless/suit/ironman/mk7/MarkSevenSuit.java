@@ -21,7 +21,7 @@ public class MarkSevenSuit extends IronManSuit {
     public MarkSevenSuit() {
         super("mark_seven");
 
-        this.powers = PowerList.of(PowerRegistry.SENTRY, PowerRegistry.FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE, PowerRegistry.JARVIS);
+        this.powers = PowerList.of(PowerRegistry.SENTRY, PowerRegistry.BOOSTED_FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE, PowerRegistry.JARVIS);
     }
 
     @Override
@@ -46,13 +46,13 @@ public class MarkSevenSuit extends IronManSuit {
     }
 
     @Override
-    public int getVerticalFlightModifier(boolean isSprinting) {
-        return (isSprinting) ? 13 : 9;
+    public int getFlightSpeed(boolean hasBoost) {
+        return 45;
     }
 
     @Override
-    public int getHorizontalFlightModifier(boolean isSprinting) {
-        return (isSprinting) ? 13 : 5;
+    public float getHoverScale() {
+        return 0.5f;
     }
 
     @Override

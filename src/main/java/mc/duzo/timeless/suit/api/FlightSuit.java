@@ -1,6 +1,8 @@
 package mc.duzo.timeless.suit.api;
 
 public interface FlightSuit {
-	int getVerticalFlightModifier(boolean isSprinting);
-	int getHorizontalFlightModifier(boolean isSprinting);
+	int getFlightSpeed(boolean hasBoost);
+	default float getHoverScale() {
+		return 1;
+	}
 }

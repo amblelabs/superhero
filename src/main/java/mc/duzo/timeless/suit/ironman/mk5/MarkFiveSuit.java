@@ -22,7 +22,7 @@ public class MarkFiveSuit extends IronManSuit {
     public MarkFiveSuit() {
         super("mark_five");
 
-        this.powers = PowerList.of(PowerRegistry.TO_CASE, PowerRegistry.CONTROLLED_FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE, PowerRegistry.JARVIS);
+        this.powers = PowerList.of(PowerRegistry.TO_CASE, PowerRegistry.BOOSTED_FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE, PowerRegistry.JARVIS);
     }
 
     @Override
@@ -52,13 +52,8 @@ public class MarkFiveSuit extends IronManSuit {
     }
 
     @Override
-    public int getVerticalFlightModifier(boolean isSprinting) {
-        return (isSprinting) ? 15 : 10;
-    }
-
-    @Override
-    public int getHorizontalFlightModifier(boolean isSprinting) {
-        return (isSprinting) ? 15 : 5;
+    public int getFlightSpeed(boolean hasBoost) {
+        return 50;
     }
 
     @Override
