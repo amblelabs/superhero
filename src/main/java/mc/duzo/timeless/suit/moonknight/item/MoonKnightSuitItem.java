@@ -54,4 +54,12 @@ public class MoonKnightSuitItem extends SuitItem implements AutomaticModel, Auto
         }
         return false;
     }
+
+    @Override
+    public void doVanillaElytraTick(LivingEntity entity, ItemStack chestStack) {
+        FabricElytraItem.super.doVanillaElytraTick(entity, chestStack);
+
+        if (entity.isSprinting())
+            entity.addVelocity(entity.getRotationVec(1.0F).multiply(1.2));
+    }
 }

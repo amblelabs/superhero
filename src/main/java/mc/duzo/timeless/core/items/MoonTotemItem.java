@@ -22,11 +22,11 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class MoonTotemItem extends Item {
-    public static final List<SuitSet> MOON_KNIGHT_SET = List.of(SetRegistry.MOON_KNIGHT_MARC, SetRegistry.MOON_KNIGHT_JAKE, SetRegistry.MOON_KNIGHT_STEVEN);
+    public static List<SuitSet> MOON_KNIGHT_SET = new ArrayList<>();
     public static final int MAX_BLOOD_METER = 50; // Maximum blood meter value
 
     static {
@@ -137,6 +137,9 @@ public class MoonTotemItem extends Item {
 
     public MoonTotemItem(Settings settings) {
         super(settings);
+        MOON_KNIGHT_SET.add(SetRegistry.MOON_KNIGHT_MARC);
+        MOON_KNIGHT_SET.add(SetRegistry.MOON_KNIGHT_STEVEN);
+        MOON_KNIGHT_SET.add(SetRegistry.MOON_KNIGHT_JAKE);
     }
 
     public void addToBloodMeter(int amount, NbtCompound nbt) {

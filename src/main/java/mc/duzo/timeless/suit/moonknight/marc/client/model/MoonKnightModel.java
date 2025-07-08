@@ -167,24 +167,27 @@ public class MoonKnightModel extends SuitModel {
 
 	@Override
 	public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
-		if (!(entity instanceof AbstractClientPlayerEntity player)) return;
 
 		this.cape = this.MoonCape;
 
 		this.MoonCape.visible = false;
-		boolean hasGlide = GlidePower.hasGlide(player);
+		boolean hasGlide = entity instanceof AbstractClientPlayerEntity playerEntity && GlidePower.hasGlide(playerEntity);
 
 		// Use a static or instance variable to store the last glide tick
 		if (hasGlide) {
-			this.lastGlideTick = player.age;
+			this.lastGlideTick = entity.age;
 		}
 		int delayTicks = 20; // 1 second delay at 20 TPS
-		this.bone4.visible = hasGlide || (player.age - this.lastGlideTick < delayTicks);
-		this.bone8.visible = hasGlide || (player.age - this.lastGlideTick < delayTicks);
+		this.bone4.visible = hasGlide || (entity.age - this.lastGlideTick < delayTicks);
+		this.bone8.visible = hasGlide || (entity.age - this.lastGlideTick < delayTicks);
 
 
 		this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 
+		if (!(entity instanceof AbstractClientPlayerEntity player)) {
+			this.cape.render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
+			return;
+		}
 
 		if (!this.hasMoonKnightCape() || !this.Body.visible) return;
 
