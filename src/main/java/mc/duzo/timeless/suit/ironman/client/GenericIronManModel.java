@@ -1,7 +1,11 @@
 package mc.duzo.timeless.suit.ironman.client;
 
 import mc.duzo.animation.generic.AnimationInfo;
-
+import mc.duzo.timeless.power.impl.FlightPower;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
+import mc.duzo.timeless.suit.client.render.SuitModel;
+import mc.duzo.timeless.suit.ironman.IronManEntity;
+import mc.duzo.timeless.suit.ironman.client.sentry.SentryAnimation;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -12,12 +16,6 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
-
-import mc.duzo.timeless.power.impl.FlightPower;
-import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
-import mc.duzo.timeless.suit.client.render.SuitModel;
-import mc.duzo.timeless.suit.ironman.IronManEntity;
-import mc.duzo.timeless.suit.ironman.client.sentry.SentryAnimation;
 
 public abstract class GenericIronManModel extends SuitModel {
     private final ModelPart root;
@@ -310,7 +308,13 @@ public abstract class GenericIronManModel extends SuitModel {
 
         matrices.scale(1.01f, 1.01f, 1.01f);
 
+        this.rightArm.visible = false;
         this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
+
+        // fix for the arm being in the wrong position, remove if model gets updated - duzo
+        this.rightArm.visible = true;
+        matrices.translate(-0.15, 1.5125f, 0);
+        this.rightArm.render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 
         matrices.pop();
     }

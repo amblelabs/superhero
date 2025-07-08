@@ -2,6 +2,7 @@ package mc.duzo.timeless.core.items;
 
 import mc.duzo.animation.registry.Identifiable;
 
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -52,12 +53,15 @@ public abstract class SuitItem extends ArmorItem implements Identifiable {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(stack, world, entity, slot, selected);
 
-        if (world.isClient()) return;
-
-        if (!(entity instanceof ServerPlayerEntity player)) return;
+        if (!(entity instanceof PlayerEntity player)) return;
         if (!stack.equals(player.getEquippedStack(EquipmentSlot.CHEST))) return; // return if this stack isnt being worn in chest
 
-        this.parent.getPowers().forEach(power -> power.tick(player));
+        if (world.isClient()) {
+            this.parent.getPowers().forEach(power -> power.tick((AbstractClientPlayerEntity) player));
+            return;
+        }
+
+        this.parent.getPowers().forEach(power -> power.tick((ServerPlayerEntity) player));
     }
 
     public static class Data {
