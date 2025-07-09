@@ -295,10 +295,8 @@ public class MarkFiveModel extends SuitModel {
             SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
             if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
                 this.rotateParts(player);
-                matrices.translate(0f, -0.2f, 0f);
             }
         } else {
-            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180f));
             matrices.translate(0f, -0.2f, 0f);
         }
 
