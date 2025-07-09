@@ -13,3 +13,4 @@
 - Refactor Flight | by [@duzos](https://github.com/duzos) ([#58](https://github.com/amblelabs/superhero/pull/58))
 - feat: sentry mode now follows you | by [@duzos](https://github.com/duzos) ([#60](https://github.com/amblelabs/superhero/pull/60))
 - fix: sentry animations not playing | by [@duzos](https://github.com/duzos) ([#60](https://github.com/amblelabs/superhero/pull/60))
+- add: Moon Knight! | by [@Loqor](https://github.com/Loqor), [@duzos](https://github.com/duzos) ([#50](https://github.com/amblelabs/superhero/pull/50))
