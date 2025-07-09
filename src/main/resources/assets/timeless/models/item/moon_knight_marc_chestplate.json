@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "timeless:item/moon_knight_marc_chestplate"
+  }
+}

@@ -1,5 +1,6 @@
 package mc.duzo.timeless.core;
 
+import mc.duzo.timeless.core.entities.BaseRangEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 
 import net.minecraft.entity.EntityType;
@@ -19,6 +20,10 @@ public class TimelessEntityTypes {
     public static final EntityType<IronManEntity> IRON_MAN = register(Registries.ENTITY_TYPE, "iron_man", EntityType.Builder.<IronManEntity>create(IronManEntity::new, SpawnGroup.MISC)
             .setDimensions(0.6f, 1.8f)
             .build("iron_man"));
+
+    public static final EntityType<BaseRangEntity> BASE_RANG_ENTITY_ENTITY_TYPE = register(Registries.ENTITY_TYPE, "base_rang_entity", EntityType.Builder.<BaseRangEntity>create(BaseRangEntity::new, SpawnGroup.MISC)
+            .setDimensions(0.5f, 0.5f)
+            .build("base_rang_entity"));
 
     public static void init() {
         registerAttributes(IRON_MAN, MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3F).build());
