@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "timeless:item/iron_man_mark_two_helmet"
+  }
+}
