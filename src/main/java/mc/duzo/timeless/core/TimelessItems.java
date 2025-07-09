@@ -4,8 +4,10 @@ import java.util.Objects;
 
 import dev.amble.lib.container.impl.ItemContainer;
 import dev.amble.lib.item.AItemSettings;
+import mc.duzo.timeless.core.items.rangs.BatarangItem;
+import mc.duzo.timeless.core.items.rangs.MoonDartItem;
 import mc.duzo.timeless.core.items.MoonTotemItem;
-import mc.duzo.timeless.core.items.RangItem;
+import mc.duzo.timeless.core.items.rangs.BaseRangItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +22,8 @@ import mc.duzo.timeless.suit.set.SuitSet;
 public class TimelessItems extends ItemContainer {
     public static MarkFiveCase MARK_FIVE_CASE = new MarkFiveCase(new AItemSettings());
     public static BatRadioItem BAT_RADIO = new BatRadioItem(new AItemSettings());
-    public static RangItem MOON_DART = new RangItem(new AItemSettings());
+    public static MoonDartItem MOON_DART = new MoonDartItem(new AItemSettings().fireproof());
+    public static BaseRangItem BATARANG = new BatarangItem(new AItemSettings().fireproof());
     public static MoonTotemItem MOON_TOTEM = new MoonTotemItem(new AItemSettings());
 
     @Override

@@ -31,8 +31,13 @@ public class BaseRangEntity extends ThrownItemEntity {
         super(TimelessEntityTypes.BASE_RANG_ENTITY_ENTITY_TYPE, x, y, z, world);
     }
 
+    public BaseRangEntity(World world, PlayerEntity player, ItemStack itemStack) {
+        super(TimelessEntityTypes.BASE_RANG_ENTITY_ENTITY_TYPE, player, world);
+        this.setItem(itemStack.isEmpty() ? new ItemStack(Items.SNOWBALL) : itemStack);
+    }
+
     protected Item getDefaultItem() {
-        return TimelessItems.MOON_DART;
+        return Items.SNOWBALL;
     }
 
     private ParticleEffect getParticleParameters() {
