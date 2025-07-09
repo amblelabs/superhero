@@ -14,17 +14,19 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 
 public abstract class GenericIronManModel extends SuitModel {
-    private final ModelPart root;
-    private final ModelPart leftLeg;
-    private final ModelPart rightLeg;
-    private final ModelPart leftArm;
-    private final ModelPart rightArm;
-    private final ModelPart body;
-    private final ModelPart head;
+    public final ModelPart root;
+    public final ModelPart leftLeg;
+    public final ModelPart rightLeg;
+    public final ModelPart leftArm;
+    public final ModelPart rightArm;
+    public final ModelPart body;
+    public final ModelPart head;
     protected SentryAnimation sentry;
 
     protected GenericIronManModel(ModelPart root) {
@@ -291,7 +293,7 @@ public abstract class GenericIronManModel extends SuitModel {
         return TexturedModelData.of(modelData, 128, 128);
     }
     @Override
-    public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
+    public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float limbAngle, float b, float alpha) {
         matrices.push();
 
         if (entity instanceof IronManEntity) {
@@ -309,12 +311,12 @@ public abstract class GenericIronManModel extends SuitModel {
         matrices.scale(1.01f, 1.01f, 1.01f);
 
         this.rightArm.visible = false;
-        this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
+        this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, limbAngle, b, alpha);
 
         // fix for the arm being in the wrong position, remove if model gets updated - duzo
         this.rightArm.visible = true;
         matrices.translate(-0.15, 1.5125f, 0);
-        this.rightArm.render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
+        this.rightArm.render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, limbAngle, b, alpha);
 
         matrices.pop();
     }
@@ -441,9 +443,30 @@ public abstract class GenericIronManModel extends SuitModel {
     public void setAngles(LivingEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
         super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 
+        if (entity instanceof PlayerEntity) return;
+
         SuitAnimationHolder anim = this.sentry.getAnimation().orElse(null);
         if (anim != null) {
             anim.update(this, animationProgress, entity);
         }
+
+        float k = 1.0F;
+        if (entity.getRoll() > 4) {
+            k = (float)entity.getVelocity().lengthSquared();
+            k /= 0.2F;
+            k *= k * k;
+        }
+
+        this.rightArm.pivotZ = 0.0F;
+        this.rightArm.pivotX = -5.0F;
+        this.leftArm.pivotZ = 0.0F;
+        this.leftArm.pivotX = 5.0F;
+
+        this.rightArm.pitch = MathHelper.cos(limbDistance * 0.6662F + (float) Math.PI) * 2.0F * limbAngle * 0.5F / k;
+        this.leftArm.pitch = MathHelper.cos(limbDistance * 0.6662F) * 2.0F * limbAngle * 0.5F / k;
+        this.rightArm.roll = 0.0F;
+        this.leftArm.roll = 0.0F;
+        this.rightLeg.pitch = MathHelper.cos(limbDistance * 0.6662F) * 1.4F * limbAngle / k;
+        this.leftLeg.pitch = MathHelper.cos(limbDistance * 0.6662F + (float) Math.PI) * 1.4F * limbAngle / k;
     }
 }
