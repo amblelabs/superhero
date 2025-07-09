@@ -11,6 +11,7 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.util.math.RotationAxis;
 
 import java.util.Optional;
@@ -108,7 +109,7 @@ public class Batman66Model extends SuitModel {
     @Override
     public void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha) {
         matrices.push();
-        if (!(entity instanceof AbstractClientPlayerEntity)) {
+        if (!(entity instanceof AbstractClientPlayerEntity || entity instanceof ArmorStandEntity)) {
             matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180f));
         }
 
