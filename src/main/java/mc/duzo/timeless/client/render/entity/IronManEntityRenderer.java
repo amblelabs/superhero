@@ -1,5 +1,8 @@
 package mc.duzo.timeless.client.render.entity;
 
+import mc.duzo.timeless.suit.Suit;
+import mc.duzo.timeless.suit.client.render.SuitModel;
+import mc.duzo.timeless.suit.ironman.IronManEntity;
 import net.minecraft.client.render.LightmapTextureManager;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -8,11 +11,8 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
-
-import mc.duzo.timeless.suit.Suit;
-import mc.duzo.timeless.suit.client.render.SuitModel;
-import mc.duzo.timeless.suit.ironman.IronManEntity;
 
 public class IronManEntityRenderer extends EntityRenderer<IronManEntity> {
     private Suit suit;
@@ -27,6 +27,8 @@ public class IronManEntityRenderer extends EntityRenderer<IronManEntity> {
         super.render(entity, yaw, tickDelta, matrices, vertexConsumers, light);
 
         this.updateModel(entity);
+        model.setAngles(entity, entity.limbAnimator.getSpeed(tickDelta), entity.limbAnimator.getPos(tickDelta), entity.age + tickDelta, entity.getHeadYaw(), MathHelper.lerp(tickDelta, entity.prevPitch, entity.getPitch()));
+
         VertexConsumer consumer = vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(model.texture()));
 
         matrices.push();
@@ -44,6 +46,7 @@ public class IronManEntityRenderer extends EntityRenderer<IronManEntity> {
 
         matrices.pop();
     }
+
     private void updateModel(IronManEntity entity) {
         if (this.suit != entity.getSuit()) {
             this.suit = entity.getSuit();

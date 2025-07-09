@@ -46,13 +46,13 @@ public class MarkThreeSuit extends IronManSuit {
     }
 
     @Override
-    public int getVerticalFlightModifier(boolean isSprinting) {
-        return (isSprinting) ? 13 : 9;
+    public int getFlightSpeed(boolean hasBoost) {
+        return 30;
     }
 
     @Override
-    public int getHorizontalFlightModifier(boolean isSprinting) {
-        return (isSprinting) ? 13 : 5;
+    public float getHoverScale() {
+        return 2f;
     }
 
     @Override

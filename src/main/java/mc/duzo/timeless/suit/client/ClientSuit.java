@@ -13,6 +13,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -60,14 +61,14 @@ public abstract class ClientSuit implements Identifiable {
     }
 
     /**
-     * @return whether the player head should remain visible when wearing this suit
+     * @return parts of the player that should always be visible when wearing this suit
      */
-    public boolean isHeadVisible() {
-        return true;
+    public List<VisiblePart> getVisibleParts(LivingEntity entity) {
+        return List.of(VisiblePart.HEAD);
     }
 
     public AnimationInfo getAnimationInfo(LivingEntity entity) {
-        boolean head = isHeadVisible() || Suit.findSuit(entity, EquipmentSlot.HEAD).isEmpty();
+        boolean head = Suit.findSuit(entity, EquipmentSlot.HEAD).isEmpty();
         boolean chest = Suit.findSuit(entity, EquipmentSlot.CHEST).isEmpty();
         boolean legs = Suit.findSuit(entity, EquipmentSlot.LEGS).isEmpty();
         boolean feet = Suit.findSuit(entity, EquipmentSlot.FEET).isEmpty();
@@ -94,6 +95,8 @@ public abstract class ClientSuit implements Identifiable {
             visibility.add(VisiblePart.RIGHT_LEG);
             visibility.add(VisiblePart.RIGHT_PANTS);
         }
+
+        visibility.addAll(this.getVisibleParts(entity));
 
         return new AnimationInfo(
             visibility,
