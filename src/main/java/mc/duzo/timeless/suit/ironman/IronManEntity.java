@@ -1,32 +1,38 @@
 package mc.duzo.timeless.suit.ironman;
 
-import java.util.List;
-import java.util.Optional;
-
+import mc.duzo.timeless.core.TimelessEntityTypes;
+import mc.duzo.timeless.suit.SuitRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.passive.PassiveEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.EntityView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
-import mc.duzo.timeless.core.TimelessEntityTypes;
-import mc.duzo.timeless.suit.SuitRegistry;
+import java.util.List;
+import java.util.Optional;
 
-public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for sentry mode
+public class IronManEntity extends TameableEntity { // todo - PathAwareEntity for sentry mode
     private static final TrackedData<String> SUIT = DataTracker.registerData(IronManEntity.class, TrackedDataHandlerRegistry.STRING);
     private int cooldown = 0;
 
@@ -46,6 +52,8 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
     }
     public IronManEntity(World world, IronManSuit suit, ServerPlayerEntity source) {
         this(world, suit, source.getPos(), source.getYaw(), source.getPitch());
+
+        this.setOwner(source);
     }
 
     public IronManSuit getSuit() {
@@ -62,7 +70,12 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
     }
 
     @Override
-    public ActionResult interact(PlayerEntity player, Hand hand) {
+    protected void initGoals() {
+        this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
+    }
+
+    @Override
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
         boolean success = this.getSuit().getSet().wear(player);
 
         if (success) {
@@ -70,6 +83,11 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
         }
 
         return success ? ActionResult.SUCCESS : ActionResult.FAIL;
+    }
+
+    @Override
+    public boolean canBeLeashedBy(PlayerEntity player) {
+        return false;
     }
 
     @Override
@@ -109,6 +127,11 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
     }
 
     @Override
+    public @Nullable PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
+        return null;
+    }
+
+    @Override
     protected void initDataTracker() {
         super.initDataTracker();
 
@@ -130,6 +153,11 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
     }
 
     @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(this.getSuit().getStepSound(), 0.25f, 1.0f);
+    }
+
+    @Override
     public Iterable<ItemStack> getArmorItems() {
         return List.of();
     }
@@ -145,7 +173,19 @@ public class IronManEntity extends LivingEntity { // todo - PathAwareEntity for 
     }
 
     @Override
+    public void refreshPositionAndAngles(double x, double y, double z, float yaw, float pitch) {
+        super.refreshPositionAndAngles(x, y, z, yaw, pitch);
+
+        this.cooldown = 60;
+    }
+
+    @Override
     public Arm getMainArm() {
         return Arm.RIGHT;
+    }
+
+    @Override
+    public EntityView method_48926() {
+        return getWorld();
     }
 }

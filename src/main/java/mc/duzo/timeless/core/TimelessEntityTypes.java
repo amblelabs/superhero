@@ -6,6 +6,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -20,7 +21,7 @@ public class TimelessEntityTypes {
             .build("iron_man"));
 
     public static void init() {
-        registerAttributes(IRON_MAN, MobEntity.createLivingAttributes().build());
+        registerAttributes(IRON_MAN, MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3F).build());
     }
 
     private static void registerAttributes(EntityType<? extends LivingEntity> type, DefaultAttributeContainer attributes) {
