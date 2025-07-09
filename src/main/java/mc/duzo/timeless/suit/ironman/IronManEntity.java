@@ -13,7 +13,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -22,13 +21,14 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Arm;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EntityView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,7 +104,7 @@ public class IronManEntity extends TameableEntity { // todo - PathAwareEntity fo
     }
 
     private void tryApply() {
-        PlayerEntity found = findNearbyPlayer(0.25f).orElse(null);
+        PlayerEntity found = findNearbyPlayer(0.05f).orElse(null);
 
         if (found == null) return;
 
@@ -116,9 +116,29 @@ public class IronManEntity extends TameableEntity { // todo - PathAwareEntity fo
     }
 
     public Optional<PlayerEntity> findNearbyPlayer(float range) {
-        EntityHitResult ray = ProjectileUtil.getEntityCollision(this.getWorld(), this, this.getPos(), this.getPos().offset(this.getMovementDirection().getOpposite(), range).add(0, 1.5, 0), this.getBoundingBox().stretch(this.getVelocity()).expand(1.0), (entity -> (entity instanceof PlayerEntity)));;
-        if (ray == null) return Optional.empty();
-        return Optional.of((PlayerEntity) ray.getEntity());
+        // Calculate the direction vector from the entity's yaw
+        float yaw = this.getYaw();
+        double rad = Math.toRadians(yaw);
+        double dx = -Math.sin(rad);
+        double dz = Math.cos(rad);
+        // Vector behind the entity
+        Vec3d behind = this.getPos().add(dx * -range, 0, dz * -range);
+        // Search for players within a small radius (e.g., 1.5 blocks) at that position
+        double radius = range;
+        List<PlayerEntity> players = this.getWorld().getEntitiesByClass(
+            PlayerEntity.class,
+            new Box(
+                behind.x - radius, behind.y - radius, behind.z - radius,
+                behind.x + radius, behind.y + radius, behind.z + radius
+            ),
+            player -> true
+        );
+        if (players.isEmpty()) return Optional.empty();
+        // Return the closest player
+        PlayerEntity closest = players.stream().min(
+            Comparator.comparingDouble(p -> p.squaredDistanceTo(behind))
+        ).get();
+        return Optional.of(closest);
     }
 
     @Override
