@@ -39,7 +39,7 @@ public abstract class BaseRangItem extends Item {
         }
 
         ItemCooldownManager cooldownManager = user.getItemCooldownManager();
-        cooldownManager.set(this, world.isNight() && world.getMoonPhase() > 0 ? 10 : 20);
+        cooldownManager.set(this, world.isNight() && world.getMoonPhase() > 0 ? 7 : 10);
 
         return TypedActionResult.success(itemStack, world.isClient());
     }

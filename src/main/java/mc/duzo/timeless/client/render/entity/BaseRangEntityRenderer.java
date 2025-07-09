@@ -3,6 +3,7 @@
  */
 package mc.duzo.timeless.client.render.entity;
 
+import mc.duzo.timeless.core.TimelessItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -45,12 +46,21 @@ public class BaseRangEntityRenderer<T extends Entity>
 
     @Override
     public void render(T entity, float yaw, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light) {
+        if (!(entity instanceof FlyingItemEntity flyingItem)) {
+            return;
+        }
         matrices.push();
         matrices.scale(this.scale, this.scale, this.scale);
 
         // Apply yaw (Y axis) first, then pitch (X axis) for proper orientation
         matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(entity.getYaw()));
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(90-entity.getPitch()));
+        float spinAngle = (float) (entity.age * entity.getVelocity().lengthSquared() * 2.0f);
+        matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(spinAngle));
+
+        if (flyingItem.getStack().getItem().equals(TimelessItems.BATARANG)) {
+            matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-90));
+        }
 
         this.itemRenderer.renderItem(
                 ((FlyingItemEntity)entity).getStack(),
