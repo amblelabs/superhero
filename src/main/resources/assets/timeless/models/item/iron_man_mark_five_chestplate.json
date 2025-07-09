@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "timeless:item/iron_man_mark_five_chestplate"
-  }
-}
