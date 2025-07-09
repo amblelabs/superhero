@@ -11,3 +11,5 @@
 - build(modkit): 1.1.9 | by [@duzos](https://github.com/duzos) ([#54](https://github.com/duzos/superhero/pull/54))
 - chore: improve hiding of player parts to reduce overlap issues | by [@duzos](https://github.com/duzos) ([#57](https://github.com/amblelabs/superhero/pull/57))
 - Refactor Flight | by [@duzos](https://github.com/duzos) ([#58](https://github.com/amblelabs/superhero/pull/58))
+- feat: sentry mode now follows you | by [@duzos](https://github.com/duzos) ([#60](https://github.com/amblelabs/superhero/pull/60))
+- fix: sentry animations not playing | by [@duzos](https://github.com/duzos) ([#60](https://github.com/amblelabs/superhero/pull/60))
