@@ -1,5 +1,9 @@
 package mc.duzo.timeless.suit.set;
 
+import mc.duzo.timeless.suit.moonknight.item.MoonKnightSuitItem;
+import mc.duzo.timeless.suit.moonknight.jake.JakeSuit;
+import mc.duzo.timeless.suit.moonknight.marc.MarcSuit;
+import mc.duzo.timeless.suit.moonknight.steven.StevenSuit;
 import mc.duzo.timeless.suit.superman.generic.GenericSupermanSuit;
 import mc.duzo.timeless.suit.superman.item.SupermanSuitItem;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
