@@ -31,6 +31,9 @@ public class SetRegistry {
     public static SuitSet MARK_TWO;
     public static SuitSet BATMAN_66;
     public static SuitSet SUPERMAN;
+    public static SuitSet MOON_KNIGHT_MARC;
+    public static SuitSet MOON_KNIGHT_JAKE;
+    public static SuitSet MOON_KNIGHT_STEVEN;
 
     public static void init() {
         // Iron Man
@@ -44,5 +47,8 @@ public class SetRegistry {
 
         // Superman
         SUPERMAN = register(new RegisteringSuitSet(new GenericSupermanSuit(), SupermanSuitItem::new));
+        MOON_KNIGHT_MARC = register(new RegisteringSuitSet(new MarcSuit(), MoonKnightSuitItem::new));
+        MOON_KNIGHT_JAKE = register(new RegisteringSuitSet(new JakeSuit(), MoonKnightSuitItem::new));
+        MOON_KNIGHT_STEVEN = register(new RegisteringSuitSet(new StevenSuit(), MoonKnightSuitItem::new));
     }
 }

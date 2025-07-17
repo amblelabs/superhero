@@ -29,6 +29,7 @@ public class BoostedFlightPower extends FlightPower {
 		applyBoost(player);
 	}
 
+	@Environment(EnvType.CLIENT)
 	public static void applyBoost(AbstractClientPlayerEntity player) {
 		FlightSuit suit = FlightPower.getSuit(player);
 		if (suit == null) return;

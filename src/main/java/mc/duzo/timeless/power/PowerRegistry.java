@@ -31,6 +31,8 @@ public class PowerRegistry {
     public static Power HOVER = new HoverPower().register();
     public static Power JARVIS = Power.Builder.create(new Identifier(Timeless.MOD_ID, "jarvis")).build().register();
     public static MaskTogglePower MASK_TOGGLE = new MaskTogglePower().register();
+    public static CapeTogglePower CAPE_TOGGLE = new CapeTogglePower().register();
+    public static GlidePower GLIDE_POWER = new GlidePower().register();
     public static Power ICES_OVER = new IceOverPower().register();
     public static Power RAINS_OVER = new RainOverPower().register();
     public static Power SENTRY = Power.Builder.create(new Identifier(Timeless.MOD_ID, "sentry")).run((player) -> {
@@ -43,6 +45,12 @@ public class PowerRegistry {
             .tick(player -> {
                 if (player.getServer().getTicks() % 20 != 0) return; // Run every second
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 22, 1, false, false));
+            })
+            .build().register();
+    public static Power SUPER_JUMP = Power.Builder.create(new Identifier(Timeless.MOD_ID, "super_jump"))
+            .tick(player -> {
+                if (player.getServer().getTicks() % 20 != 0) return; // Run every second
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 22, 3, false, false));
             })
             .build().register();
     public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();
