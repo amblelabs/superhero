@@ -54,6 +54,10 @@ public class PowerRegistry {
             })
             .build().register();
     public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();
+    public static BasicTogglePower INVISIBILITY = new BasicTogglePower(Timeless.MOD_ID, "invisibility", (player) -> {
+        if (player.getServer().getTicks() % 20 != 0) return; // Run every second
+        player.addStatusEffect(new StatusEffectInstance(StatusEffects.INVISIBILITY, 22, 3, false, false));
+    }, null, null).register();
 
     public static void init() {}
 }

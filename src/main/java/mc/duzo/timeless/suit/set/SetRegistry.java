@@ -1,11 +1,17 @@
 package mc.duzo.timeless.suit.set;
 
+import mc.duzo.timeless.power.PowerList;
+import mc.duzo.timeless.power.PowerRegistry;
+import mc.duzo.timeless.suit.api.SimpleSuitItem;
+import mc.duzo.timeless.suit.api.SimpleSuitMaterial;
+import mc.duzo.timeless.suit.fantastic.FantasticFourSuit;
 import mc.duzo.timeless.suit.moonknight.item.MoonKnightSuitItem;
 import mc.duzo.timeless.suit.moonknight.jake.JakeSuit;
 import mc.duzo.timeless.suit.moonknight.marc.MarcSuit;
 import mc.duzo.timeless.suit.moonknight.steven.StevenSuit;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
+import net.minecraft.item.Items;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.SimpleRegistry;
@@ -35,6 +41,7 @@ public class SetRegistry {
     public static SuitSet MOON_KNIGHT_MARC;
     public static SuitSet MOON_KNIGHT_JAKE;
     public static SuitSet MOON_KNIGHT_STEVEN;
+    public static SuitSet FANTASTIC_INVISIBLE;
 
     public static void init() {
         // Iron Man
@@ -45,8 +52,14 @@ public class SetRegistry {
 
         // Batman
         BATMAN_66 = register(new RegisteringSuitSet(new Batman66Suit(), BatmanSuitItem::new));
+
+        // Moon Knight
         MOON_KNIGHT_MARC = register(new RegisteringSuitSet(new MarcSuit(), MoonKnightSuitItem::new));
         MOON_KNIGHT_JAKE = register(new RegisteringSuitSet(new JakeSuit(), MoonKnightSuitItem::new));
         MOON_KNIGHT_STEVEN = register(new RegisteringSuitSet(new StevenSuit(), MoonKnightSuitItem::new));
+
+        // Fantastic Four
+        FANTASTIC_INVISIBLE = register(new RegisteringSuitSet(FantasticFourSuit.create(Timeless.id("fantastic_invisible"), PowerList.of(PowerRegistry.INVISIBILITY), () -> SetRegistry.FANTASTIC_INVISIBLE),
+                (suit, type) -> new SimpleSuitItem(suit, type, new SimpleSuitMaterial(Items.COPPER_INGOT, "fantastic"))));
     }
 }

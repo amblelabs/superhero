@@ -86,7 +86,7 @@ public class AlexSuitModel extends SuitModel {
 
 	@Override
 	public void renderArm(boolean isRight, AbstractClientPlayerEntity player, int i, MatrixStack matrices, VertexConsumer buffer, int light, int i1, int i2, int i3, int i4) {
-		if (isRight) this.renderRightArm(player, i, matrices, buffer, light, i1, i2, i3, i4);
+		if (isRight)  this.renderRightArm(player, i, matrices, buffer, light, i1, i2, i3, i4);
 		else this.renderLeftArm(player, i, matrices, buffer, light, i1, i2, i3, i4);
 	}
 
@@ -94,7 +94,8 @@ public class AlexSuitModel extends SuitModel {
 		matrices.push();
 
 		this.rightArm.resetTransform();
-		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-0.5f));
+		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(5f));
+		matrices.translate(0.015F, -0.015F, -0.055F);
 		this.rightArm.render(matrices, buffer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
 
 		matrices.pop();
@@ -104,6 +105,8 @@ public class AlexSuitModel extends SuitModel {
 		matrices.push();
 
 		this.leftArm.resetTransform();
+		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-5f));
+		matrices.translate(0.015F, -0.015F, -0.055F);
 		this.leftArm.render(matrices, buffer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
 
 		matrices.pop();

@@ -2,6 +2,7 @@ package mc.duzo.timeless;
 
 import dev.amble.lib.container.RegistryContainer;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,5 +38,9 @@ public class Timeless implements ModInitializer {
         TimelessCommands.init();
         // Networking
         Network.init();
+    }
+
+    public static Identifier id(String path) {
+        return new Identifier(MOD_ID, path);
     }
 }

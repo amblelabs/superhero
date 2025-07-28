@@ -1,5 +1,6 @@
 package mc.duzo.timeless.mixin.client;
 
+import mc.duzo.timeless.suit.client.render.SuitModel;
 import net.minecraft.entity.EquipmentSlot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,6 +36,20 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
     }
 
     @Inject(method = "renderArm" , at = @At("HEAD"), cancellable = true)
+    private void timeless$stopArmRender(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci){
+        Suit suit = Suit.findSuit(player, EquipmentSlot.CHEST).orElse(null);
+        if (suit == null) return;
+        ClientSuit clientSuit = suit.toClient();
+        if (!(clientSuit.hasModel())) return;
+
+        boolean isRight = player.getMainArm() == Arm.RIGHT;
+        // todo - this will create a new model every frame, which is bad
+        SuitModel model = clientSuit.model().get();
+
+        if (!model.shouldRenderOriginalArm(isRight, player)) ci.cancel();
+    }
+
+    @Inject(method = "renderArm" , at = @At("TAIL"))
     private void timeless$renderArm(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci){
         Suit suit = Suit.findSuit(player, EquipmentSlot.CHEST).orElse(null);
         if (suit == null) return;
@@ -43,7 +58,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
         boolean isRight = player.getMainArm() == Arm.RIGHT;
         // todo - this will create a new model every frame, which is bad
-        clientSuit.model().get().renderArm(isRight, player, 0, matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(clientSuit.texture())), light, 1, 1, 1, 1);
-        ci.cancel();
+        SuitModel model = clientSuit.model().get();
+        model.renderArm(isRight, player, 0, matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(clientSuit.texture())), light, 1, 1, 1, 1);
     }
 }
