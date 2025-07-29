@@ -14,7 +14,6 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.decoration.ArmorStandEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
@@ -301,19 +300,22 @@ public abstract class GenericIronManModel extends SuitModel {
             this.sentry.update((IronManEntity) entity);
         }
 
+        float pivotFix = -22F;
+
         if (entity instanceof AbstractClientPlayerEntity player) {
             SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
             if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
                 this.rotateParts(player);
             }
+
+            pivotFix = 2F;
+            matrices.translate(0f, -1.5125f, 0f);
+            matrices.scale(1.01f, 1.01f, 1.01f);
         }
 
-        matrices.translate(0f, -1.5125f, 0f);
-
-        matrices.scale(1.01f, 1.01f, 1.01f);
         this.rightArm.visible = true;
         this.rightArm.pivotX = -7.0f; // Set to absolute value (base + offset)
-        this.rightArm.pivotY = 2f;      // Set to absolute value
+        this.rightArm.pivotY = pivotFix;      // Set to absolute value
 
         this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, limbAngle, b, alpha);
 
