@@ -1,6 +1,7 @@
 package mc.duzo.timeless.suit.client.render;
 
 import mc.duzo.animation.generic.AnimationInfo;
+import mc.duzo.animation.generic.VisiblePart;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.client.animation.SuitAnimationTracker;
@@ -25,6 +26,12 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
      */
     public abstract void render(LivingEntity entity, float tickDelta, MatrixStack matrices, VertexConsumer vertexConsumers, int light, float r, float g, float b, float alpha);
     public abstract void renderArm(boolean isRight, AbstractClientPlayerEntity player, int i, MatrixStack matrices, VertexConsumer buffer, int light, int i1, int i2, int i3, int i4);
+
+    public boolean shouldRenderOriginalArm(boolean isRight, AbstractClientPlayerEntity player) {
+        VisiblePart requiredPart = isRight ? VisiblePart.RIGHT_ARM : VisiblePart.LEFT_ARM;
+
+        return this.getSuit().getVisibleParts(player).contains(requiredPart);
+    }
 
     /**
      * Sets the visibility of the model parts for the given slot.

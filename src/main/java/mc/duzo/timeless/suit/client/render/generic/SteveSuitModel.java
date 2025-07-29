@@ -80,6 +80,10 @@ public class SteveSuitModel extends SuitModel {
 			}
 		}
 
+		float factor = 1.01f;
+		matrices.scale(factor, factor, factor);
+		matrices.translate(0.0F, 1 - factor, 1 - factor);
+
 		this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 		matrices.pop();
 	}
@@ -94,7 +98,8 @@ public class SteveSuitModel extends SuitModel {
 		matrices.push();
 
 		this.rightArm.resetTransform();
-		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-0.5f));
+		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(5f));
+		matrices.translate(0.015F, -0.015F, -0.055F);
 		this.rightArm.render(matrices, buffer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
 
 		matrices.pop();
@@ -104,6 +109,8 @@ public class SteveSuitModel extends SuitModel {
 		matrices.push();
 
 		this.leftArm.resetTransform();
+		matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-5f));
+		matrices.translate(0.015F, -0.015F, -0.055F);
 		this.leftArm.render(matrices, buffer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
 
 		matrices.pop();
