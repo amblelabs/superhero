@@ -137,7 +137,7 @@ public abstract class FantasticFourSuit extends Suit implements AutomaticSuitEng
 			@Override
 			public List<VisiblePart> getVisibleParts(LivingEntity entity) {
 				// Head and arms.
-				return VisibilityList.of(VisiblePart.LEFT_SLEEVE, VisiblePart.LEFT_ARM, VisiblePart.RIGHT_SLEEVE, VisiblePart.RIGHT_ARM, VisiblePart.HEAD, VisiblePart.HAT);
+				return VisibilityList.of(VisiblePart.LEFT_ARM, VisiblePart.RIGHT_ARM, VisiblePart.HEAD, VisiblePart.HAT);
 			}
 		};
 	}

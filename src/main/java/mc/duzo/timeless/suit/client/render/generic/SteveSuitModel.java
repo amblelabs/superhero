@@ -80,6 +80,10 @@ public class SteveSuitModel extends SuitModel {
 			}
 		}
 
+		float factor = 1.01f;
+		matrices.scale(factor, factor, factor);
+		matrices.translate(0.0F, 1 - factor, 1 - factor);
+
 		this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 		matrices.pop();
 	}
