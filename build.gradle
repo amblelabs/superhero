@@ -33,7 +33,7 @@ repositories {
         }
     }
 
-    maven { url "https://theo.is-a.dev/maven-repo/" }
+    maven { url "https://theo.is-a.dev/maven/" }
 }
 
 fabricApi {
