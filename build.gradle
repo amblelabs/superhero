@@ -33,7 +33,23 @@ repositories {
         }
     }
 
-    maven { url "https://theo.is-a.dev/maven-repo/" }
+    // AmbleKit (https://github.com/amblelabs/modkit, used by https://github.com/amblelabs/ait)
+    maven {
+        url "https://amblelabs.dev/maven"
+
+        content {
+            includeGroup "dev.amble"
+        }
+    }
+
+    // MultiDim, Scheduler, Queue
+    maven {
+        url "https://theo.is-a.dev/maven/"
+
+        content {
+            includeGroup "dev.drtheo"
+        }
+    }
 }
 
 fabricApi {
@@ -49,7 +65,11 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation("maven.modrinth:amblekit:${project.sakitus_version}") {
+    modImplementation("dev.amble:lib:${project.amblekit_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+    modImplementation("maven.modrinth:animator:${project.animator_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 }

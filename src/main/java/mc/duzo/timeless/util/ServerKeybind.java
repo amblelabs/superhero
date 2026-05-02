@@ -3,38 +3,22 @@ package mc.duzo.timeless.util;
 import java.util.HashMap;
 import java.util.UUID;
 
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
-
-import mc.duzo.timeless.Timeless;
 
 public class ServerKeybind {
-    public static final Identifier UPDATE = new Identifier(Timeless.MOD_ID, "update");
+    public static final HashMap<UUID, Keymap> MOVEMENT = new HashMap<>();
 
     static {
-        ServerPlayNetworking.registerGlobalReceiver(UPDATE, (server, player, handler, buf, responseSender) -> process(buf));
+        ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> MOVEMENT.remove(handler.getPlayer().getUuid()));
     }
-    public static final HashMap<UUID, Keymap> MOVEMENT = new HashMap<>();
 
     public static Keymap get(UUID id) {
         return MOVEMENT.computeIfAbsent(id, k -> new Keymap());
     }
     public static Keymap get(ServerPlayerEntity player) {
         return get(player.getUuid());
-    }
-
-    public static void process(PacketByteBuf data) {
-        UUID id = data.readUuid();
-
-        Keymap map = get(id);
-        map.setJumping(data.readBoolean());
-        map.setForward(data.readBoolean());
-        map.setLeft(data.readBoolean());
-        map.setRight(data.readBoolean());
-        map.setBackward(data.readBoolean());
     }
 
     public static class Keymap extends HashMap<String, Boolean> {

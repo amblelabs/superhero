@@ -1,5 +1,8 @@
 package mc.duzo.timeless.network;
 
+import java.util.Optional;
+
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.fabricmc.fabric.api.networking.v1.FabricPacket;
@@ -14,11 +17,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.network.c2s.UpdateInputC2SPacket;
 import mc.duzo.timeless.network.c2s.UsePowerC2SPacket;
 
 public class Network {
     static {
         ServerPlayNetworking.registerGlobalReceiver(UsePowerC2SPacket.TYPE, UsePowerC2SPacket::handle);
+        ServerPlayNetworking.registerGlobalReceiver(UpdateInputC2SPacket.TYPE, UpdateInputC2SPacket::handle);
     }
 
     public static void init() {
@@ -42,10 +47,15 @@ public class Network {
         ServerPlayNetworking.send(player, id, buf);
     }
 
-    public static <T> T receive(Codec<T> codec, PacketByteBuf buf) {
-        return codec.decode(NbtOps.INSTANCE, buf.readNbt())
+    public static <T> Optional<T> receive(Codec<T> codec, PacketByteBuf buf) {
+        NbtCompound nbt = buf.readNbt();
+        if (nbt == null) {
+            Timeless.LOGGER.error("Network.receive: missing or invalid nbt payload");
+            return Optional.empty();
+        }
+        return codec.decode(NbtOps.INSTANCE, nbt)
                 .resultOrPartial(Timeless.LOGGER::error)
-                .orElseThrow().getFirst();
+                .map(Pair::getFirst);
     }
 
     public static void toTracking(FabricPacket packet, ServerPlayerEntity target) {

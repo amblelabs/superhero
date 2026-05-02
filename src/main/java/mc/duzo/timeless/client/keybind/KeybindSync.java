@@ -1,13 +1,10 @@
 package mc.duzo.timeless.client.keybind;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.network.PacketByteBuf;
 
-import mc.duzo.timeless.util.ServerKeybind;
+import mc.duzo.timeless.network.c2s.UpdateInputC2SPacket;
 
 public class KeybindSync {
     private static boolean jumpingLast = false;
@@ -27,18 +24,6 @@ public class KeybindSync {
         rightLast = player.input.pressingRight;
         backLast = player.input.pressingBack;
 
-        toServer(jumpingLast, forwardLast, leftLast, rightLast, backLast);
-    }
-
-    public static void toServer(Boolean... args) {
-        PacketByteBuf buf = PacketByteBufs.create();
-
-        buf.writeUuid(MinecraftClient.getInstance().player.getUuid());
-
-        for (Boolean b : args) {
-            buf.writeBoolean(b);
-        }
-
-        ClientPlayNetworking.send(ServerKeybind.UPDATE, buf);
+        ClientPlayNetworking.send(new UpdateInputC2SPacket(jumpingLast, forwardLast, leftLast, rightLast, backLast));
     }
 }

@@ -6,7 +6,6 @@ import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.api.EquipSoundSupplier;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -31,11 +30,7 @@ public abstract class TogglePower<T extends EquipSoundSupplier> extends Power {
 	}
 
 	private void setValue(ServerPlayerEntity player, boolean val, boolean sync) {
-		NbtCompound data = SuitItem.Data.get(player);
-
-		if (data == null) return;
-
-		data.putBoolean(key + "Enabled", val);
+		SuitItem.Data.putBoolean(player, key + "Enabled", val);
 
 		if (sync) {
 			T suit = Suit.findSuit(player)
@@ -58,12 +53,8 @@ public abstract class TogglePower<T extends EquipSoundSupplier> extends Power {
 	}
 
 	public boolean getValue(PlayerEntity player) {
-		NbtCompound data = SuitItem.Data.get(player);
-
-		if (data == null) return false;
-		if (!(data.contains(key + "Enabled"))) return true;
-
-		return data.getBoolean(key + "Enabled");
+		if (!SuitItem.Data.contains(player, key + "Enabled")) return true;
+		return SuitItem.Data.getBoolean(player, key + "Enabled");
 	}
 
 	protected abstract Class<T> getSuitClass();

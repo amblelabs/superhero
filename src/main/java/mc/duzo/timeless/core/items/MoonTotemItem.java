@@ -1,10 +1,10 @@
 package mc.duzo.timeless.core.items;
 
+import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,12 +22,11 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MoonTotemItem extends Item {
-    public static List<SuitSet> MOON_KNIGHT_SET = new ArrayList<>();
-    public static final int MAX_BLOOD_METER = 50; // Maximum blood meter value
+    private static List<SuitSet> moonKnightSets;
+    public static final int MAX_BLOOD_METER = 50;
 
     static {
         ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register((serverWorld, entity, other) -> {
@@ -39,7 +38,7 @@ public class MoonTotemItem extends Item {
                         totemItem.addToBloodMeter(serverWorld.isNight() ? 1 : 5, nbt);
                         player.sendMessage(Text.literal("Khonshu smiles upon you, your blood meter is now: " + totemItem.getBloodMeter(nbt) + "/" + MAX_BLOOD_METER)
                                 .formatted(Formatting.DARK_RED, Formatting.BOLD), true);
-                        System.out.println(nbt);
+                        Timeless.LOGGER.debug("MoonTotem nbt: {}", nbt);
                         break;
                     }
                 }
@@ -61,7 +60,7 @@ public class MoonTotemItem extends Item {
         NbtCompound nbt = stack.getOrCreateNbt();
         nbt.putInt("bloodMeter", 0);
         nbt.putBoolean("isFullMoon", false);
-        return super.getDefaultStack();
+        return stack;
     }
 
     @Override
@@ -89,10 +88,7 @@ public class MoonTotemItem extends Item {
             NbtCompound nbt = stack.getOrCreateNbt();
             PlayerEntity player = context.getPlayer();
             if (totemItem.shouldPulsate(nbt)) {
-                if (player.getWorld().isClient()) {
-                    MinecraftClient.getInstance().gameRenderer.showFloatingItem(context.getStack());
-                }
-                totemItem.setBloodMeter(0, nbt); // Reset blood meter on use
+                totemItem.setBloodMeter(0, nbt);
                 player.sendMessage(Text.literal("You are now the Champion of Khonshu, your blood meter is zero.")
                         .formatted(Formatting.GREEN, Formatting.BOLD), true);
                 this.getRandomMoonKnightSet(player).wear(player);
@@ -115,10 +111,7 @@ public class MoonTotemItem extends Item {
         if (stack.getItem() instanceof MoonTotemItem totemItem) {
             NbtCompound nbt = stack.getOrCreateNbt();
             if (totemItem.shouldPulsate(nbt)) {
-                if (user.getWorld().isClient()) {
-                    MinecraftClient.getInstance().gameRenderer.showFloatingItem(stack);
-                }
-                totemItem.setBloodMeter(0, nbt); // Reset blood meter on use
+                totemItem.setBloodMeter(0, nbt);
                 user.sendMessage(Text.literal("You are now the Champion of Khonshu, your blood meter is zero.")
                         .formatted(Formatting.GREEN, Formatting.BOLD), true);
                 this.getRandomMoonKnightSet(user).wear(user);
@@ -137,9 +130,17 @@ public class MoonTotemItem extends Item {
 
     public MoonTotemItem(Settings settings) {
         super(settings);
-        MOON_KNIGHT_SET.add(SetRegistry.MOON_KNIGHT_MARC);
-        MOON_KNIGHT_SET.add(SetRegistry.MOON_KNIGHT_STEVEN);
-        MOON_KNIGHT_SET.add(SetRegistry.MOON_KNIGHT_JAKE);
+    }
+
+    private static List<SuitSet> moonKnightSets() {
+        if (moonKnightSets == null) {
+            moonKnightSets = List.of(
+                    SetRegistry.MOON_KNIGHT_MARC,
+                    SetRegistry.MOON_KNIGHT_STEVEN,
+                    SetRegistry.MOON_KNIGHT_JAKE
+            );
+        }
+        return moonKnightSets;
     }
 
     public void addToBloodMeter(int amount, NbtCompound nbt) {
@@ -178,6 +179,7 @@ public class MoonTotemItem extends Item {
     }
 
     public SuitSet getRandomMoonKnightSet(PlayerEntity player) {
-        return MOON_KNIGHT_SET.get(player.getRandom().nextInt(MOON_KNIGHT_SET.size()));
+        List<SuitSet> sets = moonKnightSets();
+        return sets.get(player.getRandom().nextInt(sets.size()));
     }
 }
