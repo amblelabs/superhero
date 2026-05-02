@@ -18,6 +18,8 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
 
+import java.util.function.Supplier;
+
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitFeature;
@@ -44,12 +46,13 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         Suit suit = Suit.findSuit(player, EquipmentSlot.CHEST).orElse(null);
         if (suit == null) return;
         ClientSuit clientSuit = suit.toClient();
-        if (!(clientSuit.hasModel())) return;
 
         if (this.timeless$cachedSuit != clientSuit) {
             this.timeless$cachedSuit = clientSuit;
-            this.timeless$cachedArmModel = clientSuit.model().get();
+            Supplier<SuitModel> supplier = clientSuit.model();
+            this.timeless$cachedArmModel = supplier == null ? null : supplier.get();
         }
+        if (this.timeless$cachedArmModel == null) return;
 
         boolean isRight = player.getMainArm() == Arm.RIGHT;
         this.timeless$cachedArmModel.renderArm(isRight, player, 0, matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(clientSuit.texture())), light, 1, 1, 1, 1);
