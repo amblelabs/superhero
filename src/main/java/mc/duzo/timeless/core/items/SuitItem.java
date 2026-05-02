@@ -54,7 +54,8 @@ public abstract class SuitItem extends ArmorItem implements Identifiable {
         super.inventoryTick(stack, world, entity, slot, selected);
 
         if (!(entity instanceof PlayerEntity player)) return;
-        if (!stack.equals(player.getEquippedStack(EquipmentSlot.CHEST))) return; // return if this stack isnt being worn in chest
+        if (!stack.equals(player.getEquippedStack(EquipmentSlot.CHEST))) return;
+        if (!this.parent.getSet().isWearing(player)) return;
 
         if (world.isClient()) {
             this.parent.getPowers().forEach(power -> power.tick((AbstractClientPlayerEntity) player));

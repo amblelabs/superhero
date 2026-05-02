@@ -1,5 +1,7 @@
 package mc.duzo.timeless.suit.ironman.mk5;
 
+import java.util.UUID;
+
 import dev.drtheo.scheduler.api.TimeUnit;
 import dev.drtheo.scheduler.api.common.Scheduler;
 import dev.drtheo.scheduler.api.common.TaskStage;
@@ -9,6 +11,7 @@ import mc.duzo.animation.registry.client.TrackerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Hand;
@@ -52,7 +55,14 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
         DuzoAnimationMod.play(player, TimelessTrackers.SUIT, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close"));
         DuzoAnimationMod.play(player, TrackerRegistry.PLAYER, new Identifier(Timeless.MOD_ID, "ironman_mk5_case_close_player"));
 
-        Scheduler.get().runTaskLater(() -> toCasePost(player, force), TaskStage.END_SERVER_TICK, TimeUnit.SECONDS, (long) (8.038f));
+        UUID uuid = player.getUuid();
+        MinecraftServer server = player.getServer();
+        Scheduler.get().runTaskLater(() -> {
+            if (server == null) return;
+            ServerPlayerEntity current = server.getPlayerManager().getPlayer(uuid);
+            if (current == null) return;
+            toCasePost(current, force);
+        }, TaskStage.END_SERVER_TICK, TimeUnit.SECONDS, (long) (8.038f));
         return true;
     }
     private static void toCasePost(ServerPlayerEntity player, boolean force) {
