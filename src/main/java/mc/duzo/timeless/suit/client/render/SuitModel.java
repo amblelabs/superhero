@@ -44,6 +44,19 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
     public void setAngles(LivingEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
         if (!(entity instanceof AbstractClientPlayerEntity player)) return;
         this.runAnimations(player, animationProgress);
+
+        SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
+        if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
+            this.rotateParts(player);
+        }
+    }
+
+    /**
+     * Override to apply per-frame procedural rotations (e.g. flight tilt).
+     * Runs from setAngles, before SuitFeature copies the suit pose back to the player biped,
+     * so any rotations applied here propagate to the player model too.
+     */
+    protected void rotateParts(AbstractClientPlayerEntity player) {
     }
 
     protected void runAnimations(AbstractClientPlayerEntity player, float animationProgress) {

@@ -73,13 +73,6 @@ public class AlexSuitModel extends SuitModel {
 			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180f));
 		}
 
-		if (entity instanceof AbstractClientPlayerEntity player) {
-			SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
-			if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
-				this.rotateParts(player);
-			}
-		}
-
 		this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 		matrices.pop();
 	}
@@ -109,7 +102,8 @@ public class AlexSuitModel extends SuitModel {
 		matrices.pop();
 	}
 
-	private void rotateParts(AbstractClientPlayerEntity entity) {
+	@Override
+	protected void rotateParts(AbstractClientPlayerEntity entity) {
 		if (!FlightPower.isFlying(entity)) return;
 
 		Vec3d velocity = entity.getVelocity().rotateY(((float) Math.toRadians(entity.getYaw())));

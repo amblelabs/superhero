@@ -294,7 +294,6 @@ public class MarkFiveModel extends SuitModel {
         if (entity instanceof AbstractClientPlayerEntity player) {
             SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
             if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
-                this.rotateParts(player);
                 matrices.translate(0f, -0.2f, 0f);
             }
         }
@@ -306,7 +305,8 @@ public class MarkFiveModel extends SuitModel {
         matrices.pop();
     }
 
-    private void rotateParts(AbstractClientPlayerEntity entity) {
+    @Override
+    protected void rotateParts(AbstractClientPlayerEntity entity) {
         if (!FlightPower.isFlying(entity)) return;
 
         Vec3d velocity = entity.getVelocity().rotateY(((float) Math.toRadians(entity.getYaw())));
