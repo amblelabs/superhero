@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 public class GenericSupermanSuit extends SupermanSuit {
 
 	public GenericSupermanSuit() {
-		super("generic", PowerList.of(PowerRegistry.FLIGHT, PowerRegistry.SUPER_STRENGTH, PowerRegistry.SUPER_JUMP, PowerRegistry.SWIFT_SNEAK, PowerRegistry.INVULNERABILITY));
+		super("generic", PowerList.of(PowerRegistry.BOOSTED_FLIGHT, PowerRegistry.SUPER_STRENGTH, PowerRegistry.SUPER_JUMP, PowerRegistry.SWIFT_SNEAK, PowerRegistry.INVULNERABILITY));
 	}
 
 	@Override
