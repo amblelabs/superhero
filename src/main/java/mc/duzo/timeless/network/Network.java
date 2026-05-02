@@ -1,5 +1,8 @@
 package mc.duzo.timeless.network;
 
+import java.util.Optional;
+
+import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.fabricmc.fabric.api.networking.v1.FabricPacket;
@@ -42,16 +45,15 @@ public class Network {
         ServerPlayNetworking.send(player, id, buf);
     }
 
-    public static <T> T receive(Codec<T> codec, PacketByteBuf buf) {
+    public static <T> Optional<T> receive(Codec<T> codec, PacketByteBuf buf) {
         NbtCompound nbt = buf.readNbt();
         if (nbt == null) {
             Timeless.LOGGER.error("Network.receive: missing or invalid nbt payload");
-            return null;
+            return Optional.empty();
         }
         return codec.decode(NbtOps.INSTANCE, nbt)
                 .resultOrPartial(Timeless.LOGGER::error)
-                .map(com.mojang.datafixers.util.Pair::getFirst)
-                .orElse(null);
+                .map(Pair::getFirst);
     }
 
     public static void toTracking(FabricPacket packet, ServerPlayerEntity target) {
