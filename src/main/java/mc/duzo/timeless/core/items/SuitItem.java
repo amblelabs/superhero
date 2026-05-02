@@ -18,7 +18,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import mc.duzo.timeless.network.Network;
+import mc.duzo.timeless.network.s2c.UpdateSuitDataS2CPacket;
 import mc.duzo.timeless.suit.Suit;
+import mc.duzo.timeless.util.SuitDataAccess;
 
 public abstract class SuitItem extends ArmorItem implements Identifiable {
     private final Suit parent;
@@ -67,13 +70,8 @@ public abstract class SuitItem extends ArmorItem implements Identifiable {
 
     public static class Data {
         public static NbtCompound get(LivingEntity entity) {
-            ItemStack stack = entity.getEquippedStack(EquipmentSlot.CHEST);
-
-            if (stack == null) return null;
-            if (!(stack.getItem() instanceof SuitItem item)) return null;
-            if (!item.getSuit().getSet().isWearing(entity)) return null;
-
-            return stack.getOrCreateSubNbt("SuitData");
+            if (!(entity instanceof SuitDataAccess access)) return null;
+            return access.timeless$getSuitData();
         }
         public static NbtElement get(LivingEntity entity, String key) {
             NbtCompound data = get(entity);
@@ -84,6 +82,29 @@ public abstract class SuitItem extends ArmorItem implements Identifiable {
             NbtCompound data = get(entity);
             if (data == null) return;
             data.put(key, value);
+            sync(entity);
+        }
+        public static void putBoolean(LivingEntity entity, String key, boolean value) {
+            NbtCompound data = get(entity);
+            if (data == null) return;
+            data.putBoolean(key, value);
+            sync(entity);
+        }
+        public static boolean getBoolean(LivingEntity entity, String key) {
+            NbtCompound data = get(entity);
+            if (data == null) return false;
+            return data.getBoolean(key);
+        }
+        public static boolean contains(LivingEntity entity, String key) {
+            NbtCompound data = get(entity);
+            if (data == null) return false;
+            return data.contains(key);
+        }
+        public static void sync(LivingEntity entity) {
+            if (!(entity instanceof ServerPlayerEntity sp)) return;
+            NbtCompound data = get(sp);
+            if (data == null) return;
+            Network.toTracking(new UpdateSuitDataS2CPacket(sp.getUuid(), data), sp);
         }
     }
 }

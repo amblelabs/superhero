@@ -1,7 +1,6 @@
 package mc.duzo.timeless.power.impl;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -38,18 +37,10 @@ public class HoverPower extends Power {
     }
 
     private static void setHover(ServerPlayerEntity player, boolean val) {
-        NbtCompound data = SuitItem.Data.get(player);
-
-        if (data == null) return;
-
-        data.putBoolean("HoverEnabled", val);
+        SuitItem.Data.putBoolean(player, "HoverEnabled", val);
     }
     public static boolean hasHover(PlayerEntity player) {
-        NbtCompound data = SuitItem.Data.get(player);
-
-        if (data == null) return false;
-
-        return data.getBoolean("HoverEnabled");
+        return SuitItem.Data.getBoolean(player, "HoverEnabled");
     }
 
     @Override

@@ -12,7 +12,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -120,32 +119,16 @@ public class FlightPower extends Power {
     }
 
     public static boolean hasFlight(PlayerEntity player) {
-        NbtCompound data = SuitItem.Data.get(player);
-
-        if (data == null) return false;
-
-        return data.getBoolean("FlightEnabled");
+        return SuitItem.Data.getBoolean(player, "FlightEnabled");
     }
     public static void setFlight(PlayerEntity player, boolean val) {
-        NbtCompound data = SuitItem.Data.get(player);
-
-        if (data == null) return;
-
-        data.putBoolean("FlightEnabled", val);
+        SuitItem.Data.putBoolean(player, "FlightEnabled", val);
     }
     public static boolean isFlying(PlayerEntity player) {
-        NbtCompound data = SuitItem.Data.get(player);
-
-        if (data == null) return false;
-
-        return data.getBoolean("IsFlying");
+        return SuitItem.Data.getBoolean(player, "IsFlying");
     }
     private static void setIsFlying(PlayerEntity player, boolean val) {
-        NbtCompound data = SuitItem.Data.get(player);
-
-        if (data == null) return;
-
-        data.putBoolean("IsFlying", val);
+        SuitItem.Data.putBoolean(player, "IsFlying", val);
 
         if (player instanceof ServerPlayerEntity)
             Network.toTracking(new UpdateFlyingStatusS2CPacket(player.getUuid(), val), (ServerPlayerEntity) player);
