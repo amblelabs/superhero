@@ -12,7 +12,8 @@
     "client.ArmorFeatureRendererMixin",
     "client.ArmorStandEntityRendererMixin",
     "client.ClientPlayerEntityMixin",
-    "client.PlayerEntityRendererMixin"
+    "client.PlayerEntityRendererMixin",
+    "client.WallCrawlRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
