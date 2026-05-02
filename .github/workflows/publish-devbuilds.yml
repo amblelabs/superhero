@@ -49,16 +49,19 @@ jobs:
       #  BETA: 1 # exclude assets if it's a beta dev build
 
     - name: Publish artifacts
-      uses: DrTheodor/discord-webhook-upload-action@v1.2
+      uses: drtheodor/discord-webhook-upload-action@v0.2
       with:
         url: ${{ secrets.DEV_BUILDS }}
-        file: 'build/libs/*'
         username: tony stank
         avatar: 'https://img.asmedia.epimg.net/resizer/v2/5R475RB4FZAOJIDICEZLRYLDZM.jpg?auth=e8fe4ea252b5bf7424148eb36e30055f04fc07cd4b2cb88e8f94bee7b8346ac0&width=1472&height=1104&smart=true'
-        commit: '> :sparkles: [%MESSAGE%](<%LINK%>) by [%AUTHOR%](<%AUTHOR_LINK%>)'
-        message: |
+        message_commit: '> :sparkles: [${commitMessage}](<${commitUrl}>) by [${authorName}](<${authorUrl}>)'
+        message_header: |
           <:new1:1253371736510959636><:new2:1253371805734015006> New `Timeless Heroes` dev build `#${{ github.run_number }}`:
-          %COMMITS%
+        file: |
+          build/libs/*.jar
+          !build/libs/*-sources.jar
+          !build/libs/*-dev.jar
+          !build/libs/*-javadoc.jar
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
