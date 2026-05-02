@@ -2,6 +2,7 @@ package mc.duzo.timeless.mixin.client;
 
 import net.minecraft.entity.EquipmentSlot;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,12 +21,16 @@ import net.minecraft.util.Arm;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.client.ClientSuit;
 import mc.duzo.timeless.suit.client.render.SuitFeature;
+import mc.duzo.timeless.suit.client.render.SuitModel;
 
 @Mixin(PlayerEntityRenderer.class)
 public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
     public PlayerEntityRendererMixin(EntityRendererFactory.Context ctx, PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
         super(ctx, model, shadowRadius);
     }
+
+    @Unique private ClientSuit timeless$cachedSuit;
+    @Unique private SuitModel timeless$cachedArmModel;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void timeless$PlayerEntityRenderer(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
@@ -41,9 +46,13 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         ClientSuit clientSuit = suit.toClient();
         if (!(clientSuit.hasModel())) return;
 
+        if (this.timeless$cachedSuit != clientSuit) {
+            this.timeless$cachedSuit = clientSuit;
+            this.timeless$cachedArmModel = clientSuit.model().get();
+        }
+
         boolean isRight = player.getMainArm() == Arm.RIGHT;
-        // todo - this will create a new model every frame, which is bad
-        clientSuit.model().get().renderArm(isRight, player, 0, matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(clientSuit.texture())), light, 1, 1, 1, 1);
+        this.timeless$cachedArmModel.renderArm(isRight, player, 0, matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(clientSuit.texture())), light, 1, 1, 1, 1);
         ci.cancel();
     }
 }
