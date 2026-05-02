@@ -1,6 +1,9 @@
 package mc.duzo.timeless.suit.client.render.generic;
 
+import mc.duzo.animation.generic.AnimationInfo;
+import mc.duzo.timeless.power.impl.FlightPower;
 import mc.duzo.timeless.suit.client.ClientSuit;
+import mc.duzo.timeless.suit.client.animation.SuitAnimationHolder;
 import mc.duzo.timeless.suit.client.render.SuitModel;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -11,6 +14,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.RotationAxis;
+import net.minecraft.util.math.Vec3d;
 
 public class SteveSuitModel extends SuitModel {
 	private final ClientSuit suit;
@@ -69,6 +73,13 @@ public class SteveSuitModel extends SuitModel {
 			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180f));
 		}
 
+		if (entity instanceof AbstractClientPlayerEntity player) {
+			SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
+			if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
+				this.rotateParts(player);
+			}
+		}
+
 		this.getPart().render(matrices, vertexConsumers, light, OverlayTexture.DEFAULT_UV, r, g, b, alpha);
 		matrices.pop();
 	}
@@ -96,6 +107,40 @@ public class SteveSuitModel extends SuitModel {
 		this.leftArm.render(matrices, buffer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1f);
 
 		matrices.pop();
+	}
+
+	private void rotateParts(AbstractClientPlayerEntity entity) {
+		if (!FlightPower.isFlying(entity)) return;
+
+		Vec3d velocity = entity.getVelocity().rotateY(((float) Math.toRadians(entity.getYaw())));
+
+		float velocityY = Math.min((float) velocity.y / 2f, 0);
+		float velocityX = (float) velocity.x / 2f;
+		float velocityZ = (float) velocity.z / 2f;
+
+		this.rightArm.pitch = velocityZ;
+		this.leftArm.pitch = velocityZ;
+		this.rightArm.roll += velocityX + 0.1f - velocityY;
+		this.leftArm.roll += velocityX - 0.1f + velocityY;
+
+		this.rightLeg.pitch = velocityZ / 1.25f - velocityY;
+		this.leftLeg.pitch = velocityZ / 1.25f - velocityY;
+		this.rightLeg.roll = this.rightArm.roll / 2f;
+		this.leftLeg.roll = this.leftArm.roll / 2f;
+
+		this.rightLeg.pitch = Math.min(this.rightLeg.pitch, 1.25f);
+		this.leftLeg.pitch = Math.min(this.leftLeg.pitch, 1.25f);
+
+		this.body.pitch = velocityZ / 3f - (velocityY / 3f);
+		this.body.roll = velocityX / 3f;
+
+		this.rightLeg.pivotY -= this.body.pitch * 3f * 1.4f;
+		this.rightLeg.pivotZ += this.body.pitch * 3f * 3.2f;
+		this.rightLeg.pivotX -= this.body.roll * 3f * 3.2f;
+
+		this.leftLeg.pivotY -= this.body.pitch * 3f * 1.4f;
+		this.leftLeg.pivotZ += this.body.pitch * 3f * 3.2f;
+		this.leftLeg.pivotX -= this.body.roll * 3f * 3.2f;
 	}
 
 	@Override

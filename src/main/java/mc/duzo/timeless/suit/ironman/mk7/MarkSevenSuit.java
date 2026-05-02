@@ -1,14 +1,5 @@
 package mc.duzo.timeless.suit.ironman.mk7;
 
-import java.util.function.Supplier;
-
-import mc.duzo.animation.generic.AnimationInfo;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Identifier;
-
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.power.PowerList;
 import mc.duzo.timeless.power.PowerRegistry;
@@ -18,6 +9,11 @@ import mc.duzo.timeless.suit.ironman.IronManSuit;
 import mc.duzo.timeless.suit.ironman.mk7.client.MarkSevenModel;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.util.Identifier;
+
+import java.util.function.Supplier;
 
 public class MarkSevenSuit extends IronManSuit {
     private final PowerList powers;
@@ -25,7 +21,7 @@ public class MarkSevenSuit extends IronManSuit {
     public MarkSevenSuit() {
         super("mark_seven");
 
-        this.powers = PowerList.of(PowerRegistry.SENTRY, PowerRegistry.FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE, PowerRegistry.JARVIS);
+        this.powers = PowerList.of(PowerRegistry.SENTRY, PowerRegistry.BOOSTED_FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE, PowerRegistry.JARVIS);
     }
 
     @Override
@@ -41,30 +37,22 @@ public class MarkSevenSuit extends IronManSuit {
     @Environment(EnvType.CLIENT)
     @Override
     protected ClientSuit createClient() {
-        AnimationInfo info = new AnimationInfo(AnimationInfo.RenderType.TORSO_HEAD, null, AnimationInfo.Movement.ALLOW, null);
-
         return new ClientSuit(this) {
             @Override
             public Supplier<SuitModel> model() {
                 return MarkSevenModel::new;
             }
-
-            @Override
-            public AnimationInfo getAnimationInfo(LivingEntity entity) {
-                if (!(getSet().isWearing(entity))) return null;
-                return info;
-            }
         };
     }
 
     @Override
-    public int getVerticalFlightModifier(boolean isSprinting) {
-        return (isSprinting) ? 13 : 9;
+    public int getFlightSpeed(boolean hasBoost) {
+        return 45;
     }
 
     @Override
-    public int getHorizontalFlightModifier(boolean isSprinting) {
-        return (isSprinting) ? 13 : 5;
+    public float getHoverScale() {
+        return 0.5f;
     }
 
     @Override

@@ -26,7 +26,7 @@ public abstract class Power implements Identifiable, Translatable {
     public abstract void tick(ServerPlayerEntity player);
     @Environment(EnvType.CLIENT)
     public void tick(AbstractClientPlayerEntity player) {
-        
+
     }
     public abstract void onLoad(ServerPlayerEntity player);
 

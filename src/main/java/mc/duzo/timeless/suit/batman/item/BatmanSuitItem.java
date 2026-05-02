@@ -24,7 +24,7 @@ public class BatmanSuitItem extends SuitItem implements AutomaticModel, Automati
 
     private static class BatmanMaterial extends SuitMaterial {
         public BatmanMaterial(Item repair) {
-            super("iron_man", 33, Util.make(new EnumMap(ArmorItem.Type.class), map -> {
+            super("batman", 33, Util.make(new EnumMap(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 3);
                 map.put(ArmorItem.Type.LEGGINGS, 6);
                 map.put(ArmorItem.Type.CHESTPLATE, 8);

@@ -1,19 +1,21 @@
 package mc.duzo.timeless.suit.client;
 
-import java.util.Optional;
-import java.util.function.Supplier;
-
 import mc.duzo.animation.generic.AnimationInfo;
+import mc.duzo.animation.generic.VisibilityList;
+import mc.duzo.animation.generic.VisiblePart;
 import mc.duzo.animation.registry.Identifiable;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.Identifier;
-
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
 import mc.duzo.timeless.suit.client.render.SuitModel;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Identifier;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 @Environment(EnvType.CLIENT)
 public abstract class ClientSuit implements Identifiable {
@@ -58,7 +60,49 @@ public abstract class ClientSuit implements Identifiable {
         return new Identifier(texture.getNamespace(), texture.getPath().substring(0, index) + "_emission.png");
     }
 
+    /**
+     * @return parts of the player that should always be visible when wearing this suit
+     */
+    public List<VisiblePart> getVisibleParts(LivingEntity entity) {
+        return List.of(VisiblePart.HEAD);
+    }
+
     public AnimationInfo getAnimationInfo(LivingEntity entity) {
-        return new AnimationInfo(AnimationInfo.RenderType.ALL, null, AnimationInfo.Movement.ALLOW, AnimationInfo.Transform.TARGETED);
+        boolean head = Suit.findSuit(entity, EquipmentSlot.HEAD).isEmpty();
+        boolean chest = Suit.findSuit(entity, EquipmentSlot.CHEST).isEmpty();
+        boolean legs = Suit.findSuit(entity, EquipmentSlot.LEGS).isEmpty();
+        boolean feet = Suit.findSuit(entity, EquipmentSlot.FEET).isEmpty();
+
+        VisibilityList visibility = VisibilityList.none();
+
+        if (head) {
+            visibility.add(VisiblePart.HEAD);
+            visibility.add(VisiblePart.HAT);
+        }
+
+        if (chest) {
+            visibility.add(VisiblePart.BODY);
+            visibility.add(VisiblePart.JACKET);
+            visibility.add(VisiblePart.LEFT_ARM);
+            visibility.add(VisiblePart.LEFT_SLEEVE);
+            visibility.add(VisiblePart.RIGHT_ARM);
+            visibility.add(VisiblePart.RIGHT_SLEEVE);
+        }
+
+        if (legs && feet) {
+            visibility.add(VisiblePart.LEFT_LEG);
+            visibility.add(VisiblePart.LEFT_PANTS);
+            visibility.add(VisiblePart.RIGHT_LEG);
+            visibility.add(VisiblePart.RIGHT_PANTS);
+        }
+
+        visibility.addAll(this.getVisibleParts(entity));
+
+        return new AnimationInfo(
+            visibility,
+            null,
+            AnimationInfo.Movement.ALLOW,
+            null
+        );
     }
 }

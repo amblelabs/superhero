@@ -22,6 +22,12 @@ public class Timeless implements ModInitializer {
         RegistryContainer.register(TimelessItems.class, Timeless.MOD_ID);
         RegistryContainer.register(TimelessBlocks.class, Timeless.MOD_ID);
 
+        // Suits and powers
+        PowerRegistry.init();
+        SetRegistry.init();
+        SuitRegistry.init();
+        TimelessTrackers.init();
+
         // Register blocks, items, block entities, sounds, and entities
         TimelessBlockEntityTypes.init();
         TimelessEntityTypes.init();
@@ -29,13 +35,6 @@ public class Timeless implements ModInitializer {
         TimelessItems.init();
 
         TimelessCommands.init();
-
-        // Suits and powers
-        PowerRegistry.init();
-        SetRegistry.init();
-        SuitRegistry.init();
-        TimelessTrackers.init();
-
         // Networking
         Network.init();
     }

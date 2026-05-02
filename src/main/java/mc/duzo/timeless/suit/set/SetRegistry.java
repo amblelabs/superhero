@@ -1,5 +1,18 @@
 package mc.duzo.timeless.suit.set;
 
+import mc.duzo.timeless.suit.moonknight.item.MoonKnightSuitItem;
+import mc.duzo.timeless.suit.moonknight.jake.JakeSuit;
+import mc.duzo.timeless.suit.moonknight.marc.MarcSuit;
+import mc.duzo.timeless.suit.moonknight.steven.StevenSuit;
+import mc.duzo.timeless.suit.spiderman.item.SpidermanSuitItem;
+import mc.duzo.timeless.suit.spiderman.miles.MilesSuit;
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
+
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.SimpleRegistry;
+import net.minecraft.util.Identifier;
+
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.suit.batman.item.BatmanSuitItem;
 import mc.duzo.timeless.suit.batman.sixer.Batman66Suit;
@@ -8,13 +21,6 @@ import mc.duzo.timeless.suit.ironman.mk2.MarkTwoSuit;
 import mc.duzo.timeless.suit.ironman.mk3.MarkThreeSuit;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveSuit;
 import mc.duzo.timeless.suit.ironman.mk7.MarkSevenSuit;
-import mc.duzo.timeless.suit.spiderman.item.SpidermanSuitItem;
-import mc.duzo.timeless.suit.spiderman.miles.MilesSuit;
-import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.SimpleRegistry;
-import net.minecraft.util.Identifier;
 
 public class SetRegistry {
     public static final SimpleRegistry<SuitSet> REGISTRY = FabricRegistryBuilder.createSimple(RegistryKey.<SuitSet>ofRegistry(new Identifier(Timeless.MOD_ID, "suit_set"))).buildAndRegister();
@@ -29,6 +35,9 @@ public class SetRegistry {
     public static SuitSet MARK_TWO;
     public static SuitSet BATMAN_66;
     public static SuitSet MILES;
+    public static SuitSet MOON_KNIGHT_MARC;
+    public static SuitSet MOON_KNIGHT_JAKE;
+    public static SuitSet MOON_KNIGHT_STEVEN;
 
     public static void init() {
         // Iron Man
@@ -42,5 +51,10 @@ public class SetRegistry {
 
         // Spiderman
         MILES = register(new RegisteringSuitSet(new MilesSuit(), SpidermanSuitItem::new));
+
+        // Moon Knight
+        MOON_KNIGHT_MARC = register(new RegisteringSuitSet(new MarcSuit(), MoonKnightSuitItem::new));
+        MOON_KNIGHT_JAKE = register(new RegisteringSuitSet(new JakeSuit(), MoonKnightSuitItem::new));
+        MOON_KNIGHT_STEVEN = register(new RegisteringSuitSet(new StevenSuit(), MoonKnightSuitItem::new));
     }
 }

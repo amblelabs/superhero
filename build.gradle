@@ -21,7 +21,35 @@ repositories {
         }
     }
 
-    maven { url "https://theo.is-a.dev/maven-repo/" }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+
+    // AmbleKit (https://github.com/amblelabs/modkit, used by https://github.com/amblelabs/ait)
+    maven {
+        url "https://amblelabs.dev/maven"
+
+        content {
+            includeGroup "dev.amble"
+        }
+    }
+
+    // MultiDim, Scheduler, Queue
+    maven {
+        url "https://theo.is-a.dev/maven/"
+
+        content {
+            includeGroup "dev.drtheo"
+        }
+    }
 }
 
 fabricApi {
@@ -37,21 +65,18 @@ dependencies {
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    // duzos animator
-    modImplementation files("libs/animator.jar")
-
-    modImplementation("com.github.amblelabs:modkit:${project.sakitus_version}") {
+    modImplementation("dev.amble:lib:${project.amblekit_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    include(modImplementation("dev.drtheo:scheduler:${project.scheduler_version}")) {
+    modImplementation("maven.modrinth:animator:${project.animator_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-
 }
 
 processResources {
     inputs.property "version", project.version
+    filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version
@@ -60,6 +85,10 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.release = 17
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/timeless.accesswidener")
 }
 
 java {

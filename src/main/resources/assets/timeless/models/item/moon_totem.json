@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "timeless:item/moon_totem"
+  },
+  "overrides": [
+    {"predicate": {"pulsate": 0}, "model": "timeless:item/moon_totem"},
+    {"predicate": {"pulsate": 1}, "model": "timeless:item/alternate/moon_totem"}
+  ]
+}
