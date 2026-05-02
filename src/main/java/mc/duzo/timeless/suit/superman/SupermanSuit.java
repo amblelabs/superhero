@@ -41,11 +41,6 @@ public abstract class SupermanSuit extends Suit implements AutomaticSuitEnglish,
 	}
 
 	@Override
-	public boolean isAlwaysVisible() {
-		return false;
-	}
-
-	@Override
 	public Identifier id() {
 		return this.id;
 	}
