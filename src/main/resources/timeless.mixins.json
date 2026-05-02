@@ -5,7 +5,8 @@
   "mixins": [
     "EnchantmentHelperMixin",
     "EntityMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "ServerPlayerEntityMixin"
   ],
   "client": [
     "client.ArmorFeatureRendererMixin",

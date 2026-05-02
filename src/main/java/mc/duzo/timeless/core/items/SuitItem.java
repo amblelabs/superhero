@@ -2,6 +2,10 @@ package mc.duzo.timeless.core.items;
 
 import mc.duzo.animation.registry.Identifiable;
 
+import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -69,6 +73,37 @@ public abstract class SuitItem extends ArmorItem implements Identifiable {
     }
 
     public static class Data {
+        private static final String LEGACY_KEY = "SuitData";
+
+        static {
+            ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
+                ServerPlayerEntity player = handler.getPlayer();
+                migrateLegacy(player);
+                sync(player);
+            });
+
+            EntityTrackingEvents.START_TRACKING.register((tracked, watcher) -> {
+                if (!(tracked instanceof ServerPlayerEntity sp)) return;
+                NbtCompound data = get(sp);
+                if (data == null) return;
+                ServerPlayNetworking.send(watcher, new UpdateSuitDataS2CPacket(sp.getUuid(), data));
+            });
+        }
+
+        private static void migrateLegacy(ServerPlayerEntity player) {
+            if (!(player instanceof SuitDataAccess access)) return;
+            if (!access.timeless$getSuitData().isEmpty()) return;
+
+            ItemStack chest = player.getEquippedStack(EquipmentSlot.CHEST);
+            if (!(chest.getItem() instanceof SuitItem)) return;
+            if (!chest.hasNbt()) return;
+            NbtCompound chestNbt = chest.getNbt();
+            if (!chestNbt.contains(LEGACY_KEY)) return;
+
+            access.timeless$setSuitData(chestNbt.getCompound(LEGACY_KEY).copy());
+            chestNbt.remove(LEGACY_KEY);
+        }
+
         public static NbtCompound get(LivingEntity entity) {
             if (!(entity instanceof SuitDataAccess access)) return null;
             return access.timeless$getSuitData();
