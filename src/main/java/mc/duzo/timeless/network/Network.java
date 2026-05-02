@@ -17,11 +17,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.network.c2s.UpdateInputC2SPacket;
 import mc.duzo.timeless.network.c2s.UsePowerC2SPacket;
 
 public class Network {
     static {
         ServerPlayNetworking.registerGlobalReceiver(UsePowerC2SPacket.TYPE, UsePowerC2SPacket::handle);
+        ServerPlayNetworking.registerGlobalReceiver(UpdateInputC2SPacket.TYPE, UpdateInputC2SPacket::handle);
     }
 
     public static void init() {
