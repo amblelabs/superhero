@@ -43,9 +43,15 @@ public class Network {
     }
 
     public static <T> T receive(Codec<T> codec, PacketByteBuf buf) {
-        return codec.decode(NbtOps.INSTANCE, buf.readNbt())
+        NbtCompound nbt = buf.readNbt();
+        if (nbt == null) {
+            Timeless.LOGGER.error("Network.receive: missing or invalid nbt payload");
+            return null;
+        }
+        return codec.decode(NbtOps.INSTANCE, nbt)
                 .resultOrPartial(Timeless.LOGGER::error)
-                .orElseThrow().getFirst();
+                .map(com.mojang.datafixers.util.Pair::getFirst)
+                .orElse(null);
     }
 
     public static void toTracking(FabricPacket packet, ServerPlayerEntity target) {
