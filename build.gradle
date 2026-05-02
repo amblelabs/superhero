@@ -53,7 +53,22 @@ repositories {
 }
 
 fabricApi {
-    configureDataGeneration()
+    configureDataGeneration {
+        modId = "timeless"
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs += "src/main/generated"
+        }
+    }
+}
+
+processResources {
+    exclude ".cache/**"
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 dependencies {
@@ -124,3 +139,5 @@ publishing {
         // retrieving dependencies.
     }
 }
+
+

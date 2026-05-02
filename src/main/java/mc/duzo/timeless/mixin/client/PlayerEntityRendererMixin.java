@@ -41,7 +41,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         this.addFeature(new SuitFeature<>(renderer, ctx.getModelLoader()));
     }
 
-    @Inject(method = "renderArm" , at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderArm", at = @At("TAIL"))
     private void timeless$renderArm(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity player, ModelPart arm, ModelPart sleeve, CallbackInfo ci){
         Suit suit = Suit.findSuit(player, EquipmentSlot.CHEST).orElse(null);
         if (suit == null) return;
@@ -56,6 +56,5 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
         boolean isRight = player.getMainArm() == Arm.RIGHT;
         this.timeless$cachedArmModel.renderArm(isRight, player, 0, matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(clientSuit.texture())), light, 1, 1, 1, 1);
-        ci.cancel();
     }
 }
