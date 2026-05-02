@@ -302,12 +302,7 @@ public abstract class GenericIronManModel extends SuitModel {
 
         float pivotFix = -22F;
 
-        if (entity instanceof AbstractClientPlayerEntity player) {
-            SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
-            if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
-                this.rotateParts(player);
-            }
-
+        if (entity instanceof AbstractClientPlayerEntity) {
             pivotFix = 2F;
             matrices.translate(0f, -1.5125f, 0f);
             matrices.scale(1.01f, 1.01f, 1.01f);
@@ -322,7 +317,8 @@ public abstract class GenericIronManModel extends SuitModel {
         matrices.pop();
     }
 
-    private void rotateParts(AbstractClientPlayerEntity entity) {
+    @Override
+    protected void rotateParts(AbstractClientPlayerEntity entity) {
         if (!FlightPower.isFlying(entity)) return;
 
         Vec3d velocity = entity.getVelocity().rotateY(((float) Math.toRadians(entity.getYaw())));
