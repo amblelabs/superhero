@@ -54,6 +54,12 @@ public class PowerRegistry {
             })
             .build().register();
     public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();
+    public static Power INVULNERABILITY = Power.Builder.create(new Identifier(Timeless.MOD_ID, "invulnerability"))
+            .tick(player -> {
+                if (player.getServer().getTicks() % 20 != 0) return;
+                player.addStatusEffect(new StatusEffectInstance(StatusEffects.RESISTANCE, 22, 2, false, false));
+            })
+            .build().register();
 
     public static void init() {}
 }
