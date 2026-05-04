@@ -54,7 +54,9 @@ public class PowerRegistry {
             })
             .build().register();
     public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();
+    public static SpideySensePower SPIDEY_SENSE = new SpideySensePower().register();
     public static WallClimbPower WALL_CLIMB = new WallClimbPower().register();
+    public static WebSwingPower WEB_SWING = new WebSwingPower().register();
 
     public static void init() {}
 }

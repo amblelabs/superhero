@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public class MilesSuit extends SpidermanSuit {
     public MilesSuit() {
-        super("miles", PowerList.of(PowerRegistry.WALL_CLIMB, PowerRegistry.SUPER_STRENGTH, PowerRegistry.SWIFT_SNEAK));
+        super("miles", PowerList.of(PowerRegistry.WEB_SWING, PowerRegistry.WALL_CLIMB, PowerRegistry.SUPER_STRENGTH, PowerRegistry.SPIDEY_SENSE));
     }
 
     @Override
