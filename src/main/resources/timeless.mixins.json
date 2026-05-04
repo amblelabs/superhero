@@ -6,7 +6,8 @@
     "EnchantmentHelperMixin",
     "EntityMixin",
     "PlayerEntityMixin",
-    "ServerPlayerEntityMixin"
+    "ServerPlayerEntityMixin",
+    "WallCrawlTravelMixin"
   ],
   "client": [
     "client.ArmorFeatureRendererMixin",

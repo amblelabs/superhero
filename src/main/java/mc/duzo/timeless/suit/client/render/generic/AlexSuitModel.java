@@ -13,6 +13,7 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 
@@ -64,6 +65,26 @@ public class AlexSuitModel extends SuitModel {
 		ModelPartData left_leg = modelPartData.addChild("left_leg", ModelPartBuilder.create().uv(16, 48).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.0F))
 				.uv(0, 48).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.25F)), ModelTransform.pivot(1.9F, 12.0F, 0.0F));
 		return TexturedModelData.of(modelData, 64, 64);
+	}
+
+	@Override
+	public void setAngles(LivingEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+		this.head.yaw = headYaw * 0.017453292F;
+		this.head.pitch = headPitch * 0.017453292F;
+		this.rightArm.pitch = MathHelper.cos(limbAngle * 0.6662F + (float) Math.PI) * 2.0F * limbDistance * 0.5F;
+		this.leftArm.pitch = MathHelper.cos(limbAngle * 0.6662F) * 2.0F * limbDistance * 0.5F;
+		this.rightArm.roll = 0.0F;
+		this.leftArm.roll = 0.0F;
+		this.rightArm.yaw = 0.0F;
+		this.leftArm.yaw = 0.0F;
+		this.rightLeg.pitch = MathHelper.cos(limbAngle * 0.6662F) * 1.4F * limbDistance;
+		this.leftLeg.pitch = MathHelper.cos(limbAngle * 0.6662F + (float) Math.PI) * 1.4F * limbDistance;
+		this.rightLeg.yaw = 0.0F;
+		this.leftLeg.yaw = 0.0F;
+		this.rightLeg.roll = 0.0F;
+		this.leftLeg.roll = 0.0F;
+
+		super.setAngles(entity, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 	}
 
 	@Override

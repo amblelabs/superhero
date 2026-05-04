@@ -52,6 +52,7 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
         model.setVisibilityForSlot(slot);
         model.copyFrom(context);
         model.setAngles(livingEntity, f, g, j, k, l);
+        model.copyTo(context);
 
         model.getCape().ifPresent(cape -> {
             cape.visible = false;

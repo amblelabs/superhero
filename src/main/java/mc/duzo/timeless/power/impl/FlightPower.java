@@ -5,6 +5,7 @@ import mc.duzo.timeless.core.items.SuitItem;
 import mc.duzo.timeless.network.Network;
 import mc.duzo.timeless.network.s2c.UpdateFlyingStatusS2CPacket;
 import mc.duzo.timeless.power.Power;
+import mc.duzo.timeless.power.PowerRegistry;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.api.FlightSuit;
 import net.fabricmc.api.EnvType;
@@ -119,13 +120,20 @@ public class FlightPower extends Power {
     }
 
     public static boolean hasFlight(PlayerEntity player) {
+        if (!suitHasFlightPower(player)) return false;
         return SuitItem.Data.getBoolean(player, "FlightEnabled");
     }
     public static void setFlight(PlayerEntity player, boolean val) {
         SuitItem.Data.putBoolean(player, "FlightEnabled", val);
     }
     public static boolean isFlying(PlayerEntity player) {
+        if (!suitHasFlightPower(player)) return false;
         return SuitItem.Data.getBoolean(player, "IsFlying");
+    }
+    private static boolean suitHasFlightPower(PlayerEntity player) {
+        return Suit.findSuit(player)
+                .map(s -> s.hasPower(PowerRegistry.FLIGHT) || s.hasPower(PowerRegistry.BOOSTED_FLIGHT))
+                .orElse(false);
     }
     private static void setIsFlying(PlayerEntity player, boolean val) {
         SuitItem.Data.putBoolean(player, "IsFlying", val);
