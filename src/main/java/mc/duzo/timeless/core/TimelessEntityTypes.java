@@ -14,6 +14,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.entity.MissileEntity;
+import mc.duzo.timeless.entity.RepulsorBlastEntity;
 import mc.duzo.timeless.suit.ironman.IronManEntity;
 
 public class TimelessEntityTypes {
@@ -24,6 +26,14 @@ public class TimelessEntityTypes {
     public static final EntityType<BaseRangEntity> BASE_RANG_ENTITY_ENTITY_TYPE = register(Registries.ENTITY_TYPE, "base_rang_entity", EntityType.Builder.<BaseRangEntity>create(BaseRangEntity::new, SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f)
             .build("base_rang_entity"));
+
+    public static final EntityType<RepulsorBlastEntity> REPULSOR_BLAST = register(Registries.ENTITY_TYPE, "repulsor_blast", EntityType.Builder.<RepulsorBlastEntity>create(RepulsorBlastEntity::new, SpawnGroup.MISC)
+            .setDimensions(0.1f, 0.1f).maxTrackingRange(96).trackingTickInterval(2)
+            .build("repulsor_blast"));
+
+    public static final EntityType<MissileEntity> MISSILE = register(Registries.ENTITY_TYPE, "missile", EntityType.Builder.<MissileEntity>create(MissileEntity::new, SpawnGroup.MISC)
+            .setDimensions(0.3f, 0.3f).maxTrackingRange(96).trackingTickInterval(2)
+            .build("missile"));
 
     public static void init() {
         registerAttributes(IRON_MAN, MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3F).build());

@@ -132,7 +132,9 @@ public class FlightPower extends Power {
     }
     private static boolean suitHasFlightPower(PlayerEntity player) {
         return Suit.findSuit(player)
-                .map(s -> s.hasPower(PowerRegistry.FLIGHT) || s.hasPower(PowerRegistry.BOOSTED_FLIGHT))
+                .map(s -> s.hasPower(PowerRegistry.FLIGHT)
+                        || s.hasPower(PowerRegistry.BOOSTED_FLIGHT)
+                        || s.hasPower(PowerRegistry.IRON_FLIGHT))
                 .orElse(false);
     }
     private static void setIsFlying(PlayerEntity player, boolean val) {

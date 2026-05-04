@@ -16,6 +16,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRenderEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.entity.EquipmentSlot;
@@ -30,6 +31,8 @@ public class TimelessClient implements ClientModInitializer {
         ClientNetwork.init();
         ClientSuitRegistry.init();
         TimelessKeybinds.init();
+        mc.duzo.timeless.client.render.IronManFlightState.init();
+        mc.duzo.timeless.client.render.NanoShaderHolder.register();
 
         registerRenderers();
         HudRenderCallback.EVENT.register((stack, delta) -> {
@@ -37,7 +40,10 @@ public class TimelessClient implements ClientModInitializer {
             UtilityBeltGui.render(stack, delta);
         });
 
-        registerRenderers();
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(ctx -> {
+            mc.duzo.timeless.client.render.UniBeamRenderer.renderAll(ctx.matrixStack(), ctx.consumers(), ctx.camera(), ctx.tickDelta());
+        });
+
         totemPredicate();
 
         // Disable cape rendering
@@ -50,6 +56,8 @@ public class TimelessClient implements ClientModInitializer {
     public static void registerRenderers() {
         EntityRendererRegistry.register(TimelessEntityTypes.IRON_MAN, IronManEntityRenderer::new);
         EntityRendererRegistry.register(TimelessEntityTypes.BASE_RANG_ENTITY_ENTITY_TYPE, BaseRangEntityRenderer::new);
+        EntityRendererRegistry.register(TimelessEntityTypes.REPULSOR_BLAST, mc.duzo.timeless.client.render.entity.RepulsorBlastRenderer::new);
+        EntityRendererRegistry.register(TimelessEntityTypes.MISSILE, mc.duzo.timeless.client.render.entity.MissileRenderer::new);
     }
 
     public static void totemPredicate() {

@@ -49,6 +49,8 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
         if (anim == null || anim.getInfo().transform() == AnimationInfo.Transform.TARGETED) {
             this.rotateParts(player);
         }
+
+        applyPowerPoses(entity);
     }
 
     /**
@@ -58,6 +60,26 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
      */
     protected void rotateParts(AbstractClientPlayerEntity player) {
     }
+
+    /** Dispatch per-frame procedural pose overrides from each power on the worn suit. */
+    protected void applyPowerPoses(LivingEntity entity) {
+        mc.duzo.timeless.suit.Suit suit = mc.duzo.timeless.suit.Suit.findSuit(entity).orElse(null);
+        if (suit == null) return;
+        for (mc.duzo.timeless.power.Power p : suit.getPowers()) {
+            p.applyPose(entity, this);
+        }
+    }
+
+    /**
+     * Bone accessors used by procedural pose code so it doesn't need to know which subclass it
+     * is talking to. Biped-shaped suits (Steve/Alex) override; non-biped suits leave them null.
+     */
+    public ModelPart partHead() { return null; }
+    public ModelPart partBody() { return null; }
+    public ModelPart partLeftArm() { return null; }
+    public ModelPart partRightArm() { return null; }
+    public ModelPart partLeftLeg() { return null; }
+    public ModelPart partRightLeg() { return null; }
 
     protected void runAnimations(AbstractClientPlayerEntity player, float animationProgress) {
         SuitAnimationHolder anim = this.getAnimation(player).orElse(null);

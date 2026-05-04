@@ -19,6 +19,8 @@ import mc.duzo.timeless.suit.ironman.mk2.MarkTwoSuit;
 import mc.duzo.timeless.suit.ironman.mk3.MarkThreeSuit;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveSuit;
 import mc.duzo.timeless.suit.ironman.mk7.MarkSevenSuit;
+import mc.duzo.timeless.suit.ironman.mk50.MarkFiftySuit;
+import mc.duzo.timeless.suit.ironman.mk85.MarkEightyFiveSuit;
 
 public class SetRegistry {
     public static final SimpleRegistry<SuitSet> REGISTRY = FabricRegistryBuilder.createSimple(RegistryKey.<SuitSet>ofRegistry(new Identifier(Timeless.MOD_ID, "suit_set"))).buildAndRegister();
@@ -27,6 +29,8 @@ public class SetRegistry {
         return Registry.register(REGISTRY, suit.id(), suit);
     }
 
+    public static SuitSet MARK_EIGHTY_FIVE;
+    public static SuitSet MARK_FIFTY;
     public static SuitSet MARK_SEVEN;
     public static SuitSet MARK_FIVE;
     public static SuitSet MARK_THREE;
@@ -38,6 +42,8 @@ public class SetRegistry {
 
     public static void init() {
         // Iron Man
+        MARK_EIGHTY_FIVE = register(new RegisteringSuitSet(new MarkEightyFiveSuit(), IronManSuitItem::new));
+        MARK_FIFTY = register(new RegisteringSuitSet(new MarkFiftySuit(), IronManSuitItem::new));
         MARK_SEVEN = register(new RegisteringSuitSet(new MarkSevenSuit(), IronManSuitItem::new));
         MARK_FIVE = register(new RegisteringSuitSet(new MarkFiveSuit(), IronManSuitItem::new));
         MARK_THREE = register(new RegisteringSuitSet(new MarkThreeSuit(), IronManSuitItem::new));

@@ -37,5 +37,7 @@ public class Timeless implements ModInitializer {
         TimelessCommands.init();
         // Networking
         Network.init();
+
+        TimelessGameRules.init();
     }
 }

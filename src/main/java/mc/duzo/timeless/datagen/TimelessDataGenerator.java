@@ -51,6 +51,11 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
             provider.addTranslation("key." + Timeless.MOD_ID + ".power_2", "Action 2");
             provider.addTranslation("key." + Timeless.MOD_ID + ".power_3", "Action 3");
             provider.addTranslation("key." + Timeless.MOD_ID + ".power_4", "Action 4");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_5", "Action 5");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_6", "Action 6");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_7", "Action 7");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_8", "Action 8");
+            provider.addTranslation("key." + Timeless.MOD_ID + ".power_9", "Action 9");
 
             // Items
 
@@ -74,6 +79,16 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
             provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_two_leggings", "Mk. 2 (Prototype) Iron Man Leggings");
             provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_two_boots", "Mk. 2 (Prototype) Iron Man Boots");
 
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_fifty_helmet", "Mk. 50 Iron Man Helmet");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_fifty_chestplate", "Mk. 50 Iron Man Chestplate");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_fifty_leggings", "Mk. 50 Iron Man Leggings");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_fifty_boots", "Mk. 50 Iron Man Boots");
+
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_eighty_five_helmet", "Mk. 85 Iron Man Helmet");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_eighty_five_chestplate", "Mk. 85 Iron Man Chestplate");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_eighty_five_leggings", "Mk. 85 Iron Man Leggings");
+            provider.addTranslation("item." + Timeless.MOD_ID + ".iron_man_mark_eighty_five_boots", "Mk. 85 Iron Man Boots");
+
             provider.addTranslation("item." + Timeless.MOD_ID + ".batman_66_helmet", "Batman Mask (66)");
             provider.addTranslation("item." + Timeless.MOD_ID + ".batman_66_chestplate", "Batman Chestplate (66)");
             provider.addTranslation("item." + Timeless.MOD_ID + ".batman_66_leggings", "Batman Leggings (66)");
@@ -93,6 +108,15 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
             provider.addSound("ironman_mask", TimelessSounds.IRONMAN_MASK);
             provider.addSound("ironman_powerup", TimelessSounds.IRONMAN_POWERUP);
             provider.addSound("ironman_powerdown", TimelessSounds.IRONMAN_POWERDOWN);
+            provider.addSound("ironman_repulsor", TimelessSounds.IRONMAN_REPULSOR);
+            provider.addSound("ironman_unibeam_charge", TimelessSounds.IRONMAN_UNIBEAM_CHARGE);
+            provider.addSound("ironman_unibeam_fire", TimelessSounds.IRONMAN_UNIBEAM_FIRE);
+            provider.addSound("ironman_missile_launch", TimelessSounds.IRONMAN_MISSILE_LAUNCH);
+            provider.addSound("ironman_shield_hit", TimelessSounds.IRONMAN_SHIELD_HIT);
+            provider.addSound("ironman_targetlock", TimelessSounds.IRONMAN_TARGETLOCK);
+            provider.addSound("ironman_nano_assemble", TimelessSounds.IRONMAN_NANO_ASSEMBLE);
+            provider.addSound("ironman_boost", TimelessSounds.IRONMAN_BOOST);
+            provider.addSound("ironman_dive", TimelessSounds.IRONMAN_DIVE);
 
             return provider;
         })));

@@ -6,6 +6,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ai.goal.FollowOwnerGoal;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.HostileEntity;
+import mc.duzo.timeless.power.impl.RepulsorPower;
+import java.util.EnumSet;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -71,7 +76,122 @@ public class IronManEntity extends TameableEntity { // todo - PathAwareEntity fo
 
     @Override
     protected void initGoals() {
+        this.goalSelector.add(2, new RepulsorAttackGoal(this));
+        this.goalSelector.add(3, new MoveToTargetGoal(this));
         this.goalSelector.add(6, new FollowOwnerGoal(this, 1.0, 10.0F, 2.0F, false));
+    }
+
+    /** Walk toward the closest hostile within radius until within firing distance. */
+    private static class MoveToTargetGoal extends Goal {
+        private static final double DETECT = 32.0;
+        private static final double FIRE_DIST = 12.0;
+        private final IronManEntity self;
+        private LivingEntity target;
+
+        MoveToTargetGoal(IronManEntity self) {
+            this.self = self;
+            this.setControls(EnumSet.of(Control.MOVE));
+        }
+
+        @Override
+        public boolean canStart() {
+            this.target = findNearest();
+            return this.target != null && this.self.squaredDistanceTo(this.target) > FIRE_DIST * FIRE_DIST;
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return this.target != null && this.target.isAlive() && this.self.squaredDistanceTo(this.target) > FIRE_DIST * FIRE_DIST
+                    && this.self.squaredDistanceTo(this.target) < DETECT * DETECT;
+        }
+
+        @Override
+        public void start() {
+            this.self.getNavigation().startMovingTo(this.target, 1.2);
+        }
+
+        @Override
+        public void stop() {
+            this.self.getNavigation().stop();
+            this.target = null;
+        }
+
+        @Override
+        public void tick() {
+            if (this.target == null) return;
+            this.self.getLookControl().lookAt(this.target, 30f, 30f);
+            if (this.self.getNavigation().isIdle()) {
+                this.self.getNavigation().startMovingTo(this.target, 1.2);
+            }
+        }
+
+        private LivingEntity findNearest() {
+            Box area = this.self.getBoundingBox().expand(DETECT);
+            List<HostileEntity> list = this.self.getWorld().getEntitiesByClass(HostileEntity.class, area, e -> e.isAlive());
+            LivingEntity best = null;
+            double bestDist = Double.MAX_VALUE;
+            for (HostileEntity e : list) {
+                double d = this.self.squaredDistanceTo(e);
+                if (d < bestDist) { bestDist = d; best = e; }
+            }
+            return best;
+        }
+    }
+
+    /** Sentry-mode combat goal: scans for nearby hostiles and fires repulsors at them. */
+    private static class RepulsorAttackGoal extends Goal {
+        private static final double DETECTION_RADIUS = 24.0;
+        private static final int FIRE_INTERVAL = 30;
+        private final IronManEntity self;
+        private LivingEntity target;
+        private int cooldown;
+
+        RepulsorAttackGoal(IronManEntity self) {
+            this.self = self;
+            this.setControls(EnumSet.of(Control.LOOK));
+        }
+
+        @Override
+        public boolean canStart() {
+            this.target = findNearestHostile();
+            return this.target != null;
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return this.target != null && this.target.isAlive() && this.self.squaredDistanceTo(this.target) < DETECTION_RADIUS * DETECTION_RADIUS;
+        }
+
+        @Override
+        public void stop() {
+            this.target = null;
+            this.cooldown = 0;
+        }
+
+        @Override
+        public void tick() {
+            if (this.target == null) return;
+            this.self.getLookControl().lookAt(this.target, 30f, 30f);
+            if (this.cooldown > 0) {
+                this.cooldown--;
+                return;
+            }
+            this.cooldown = FIRE_INTERVAL;
+            Vec3d aim = this.target.getEyePos().subtract(this.self.getEyePos()).normalize();
+            RepulsorPower.fireFrom(this.self, aim);
+        }
+
+        private LivingEntity findNearestHostile() {
+            Box area = this.self.getBoundingBox().expand(DETECTION_RADIUS);
+            List<HostileEntity> list = this.self.getWorld().getEntitiesByClass(HostileEntity.class, area, e -> e.isAlive());
+            LivingEntity best = null;
+            double bestDist = Double.MAX_VALUE;
+            for (HostileEntity e : list) {
+                double d = this.self.squaredDistanceTo(e);
+                if (d < bestDist) { bestDist = d; best = e; }
+            }
+            return best;
+        }
     }
 
     @Override

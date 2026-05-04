@@ -22,7 +22,15 @@ public class MarkFiveSuit extends IronManSuit {
     public MarkFiveSuit() {
         super("mark_five");
 
-        this.powers = PowerList.of(PowerRegistry.TO_CASE, PowerRegistry.BOOSTED_FLIGHT, PowerRegistry.HOVER, PowerRegistry.MASK_TOGGLE, PowerRegistry.JARVIS);
+        this.powers = PowerList.of(
+                PowerRegistry.IRON_FLIGHT,
+                PowerRegistry.HOVER,
+                PowerRegistry.MASK_TOGGLE,
+                PowerRegistry.REPULSOR,
+                PowerRegistry.UNI_BEAM,
+                PowerRegistry.SHIELD,
+                PowerRegistry.TO_CASE,
+                PowerRegistry.JARVIS);
     }
 
     @Override

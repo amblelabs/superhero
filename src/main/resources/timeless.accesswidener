@@ -1,3 +1,8 @@
 accessWidener v2 named
 accessible field net/minecraft/client/model/ModelPart cuboids Ljava/util/List;
 accessible field net/minecraft/client/model/ModelPart children Ljava/util/Map;
+accessible class net/minecraft/client/render/RenderPhase$ShaderProgram
+accessible class net/minecraft/client/render/RenderPhase$Texture
+accessible class net/minecraft/client/render/RenderLayer$MultiPhaseParameters
+accessible method net/minecraft/client/render/RenderLayer$MultiPhaseParameters builder ()Lnet/minecraft/client/render/RenderLayer$MultiPhaseParameters$Builder;
+accessible class net/minecraft/client/render/RenderLayer$MultiPhaseParameters$Builder

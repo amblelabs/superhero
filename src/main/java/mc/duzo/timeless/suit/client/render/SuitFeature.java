@@ -45,7 +45,19 @@ public class SuitFeature<T extends LivingEntity, M extends EntityModel<T>>
 
         if (livingEntity.isInvisible() && !suit.isAlwaysVisible()) return;
 
-        VertexConsumer consumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(model.texture()));
+        // Nano-assemble: while a NanoAssemblableSuit's progress < 1, swap to the custom render
+        // layer that cuts fragments above the spreading sphere threshold and tints the boundary.
+        boolean nanoActive = suit instanceof mc.duzo.timeless.suit.api.NanoAssemblableSuit nano
+                && mc.duzo.timeless.power.impl.NanoAssemblePower.isAssembling(livingEntity);
+        VertexConsumer consumer;
+        if (nanoActive) {
+            mc.duzo.timeless.suit.api.NanoAssemblableSuit nano = (mc.duzo.timeless.suit.api.NanoAssemblableSuit) suit;
+            float progress = mc.duzo.timeless.power.impl.NanoAssemblePower.progress(livingEntity);
+            mc.duzo.timeless.client.render.NanoShaderHolder.setUniforms(progress, 1.0f, nano.getNanoMaxRadius(), nano.getNanoEdgeColor());
+            consumer = vertexConsumerProvider.getBuffer(mc.duzo.timeless.client.render.NanoAssembleRenderLayer.of(model.texture()));
+        } else {
+            consumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityTranslucent(model.texture()));
+        }
 
         BipedEntityModel<?> context = (BipedEntityModel<?>) this.getContextModel();
 

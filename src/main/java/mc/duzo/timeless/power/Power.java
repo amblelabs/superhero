@@ -30,6 +30,20 @@ public abstract class Power implements Identifiable, Translatable {
     }
     public abstract void onLoad(ServerPlayerEntity player);
 
+    @Environment(EnvType.CLIENT)
+    public boolean handlesRightClick(AbstractClientPlayerEntity player) {
+        return false;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public boolean handlesLeftClick(AbstractClientPlayerEntity player) {
+        return false;
+    }
+
+    @Environment(EnvType.CLIENT)
+    public void applyPose(net.minecraft.entity.LivingEntity entity, mc.duzo.timeless.suit.client.render.SuitModel model) {
+    }
+
     @Override
     public String getTranslationKey() {
         return this.id().getNamespace() + ".power." + this.id().getPath();

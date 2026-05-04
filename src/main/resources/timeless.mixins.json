@@ -6,12 +6,15 @@
     "EnchantmentHelperMixin",
     "EntityMixin",
     "PlayerEntityMixin",
-    "ServerPlayerEntityMixin"
+    "ServerPlayerEntityMixin",
+    "ShieldDamageMixin"
   ],
   "client": [
     "client.ArmorFeatureRendererMixin",
     "client.ArmorStandEntityRendererMixin",
+    "client.BipedFlightPoseMixin",
     "client.ClientPlayerEntityMixin",
+    "client.IronManFlightRendererMixin",
     "client.PlayerEntityRendererMixin"
   ],
   "injectors": {

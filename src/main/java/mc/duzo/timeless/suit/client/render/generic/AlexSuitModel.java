@@ -189,6 +189,19 @@ public class AlexSuitModel extends SuitModel {
 	}
 
 	@Override
+	public ModelPart partHead() { return this.head; }
+	@Override
+	public ModelPart partBody() { return this.body; }
+	@Override
+	public ModelPart partLeftArm() { return this.leftArm; }
+	@Override
+	public ModelPart partRightArm() { return this.rightArm; }
+	@Override
+	public ModelPart partLeftLeg() { return this.leftLeg; }
+	@Override
+	public ModelPart partRightLeg() { return this.rightLeg; }
+
+	@Override
 	public ClientSuit getSuit() {
 		return suit;
 	}

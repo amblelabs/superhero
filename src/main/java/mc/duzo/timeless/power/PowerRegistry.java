@@ -28,6 +28,7 @@ public class PowerRegistry {
             .build().register();
     public static Power FLIGHT = new FlightPower().register();
     public static Power BOOSTED_FLIGHT = new BoostedFlightPower().register();
+    public static IronManFlightPower IRON_FLIGHT = new IronManFlightPower().register();
     public static Power HOVER = new HoverPower().register();
     public static Power JARVIS = Power.Builder.create(new Identifier(Timeless.MOD_ID, "jarvis")).build().register();
     public static MaskTogglePower MASK_TOGGLE = new MaskTogglePower().register();
@@ -54,6 +55,12 @@ public class PowerRegistry {
             })
             .build().register();
     public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();
+    public static RepulsorPower REPULSOR = new RepulsorPower().register();
+    public static UniBeamPower UNI_BEAM = new UniBeamPower().register();
+    public static MissileVolleyPower MISSILE_VOLLEY = new MissileVolleyPower().register();
+    public static ShieldPower SHIELD = new ShieldPower().register();
+    public static BarrelRollPower BARREL_ROLL = new BarrelRollPower().register();
+    public static NanoAssemblePower NANO_ASSEMBLE = new NanoAssemblePower().register();
 
     public static void init() {}
 }

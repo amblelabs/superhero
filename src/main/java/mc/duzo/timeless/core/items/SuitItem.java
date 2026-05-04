@@ -130,6 +130,28 @@ public abstract class SuitItem extends ArmorItem implements Identifiable {
             if (data == null) return false;
             return data.getBoolean(key);
         }
+        public static void putInt(LivingEntity entity, String key, int value) {
+            NbtCompound data = get(entity);
+            if (data == null) return;
+            data.putInt(key, value);
+            sync(entity);
+        }
+        public static int getInt(LivingEntity entity, String key) {
+            NbtCompound data = get(entity);
+            if (data == null) return 0;
+            return data.getInt(key);
+        }
+        public static void putFloat(LivingEntity entity, String key, float value) {
+            NbtCompound data = get(entity);
+            if (data == null) return;
+            data.putFloat(key, value);
+            sync(entity);
+        }
+        public static float getFloat(LivingEntity entity, String key) {
+            NbtCompound data = get(entity);
+            if (data == null) return 0f;
+            return data.getFloat(key);
+        }
         public static boolean contains(LivingEntity entity, String key) {
             NbtCompound data = get(entity);
             if (data == null) return false;
