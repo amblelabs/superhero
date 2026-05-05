@@ -54,7 +54,8 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         }
         if (this.timeless$cachedArmModel == null) return;
 
-        boolean isRight = player.getMainArm() == Arm.RIGHT;
+        // arm.pivotX < 0 for the right bone (-5), > 0 for the left bone (+5).
+        boolean isRight = arm.pivotX < 0;
         this.timeless$cachedArmModel.renderArm(isRight, player, 0, matrices, vertexConsumers.getBuffer(RenderLayer.getEntityTranslucent(clientSuit.texture())), light, 1, 1, 1, 1);
         ci.cancel();
     }

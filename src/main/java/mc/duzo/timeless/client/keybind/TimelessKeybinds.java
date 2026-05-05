@@ -34,5 +34,6 @@ public class TimelessKeybinds {
         binds.forEach(bind -> bind.tick(player));
 
         KeybindSync.tick(player);
+        PowerRightClickHandler.tick(client);
     }
 }

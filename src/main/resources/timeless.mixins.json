@@ -6,13 +6,22 @@
     "EnchantmentHelperMixin",
     "EntityMixin",
     "PlayerEntityMixin",
-    "ServerPlayerEntityMixin"
+    "ServerPlayerEntityMixin",
+    "SwingFallDamageMixin",
+    "WallCrawlTravelMixin"
   ],
   "client": [
     "client.ArmorFeatureRendererMixin",
     "client.ArmorStandEntityRendererMixin",
     "client.ClientPlayerEntityMixin",
-    "client.PlayerEntityRendererMixin"
+    "client.BipedSwingPoseMixin",
+    "client.EntityGlowMixin",
+    "client.HeldItemRendererInvoker",
+    "client.HeldItemRendererMixin",
+    "client.MouseMixin",
+    "client.PlayerEntityRendererMixin",
+    "client.WallCrawlRendererMixin",
+    "client.WebSwingRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

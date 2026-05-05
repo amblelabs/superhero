@@ -14,6 +14,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
 import mc.duzo.timeless.Timeless;
+import mc.duzo.timeless.entity.WebRopeEntity;
 import mc.duzo.timeless.suit.ironman.IronManEntity;
 
 public class TimelessEntityTypes {
@@ -24,6 +25,12 @@ public class TimelessEntityTypes {
     public static final EntityType<BaseRangEntity> BASE_RANG_ENTITY_ENTITY_TYPE = register(Registries.ENTITY_TYPE, "base_rang_entity", EntityType.Builder.<BaseRangEntity>create(BaseRangEntity::new, SpawnGroup.MISC)
             .setDimensions(0.5f, 0.5f)
             .build("base_rang_entity"));
+
+    public static final EntityType<WebRopeEntity> WEB_ROPE = register(Registries.ENTITY_TYPE, "web_rope", EntityType.Builder.<WebRopeEntity>create(WebRopeEntity::new, SpawnGroup.MISC)
+            .setDimensions(0.25f, 0.25f)
+            .maxTrackingRange(96)
+            .trackingTickInterval(2)
+            .build("web_rope"));
 
     public static void init() {
         registerAttributes(IRON_MAN, MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3F).build());

@@ -16,6 +16,7 @@ public class TimelessSounds implements SoundContainer {
     public static final SoundEvent IRONMAN_MASK = SoundEvent.of(new Identifier(Timeless.MOD_ID, "ironman_mask"));
     public static final SoundEvent IRONMAN_POWERUP = SoundEvent.of(new Identifier(Timeless.MOD_ID, "ironman_powerup"));
     public static final SoundEvent IRONMAN_POWERDOWN = SoundEvent.of(new Identifier(Timeless.MOD_ID, "ironman_powerdown"));
+    public static final SoundEvent SPIDERMAN_SHOOT = SoundEvent.of(new Identifier(Timeless.MOD_ID, "spiderman_shoot"));
 
     private static SoundEvent register(String name) {
         return register(new Identifier(Timeless.MOD_ID, name));

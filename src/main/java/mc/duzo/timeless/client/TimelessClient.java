@@ -30,11 +30,14 @@ public class TimelessClient implements ClientModInitializer {
         ClientNetwork.init();
         ClientSuitRegistry.init();
         TimelessKeybinds.init();
+        mc.duzo.timeless.client.render.WebSwingState.init();
+        mc.duzo.timeless.client.render.SpideySenseTracker.init();
 
         registerRenderers();
         HudRenderCallback.EVENT.register((stack, delta) -> {
             JarvisGui.render(stack, delta);
             UtilityBeltGui.render(stack, delta);
+            mc.duzo.timeless.client.gui.SpideySenseHud.render(stack, delta);
         });
 
         registerRenderers();
@@ -45,11 +48,13 @@ public class TimelessClient implements ClientModInitializer {
             ItemStack stack = player.getEquippedStack(EquipmentSlot.CHEST);
             return !(stack.getItem() instanceof MoonKnightSuitItem);
         });
+
     }
 
     public static void registerRenderers() {
         EntityRendererRegistry.register(TimelessEntityTypes.IRON_MAN, IronManEntityRenderer::new);
         EntityRendererRegistry.register(TimelessEntityTypes.BASE_RANG_ENTITY_ENTITY_TYPE, BaseRangEntityRenderer::new);
+        EntityRendererRegistry.register(TimelessEntityTypes.WEB_ROPE, mc.duzo.timeless.client.render.entity.WebRopeRenderer::new);
     }
 
     public static void totemPredicate() {

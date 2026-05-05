@@ -44,7 +44,50 @@ public abstract class SuitModel extends EntityModel<LivingEntity> {
     public void setAngles(LivingEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
         if (!(entity instanceof AbstractClientPlayerEntity player)) return;
         this.runAnimations(player, animationProgress);
+        if (mc.duzo.timeless.client.render.WebSwingBodyTilt.isSwinging(entity)) {
+            resetSneakPivots();
+        }
+        applyPowerPoses(entity);
     }
+
+    private void resetSneakPivots() {
+        ModelPart head = partHead();
+        ModelPart body = partBody();
+        ModelPart la = partLeftArm();
+        ModelPart ra = partRightArm();
+        ModelPart ll = partLeftLeg();
+        ModelPart rl = partRightLeg();
+        if (head != null) head.pivotY = 0f;
+        if (body != null) {
+            body.pivotY = 0f;
+            body.pitch = 0f;
+        }
+        if (la != null) la.pivotY = 2f;
+        if (ra != null) ra.pivotY = 2f;
+        if (ll != null) { ll.pivotY = 12f; ll.pivotZ = 0f; }
+        if (rl != null) { rl.pivotY = 12f; rl.pivotZ = 0f; }
+    }
+
+    protected void applyPowerPoses(LivingEntity entity) {
+        mc.duzo.timeless.suit.Suit suit = mc.duzo.timeless.suit.Suit.findSuit(entity).orElse(null);
+        if (suit == null) return;
+        for (mc.duzo.timeless.power.Power p : suit.getPowers()) {
+            p.applyPose(entity, this);
+        }
+    }
+
+    /**
+     * Bone accessors for biped-shaped suit models.
+     * Subclasses with biped structure (Steve/Alex) override to return their fields;
+     * non-biped suits (Iron Man marks etc.) leave these null and just do their own rotateParts.
+     * Powers' applyPose() reads through these to apply procedural pose changes generically.
+     */
+    public ModelPart partHead() { return null; }
+    public ModelPart partBody() { return null; }
+    public ModelPart partLeftArm() { return null; }
+    public ModelPart partRightArm() { return null; }
+    public ModelPart partLeftLeg() { return null; }
+    public ModelPart partRightLeg() { return null; }
 
     protected void runAnimations(AbstractClientPlayerEntity player, float animationProgress) {
         SuitAnimationHolder anim = this.getAnimation(player).orElse(null);
