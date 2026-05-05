@@ -32,7 +32,13 @@ public final class WebSwingState {
     private float prevRollDeg;
     private float currRollDeg;
 
+    // Post-swing: once you start swinging, the pose holds through the air until the next
+    // ground contact, even after the rope releases.
+    private boolean postSwing;
+
     private WebSwingState() {}
+
+    public boolean isPostSwing() { return this.postSwing; }
 
     public static void init() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -62,7 +68,13 @@ public final class WebSwingState {
 
     private static void tickPlayer(ClientWorld world, PlayerEntity player, WebSwingState state) {
         WebRopeEntity rope = findActiveRopeIn(world, player);
-        boolean swinging = rope != null && !player.isOnGround();
+        boolean onGround = player.isOnGround();
+        if (rope != null && !onGround) {
+            state.postSwing = true;
+        } else if (onGround) {
+            state.postSwing = false;
+        }
+        boolean swinging = (rope != null || state.postSwing) && !onGround;
         state.prev = state.curr;
         state.curr = MathHelper.clamp(state.curr + (swinging ? STEP : -STEP), 0f, 1f);
 
@@ -71,7 +83,7 @@ public final class WebSwingState {
 
         float targetPitch = 0f;
         float targetRoll = 0f;
-        if (rope != null) {
+        if (swinging) {
             double mx = player.getX() - player.prevX;
             double my = player.getY() - player.prevY;
             double mz = player.getZ() - player.prevZ;
@@ -85,12 +97,21 @@ public final class WebSwingState {
             double horizSpeed = Math.max(Math.sqrt(blended.x * blended.x + blended.z * blended.z), 1.0e-3);
             targetPitch = (float) MathHelper.clamp(Math.toDegrees(Math.atan2(blended.y, horizSpeed)), -25.0, 25.0);
 
-            double dx = rope.getX() - player.getX();
-            double dz = rope.getZ() - player.getZ();
-            double horizDist = Math.sqrt(dx * dx + dz * dz);
-            if (horizDist > 1.0e-3) {
-                Vec3d ropeBodyLocal = new Vec3d(dx / horizDist, 0, dz / horizDist).rotateY((float) yawRad);
-                targetRoll = (float) MathHelper.clamp(ropeBodyLocal.x * Math.min(speed, 1.0) * 25.0, -25.0, 25.0);
+            if (rope != null) {
+                double dx = rope.getX() - player.getX();
+                double dz = rope.getZ() - player.getZ();
+                double horizDist = Math.sqrt(dx * dx + dz * dz);
+                if (horizDist > 1.0e-3) {
+                    Vec3d ropeBodyLocal = new Vec3d(dx / horizDist, 0, dz / horizDist).rotateY((float) yawRad);
+                    targetRoll = (float) MathHelper.clamp(ropeBodyLocal.x * Math.min(speed, 1.0) * 25.0, -25.0, 25.0);
+                }
+            } else {
+                // No rope: roll from sideways motion relative to body yaw.
+                double horizSpeed2 = Math.sqrt(mx * mx + mz * mz);
+                if (horizSpeed2 > 1.0e-3) {
+                    Vec3d motionLocal = new Vec3d(mx, 0, mz).normalize().rotateY((float) yawRad);
+                    targetRoll = (float) MathHelper.clamp(-motionLocal.x * Math.min(horizSpeed2 / 0.4, 1.0) * 18.0, -25.0, 25.0);
+                }
             }
         }
 

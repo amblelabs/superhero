@@ -119,7 +119,8 @@ public class WebSwingPower extends Power {
         if (!(player.getWorld() instanceof ClientWorld)) return;
 
         WebRopeEntity rope = WebSwingState.findActiveRope(player);
-        if (rope == null) return;
+        WebSwingState state = WebSwingState.get(player);
+        if (rope == null && !state.isPostSwing()) return;
 
         ModelPart leftArm = model.partLeftArm();
         ModelPart rightArm = model.partRightArm();
@@ -127,28 +128,15 @@ public class WebSwingPower extends Power {
 
         MinecraftClient mc = MinecraftClient.getInstance();
         float tickDelta = mc.getTickDelta();
-        float timer = WebSwingState.get(player).interpolate(tickDelta);
+        float timer = state.interpolate(tickDelta);
         if (timer <= 0.001f) return;
 
-        Vec3d shoulderApprox = new Vec3d(entity.getX(), entity.getBodyY(0.85), entity.getZ());
-        Vec3d toRope = rope.getPos().subtract(shoulderApprox);
-        if (toRope.lengthSquared() < 1.0e-6) return;
-
-        Vec3d local = toRope.rotateY((float) Math.toRadians(entity.bodyYaw)).normalize();
-        double lx = local.x, ly = local.y, lz = local.z;
-
-        float gripRoll = (float) -Math.asin(MathHelper.clamp(lx, -1.0, 1.0));
-        float gripPitch = (float) Math.atan2(-lz, -ly);
-
-        boolean leftIsGrip = rope.isLeftArm();
-        ModelPart gripArm = leftIsGrip ? leftArm : rightArm;
-        ModelPart trailArm = leftIsGrip ? rightArm : leftArm;
-        float trailMirror = leftIsGrip ? 1f : -1f;
-
-        // Horizontal speed drives all velocity-scaled motion. Normalised so 1.0 ~= sprint.
+        // Speed drives velocity-scaled motion. Includes vertical so falling/rising affects swing.
         double mx = entity.getX() - entity.prevX;
+        double my = entity.getY() - entity.prevY;
         double mz = entity.getZ() - entity.prevZ;
-        float horizSpeed = (float) MathHelper.clamp(Math.sqrt(mx * mx + mz * mz) / 0.4, 0.0, 1.0);
+        float speed = (float) MathHelper.clamp(Math.sqrt(mx * mx + my * my + mz * mz) / 0.4, 0.0, 1.0);
+        float vertSpeed = (float) MathHelper.clamp(Math.abs(my) / 0.5, 0.0, 1.0);
         float phase = ((float) entity.age + tickDelta) * 0.32f;
         float swingOsc = MathHelper.sin(phase);
         float legOsc = MathHelper.sin(phase + (float) Math.PI * 0.5f);
@@ -156,22 +144,48 @@ public class WebSwingPower extends Power {
         // 45 degrees in radians, the upper bound the user requested for sideways spread / leg swing.
         final float MAX_45 = (float) Math.toRadians(45.0);
 
-        gripArm.pitch = MathHelper.lerp(timer, gripArm.pitch, gripPitch);
-        gripArm.yaw = MathHelper.lerp(timer, gripArm.yaw, 0f);
-        gripArm.roll = MathHelper.lerp(timer, gripArm.roll, gripRoll);
+        boolean leftIsGrip = rope != null && rope.isLeftArm();
+        ModelPart gripArm = leftIsGrip ? leftArm : rightArm;
+        ModelPart trailArm = leftIsGrip ? rightArm : leftArm;
+        float trailMirror = leftIsGrip ? 1f : -1f;
 
-        // Trail arm: at rest pose pitch=0, roll=0 (hanging straight); ramp to pitch +/- swingOsc*45deg
-        // (front-back swing) and roll up to +/- 45deg (sideways spread) as horizSpeed grows.
-        float trailPitch = swingOsc * MAX_45 * horizSpeed;
-        float trailRoll = trailMirror * MAX_45 * horizSpeed;
-        trailArm.pitch = MathHelper.lerp(timer, trailArm.pitch, trailPitch);
-        trailArm.yaw = MathHelper.lerp(timer, trailArm.yaw, 0f);
-        trailArm.roll = MathHelper.lerp(timer, trailArm.roll, trailRoll);
+        if (rope != null) {
+            Vec3d shoulderApprox = new Vec3d(entity.getX(), entity.getBodyY(0.85), entity.getZ());
+            Vec3d toRope = rope.getPos().subtract(shoulderApprox);
+            if (toRope.lengthSquared() >= 1.0e-6) {
+                Vec3d local = toRope.rotateY((float) Math.toRadians(entity.bodyYaw)).normalize();
+                double lx = local.x, ly = local.y, lz = local.z;
+
+                float gripRoll = (float) -Math.asin(MathHelper.clamp(lx, -1.0, 1.0));
+                float gripPitch = (float) Math.atan2(-lz, -ly);
+
+                gripArm.pitch = MathHelper.lerp(timer, gripArm.pitch, gripPitch);
+                gripArm.yaw = MathHelper.lerp(timer, gripArm.yaw, 0f);
+                gripArm.roll = MathHelper.lerp(timer, gripArm.roll, gripRoll);
+            }
+        } else {
+            // Post-swing (airborne after release): both arms flow with the body, biased upward.
+            float fallReach = -MAX_45 * 0.5f * (1f + vertSpeed);
+            leftArm.pitch = MathHelper.lerp(timer, leftArm.pitch, fallReach + swingOsc * MAX_45 * 0.4f * speed);
+            rightArm.pitch = MathHelper.lerp(timer, rightArm.pitch, fallReach - swingOsc * MAX_45 * 0.4f * speed);
+            leftArm.roll = MathHelper.lerp(timer, leftArm.roll, MAX_45 * 0.4f * speed);
+            rightArm.roll = MathHelper.lerp(timer, rightArm.roll, -MAX_45 * 0.4f * speed);
+        }
+
+        if (rope != null) {
+            // Trail arm: at rest pose pitch=0, roll=0 (hanging straight); ramp to pitch +/- swingOsc*45deg
+            // (front-back swing) and roll up to +/- 45deg (sideways spread) as speed grows.
+            float trailPitch = swingOsc * MAX_45 * speed - vertSpeed * MAX_45 * 0.4f;
+            float trailRoll = trailMirror * MAX_45 * speed;
+            trailArm.pitch = MathHelper.lerp(timer, trailArm.pitch, trailPitch);
+            trailArm.yaw = MathHelper.lerp(timer, trailArm.yaw, 0f);
+            trailArm.roll = MathHelper.lerp(timer, trailArm.roll, trailRoll);
+        }
 
         ModelPart body = model.partBody();
         if (body != null) {
-            body.pitch = MathHelper.lerp(timer, body.pitch, swingOsc * 0.05f * horizSpeed);
-            body.yaw = MathHelper.lerp(timer, body.yaw, swingOsc * 0.08f * horizSpeed);
+            body.pitch = MathHelper.lerp(timer, body.pitch, swingOsc * 0.05f * speed - vertSpeed * 0.15f);
+            body.yaw = MathHelper.lerp(timer, body.yaw, swingOsc * 0.08f * speed);
             body.roll = MathHelper.lerp(timer, body.roll, 0f);
         }
 
@@ -181,8 +195,8 @@ public class WebSwingPower extends Power {
         ModelPart leftLeg = model.partLeftLeg();
         ModelPart rightLeg = model.partRightLeg();
         if (leftLeg != null && rightLeg != null) {
-            float legSwing = legOsc * MAX_45 * horizSpeed;
-            float legSpread = MAX_45 * 0.35f * horizSpeed;
+            float legSwing = legOsc * MAX_45 * speed - vertSpeed * MAX_45 * 0.3f;
+            float legSpread = MAX_45 * 0.35f * speed;
             leftLeg.pitch = MathHelper.lerp(timer, leftLeg.pitch, legSwing);
             rightLeg.pitch = MathHelper.lerp(timer, rightLeg.pitch, -legSwing);
             leftLeg.yaw = MathHelper.lerp(timer, leftLeg.yaw, 0f);
