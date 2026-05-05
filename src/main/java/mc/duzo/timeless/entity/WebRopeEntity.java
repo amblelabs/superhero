@@ -290,11 +290,6 @@ public class WebRopeEntity extends Entity {
     private void tickSwing(PlayerEntity shooter) {
         this.ticksAnchored++;
 
-        if (!this.getWorld().isClient && shooter.isOnGround()) {
-            this.setDisconnected(true);
-            return;
-        }
-
         if (!this.getWorld().isClient
                 && this.ticksAnchored > RELEASE_GRACE_TICKS
                 && shooter.handSwinging
