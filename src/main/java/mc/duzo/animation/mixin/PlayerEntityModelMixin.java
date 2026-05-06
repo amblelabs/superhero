@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import mc.duzo.animation.generic.AnimationInfo;
+import mc.duzo.animation.generic.VisibilityList;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,7 +31,8 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity>
     @Final
     private List<ModelPart> parts;
 
-    @Unique ModelPart root;
+    @Unique
+    ModelPart root;
 
     public PlayerEntityModelMixin(ModelPart root) {
         super(root);
@@ -47,9 +49,20 @@ public abstract class PlayerEntityModelMixin<T extends LivingEntity>
 
         PlayerAnimationHelper.startAnimations(player);
 
+        AnimationInfo info = AnimationUtil.getInfo(player);
+
+        if (info != null) {
+            VisibilityList visibility = info.render();
+
+            PlayerEntityModel<AbstractClientPlayerEntity> model =
+                    (PlayerEntityModel<AbstractClientPlayerEntity>) (Object) this;
+
+            visibility.apply(model, player);
+        }
+
         if (!AnimationUtil.isRunningAnimations(player)) return;
 
-        if (AnimationUtil.getInfo(player).transform() == AnimationInfo.Transform.ALL) {
+        if (info != null && info.transform() == AnimationInfo.Transform.ALL) {
             this.animation$getPart().resetTransform();
             this.parts.forEach(ModelPart::resetTransform);
         }
