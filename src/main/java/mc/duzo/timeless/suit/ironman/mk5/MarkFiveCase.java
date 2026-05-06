@@ -77,7 +77,6 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
             } finally {
                 ACTIVE_TRANSFORMATIONS.remove(uuid);
             }
-            ACTIVE_TRANSFORMATIONS.remove(uuid);
         }, TaskStage.END_SERVER_TICK, TimeUnit.SECONDS, (long) (8.038f));
         return true;
     }
