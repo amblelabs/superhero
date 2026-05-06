@@ -10,6 +10,7 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 
@@ -315,10 +316,12 @@ public class MarkFiveModel extends SuitModel {
         float velocityX = (float) velocity.x / 2f;
         float velocityZ = (float) velocity.z / 2f;
 
-        this.rightArm.pitch = velocityZ;
-        this.leftArm.pitch = velocityZ;
-        this.rightArm.roll += velocityX + 0.1f - velocityY;
-        this.leftArm.roll += velocityX - 0.1f + velocityY;
+        this.rightArm.pitch = MathHelper.clamp(velocityZ, -1.5F, 1.5F);
+        this.leftArm.pitch  = MathHelper.clamp(velocityZ, -1.5F, 1.5F);
+
+        this.rightArm.roll = MathHelper.clamp(this.rightArm.roll + velocityX + 0.1f - velocityY, -1.5F, 1.5F);
+
+        this.leftArm.roll = MathHelper.clamp(this.leftArm.roll + velocityX - 0.1f + velocityY, -1.5F, 1.5F);
 
         this.rightLeg.pitch = velocityZ / 1.25f - velocityY;
         this.leftLeg.pitch = velocityZ / 1.25f - velocityY;
