@@ -1,5 +1,7 @@
 package mc.duzo.timeless.suit.ironman.mk5;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import dev.drtheo.scheduler.api.TimeUnit;
@@ -32,6 +34,9 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
         super(settings.maxCount(1));
     }
 
+    //not sure if this should be done in the item class
+    private static final Set<UUID> ACTIVE_TRANSFORMATIONS = new HashSet<>();
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         if (world.isClient()) {
@@ -44,11 +49,17 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
     }
 
     public static boolean toCase(ServerPlayerEntity player, boolean force) {
+
+        if (ACTIVE_TRANSFORMATIONS.contains(player.getUuid())) {
+            return false;
+        }
+
         if (!force) {
             if (!player.isOnGround()) return false;
             if (!(getSet().isWearing(player))) return false;
         }
 
+        ACTIVE_TRANSFORMATIONS.add(player.getUuid());
 
         player.getWorld().playSound(null, player.getBlockPos(), TimelessSounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
 
@@ -58,10 +69,15 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
         UUID uuid = player.getUuid();
         MinecraftServer server = player.getServer();
         Scheduler.get().runTaskLater(() -> {
-            if (server == null) return;
-            ServerPlayerEntity current = server.getPlayerManager().getPlayer(uuid);
-            if (current == null) return;
-            toCasePost(current, force);
+            try {
+                if (server == null) return;
+                ServerPlayerEntity current = server.getPlayerManager().getPlayer(uuid);
+                if (current == null) return;
+                toCasePost(current, force);
+            } finally {
+                ACTIVE_TRANSFORMATIONS.remove(uuid);
+            }
+            ACTIVE_TRANSFORMATIONS.remove(uuid);
         }, TaskStage.END_SERVER_TICK, TimeUnit.SECONDS, (long) (8.038f));
         return true;
     }
