@@ -1,5 +1,6 @@
 package mc.duzo.timeless.suit.set;
 
+import mc.duzo.timeless.suit.ironman.mk42.MarkFortyTwoSuit;
 import mc.duzo.timeless.suit.moonknight.item.MoonKnightSuitItem;
 import mc.duzo.timeless.suit.moonknight.jake.JakeSuit;
 import mc.duzo.timeless.suit.moonknight.marc.MarcSuit;
@@ -27,6 +28,7 @@ public class SetRegistry {
         return Registry.register(REGISTRY, suit.id(), suit);
     }
 
+    public static SuitSet MARK_FORTY_TWO;
     public static SuitSet MARK_SEVEN;
     public static SuitSet MARK_FIVE;
     public static SuitSet MARK_THREE;
@@ -38,6 +40,7 @@ public class SetRegistry {
 
     public static void init() {
         // Iron Man
+        MARK_FORTY_TWO = register(new RegisteringSuitSet(new MarkFortyTwoSuit(), IronManSuitItem::new));
         MARK_SEVEN = register(new RegisteringSuitSet(new MarkSevenSuit(), IronManSuitItem::new));
         MARK_FIVE = register(new RegisteringSuitSet(new MarkFiveSuit(), IronManSuitItem::new));
         MARK_THREE = register(new RegisteringSuitSet(new MarkThreeSuit(), IronManSuitItem::new));
