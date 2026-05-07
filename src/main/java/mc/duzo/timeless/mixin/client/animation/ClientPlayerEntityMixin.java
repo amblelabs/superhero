@@ -1,4 +1,4 @@
-package mc.duzo.animation.mixin;
+package mc.duzo.timeless.mixin.client.animation;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

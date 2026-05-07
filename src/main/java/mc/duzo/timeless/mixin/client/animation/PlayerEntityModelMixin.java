@@ -1,4 +1,4 @@
-package mc.duzo.animation.mixin;
+package mc.duzo.timeless.mixin.client.animation;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package mc.duzo.animation.mixin;
+package mc.duzo.timeless.mixin.client.animation;
 
 import mc.duzo.animation.generic.VisibilityList;
 import mc.duzo.animation.generic.VisiblePart;

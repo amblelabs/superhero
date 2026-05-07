@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.networking.v1.FabricPacket;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.PacketType;
 
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -46,6 +47,6 @@ public record PlayAnimationS2CPacket(UUID player, Identifier tracker, Identifier
         Supplier<AnimationHolder> supplier = (Supplier<AnimationHolder>) AnimationRegistry.instance().REGISTRY.get(animation());
         if (supplier == null) return;
 
-        tracker.add(player(), supplier.get());
+        MinecraftClient.getInstance().execute(() -> tracker.add(player(), supplier.get()));
     }
 }
