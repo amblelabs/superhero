@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     # only proceed if merge event or manual run
     if: |
-      (github.event_name == 'pull_request' && github.event.pull_request.merged == true) ||
+      (github.event_name == 'pull_request_target' && github.event.pull_request.merged == true) ||
       (github.event_name == 'workflow_dispatch')
     steps:
       - name: Checkout repository
