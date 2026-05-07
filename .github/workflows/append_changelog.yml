@@ -11,6 +11,10 @@ on:
         required: false
         default: ''
 
+concurrency:
+  group: append-changelog
+  cancel-in-progress: false
+
 jobs:
   append-changelog:
     runs-on: ubuntu-latest
