@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.item.ItemGroup;
 
 import mc.duzo.timeless.Timeless;
-import mc.duzo.timeless.item.BatRadioItem;
+import mc.duzo.timeless.suit.batman.item.BatRadioItem;
 import mc.duzo.timeless.suit.ironman.mk5.MarkFiveCase;
 import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
