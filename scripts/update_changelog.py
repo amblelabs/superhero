@@ -8,7 +8,7 @@ parser.add_argument(
 args = parser.parse_args()
 
 repo = os.environ["GITHUB_REPOSITORY"]
-token = os.environ["BOT_TOKEN"]
+token = os.environ["GH_TOKEN"]
 headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github.v3+json"}
 
 # Fetch PR metadata

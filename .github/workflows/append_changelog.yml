@@ -1,29 +1,36 @@
 name: Update Changelog
 
 on:
-  pull_request:
+  pull_request_target:
     types: [closed]
     branches: [master]
   workflow_dispatch:
     inputs:
       pr_numbers:
         description: 'Comma-separated PR numbers to process (e.g. "12,47")'
-        required: false
-        default: ''
+        required: true
+
+concurrency:
+  group: append-changelog
+  cancel-in-progress: false
 
 jobs:
   append-changelog:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     # only proceed if merge event or manual run
     if: |
-      (github.event_name == 'pull_request' && github.event.pull_request.merged == true) ||
+      (github.event_name == 'pull_request_target' && github.event.pull_request.merged == true) ||
       (github.event_name == 'workflow_dispatch')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.BOT_TOKEN }}
+          ref: master
+          ssh-key: ${{ secrets.CHANGELOG_DEPLOY_KEY }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -36,17 +43,19 @@ jobs:
       - name: Run changelog updater
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}
         run: |
           python scripts/update_changelog.py \
             --pr-numbers "${{ github.event.inputs.pr_numbers }}"
       - name: Commit & push
-        env:
-          TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
           git config user.name "github-bot"
           git config user.email "bot@users.noreply.github.com"
           git add CHANGELOG.md
+          if git diff --cached --quiet; then
+            echo "No changelog changes to commit."
+            exit 0
+          fi
           git commit -m "docs: update CHANGELOG"
-          git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
+          git push origin HEAD:master
