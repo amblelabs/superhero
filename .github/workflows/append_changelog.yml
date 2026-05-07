@@ -8,8 +8,7 @@ on:
     inputs:
       pr_numbers:
         description: 'Comma-separated PR numbers to process (e.g. "12,47")'
-        required: false
-        default: ''
+        required: true
 
 concurrency:
   group: append-changelog
