@@ -18,9 +18,6 @@ concurrency:
 jobs:
   append-changelog:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: read
     # only proceed if merge event or manual run
     if: |
       (github.event_name == 'pull_request' && github.event.pull_request.merged == true) ||
@@ -31,7 +28,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.BOT_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -44,19 +41,21 @@ jobs:
       - name: Run changelog updater
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-          BOT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}
         run: |
           python scripts/update_changelog.py \
             --pr-numbers "${{ github.event.inputs.pr_numbers }}"
       - name: Commit & push
+        env:
+          TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-bot"
+          git config user.email "bot@users.noreply.github.com"
           git add CHANGELOG.md
           if git diff --cached --quiet; then
             echo "No changelog changes to commit."
             exit 0
           fi
           git commit -m "docs: update CHANGELOG"
-          git push origin HEAD:master
+          git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:master
