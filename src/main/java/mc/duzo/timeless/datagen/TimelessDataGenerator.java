@@ -32,7 +32,6 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
     private void genEnglish(FabricDataGenerator.Pack pack) {
         pack.addProvider((((output, registriesFuture) -> {
             AmbleLanguageProvider provider = new AmbleLanguageProvider(output, LanguageType.EN_US);
-
             for (Suit suit : SuitRegistry.REGISTRY) {
                 if (!(suit instanceof AutomaticSuitEnglish)) continue;
 
