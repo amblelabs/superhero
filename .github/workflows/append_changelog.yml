@@ -44,7 +44,7 @@ jobs:
       - name: Run changelog updater
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-          BOT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_EVENT_PATH: ${{ github.event_path }}
         run: |
           python scripts/update_changelog.py \
