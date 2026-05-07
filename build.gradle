@@ -68,10 +68,6 @@ dependencies {
     modImplementation("dev.amble:lib:${project.amblekit_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-
-    modImplementation("maven.modrinth:animator:${project.animator_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
 }
 
 processResources {

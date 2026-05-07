@@ -1,4 +1,4 @@
-package mc.duzo.timeless.item;
+package mc.duzo.timeless.suit.batman.item;
 
 import java.util.List;
 import java.util.Map;

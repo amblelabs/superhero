@@ -12,7 +12,11 @@
     "client.ArmorFeatureRendererMixin",
     "client.ArmorStandEntityRendererMixin",
     "client.ClientPlayerEntityMixin",
-    "client.PlayerEntityRendererMixin"
+    "client.PlayerEntityRendererMixin",
+    "client.animation.ClientPlayerEntityMixin",
+    "client.animation.PerspectiveMixin",
+    "client.animation.PlayerEntityModelMixin",
+    "client.animation.PlayerEntityRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -17,13 +17,16 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"mc.duzo.timeless.Timeless"
+			"mc.duzo.timeless.Timeless",
+			"mc.duzo.animation.DuzoAnimationMod"
 		],
 		"client": [
-			"mc.duzo.timeless.client.TimelessClient"
+			"mc.duzo.timeless.client.TimelessClient",
+			"mc.duzo.animation.client.DuzoAnimationClient"
 		],
 		"fabric-datagen": [
-			"mc.duzo.timeless.datagen.TimelessDataGenerator"
+			"mc.duzo.timeless.datagen.TimelessDataGenerator",
+			"mc.duzo.animation.datagen.AnimationDataGenerator"
 		]
 	},
 	"mixins": [

@@ -28,6 +28,8 @@ import mc.duzo.timeless.suit.set.SetRegistry;
 import mc.duzo.timeless.suit.set.SuitSet;
 
 public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
+    private static final int TRANSFORM_COOLDOWN_TICKS = 161;
+
     public MarkFiveCase(Settings settings) {
         super(settings.maxCount(1));
     }
@@ -44,11 +46,14 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
     }
 
     public static boolean toCase(ServerPlayerEntity player, boolean force) {
+        if (player.getItemCooldownManager().isCoolingDown(TimelessItems.MARK_FIVE_CASE)) return false;
+
         if (!force) {
             if (!player.isOnGround()) return false;
             if (!(getSet().isWearing(player))) return false;
         }
 
+        player.getItemCooldownManager().set(TimelessItems.MARK_FIVE_CASE, TRANSFORM_COOLDOWN_TICKS);
 
         player.getWorld().playSound(null, player.getBlockPos(), TimelessSounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
 
@@ -75,11 +80,15 @@ public class MarkFiveCase extends Item implements AutomaticSuitEnglish {
     }
 
     public static boolean fromCase(ServerPlayerEntity player, boolean force) {
+        if (player.getItemCooldownManager().isCoolingDown(TimelessItems.MARK_FIVE_CASE)) return false;
+
         if (!force) {
             if (!player.isOnGround()) return false; // not on ground
             if (!player.getMainHandStack().isOf(TimelessItems.MARK_FIVE_CASE)) return false; // not holding
             if (SuitSet.hasArmor(player)) return false; // already wearing
         }
+
+        player.getItemCooldownManager().set(TimelessItems.MARK_FIVE_CASE, TRANSFORM_COOLDOWN_TICKS);
 
         player.getWorld().playSound(null, player.getBlockPos(), TimelessSounds.MARK5_NOISES, SoundCategory.PLAYERS, 0.25f, 1f);
 

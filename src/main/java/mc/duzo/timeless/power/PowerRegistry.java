@@ -2,6 +2,7 @@ package mc.duzo.timeless.power;
 
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.registry.Registry;
@@ -41,19 +42,21 @@ public class PowerRegistry {
         player.getWorld().spawnEntity(new IronManEntity(player.getServerWorld(), suit, player));
         suit.getSet().clear(player);
     }).build().register();
-    public static Power SUPER_STRENGTH = Power.Builder.create(new Identifier(Timeless.MOD_ID, "super_strength"))
-            .tick(player -> {
-                if (player.getServer().getTicks() % 20 != 0) return; // Run every second
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, 22, 1, false, false));
-            })
-            .build().register();
-    public static Power SUPER_JUMP = Power.Builder.create(new Identifier(Timeless.MOD_ID, "super_jump"))
-            .tick(player -> {
-                if (player.getServer().getTicks() % 20 != 0) return; // Run every second
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.JUMP_BOOST, 22, 3, false, false));
-            })
-            .build().register();
+    public static Power SUPER_STRENGTH = createEffectPower("super_strength", StatusEffects.STRENGTH, 1);
+    public static Power SUPER_JUMP = createEffectPower("super_jump", StatusEffects.JUMP_BOOST, 3);
     public static Power SWIFT_SNEAK = Power.Builder.create(new Identifier(Timeless.MOD_ID, "swift_sneak")).build().register();
 
     public static void init() {}
+
+    private static Power createEffectPower(String id, StatusEffect effect, int amplifier) {
+        return Power.Builder.create(new Identifier(Timeless.MOD_ID, id))
+                .tick(player -> {
+                    if (player.getServer().getTicks() % 20 != 0) return;
+                    player.addStatusEffect(
+                            new StatusEffectInstance(effect, 22, amplifier, false, false)
+                    );
+                })
+                .build()
+                .register();
+    }
 }
