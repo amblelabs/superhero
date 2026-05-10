@@ -25,8 +25,7 @@
 			"mc.duzo.animation.client.DuzoAnimationClient"
 		],
 		"fabric-datagen": [
-			"mc.duzo.timeless.datagen.TimelessDataGenerator",
-			"mc.duzo.animation.datagen.AnimationDataGenerator"
+			"mc.duzo.timeless.datagen.TimelessDataGenerator"
 		]
 	},
 	"mixins": [
