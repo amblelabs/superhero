@@ -16,6 +16,7 @@ public class JarvisGui {
         MinecraftClient client = MinecraftClient.getInstance();
 
         if (!hasPoweredHud(client)) {
+            if (IronManHudRenderer.tickRetract(context, delta, client)) return;
             IronManHudRenderer.powerDown();
             return;
         }

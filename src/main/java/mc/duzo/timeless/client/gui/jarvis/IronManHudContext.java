@@ -275,7 +275,7 @@ final class IronManHudContext {
                 Math.sqrt(player.squaredDistanceTo(entity)),
                 ratio(entity.getHealth(), entity.getMaxHealth()),
                 entity.getArmor(),
-                local.x,
+                -local.x,
                 local.z,
                 entity instanceof HostileEntity,
                 Math.sqrt(vx * vx + vy * vy + vz * vz) * 20.0,

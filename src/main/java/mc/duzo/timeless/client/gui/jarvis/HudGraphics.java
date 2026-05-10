@@ -171,6 +171,84 @@ final class HudGraphics {
         return this.text.getWidth(value);
     }
 
+    void liquidPanel(float x, float y, float w, float h, float alpha, int accentColor) {
+        if (alpha <= 0.0f) return;
+        int shadow = HudGraphics.argb(Math.round(alpha * 70), 0, 0, 0);
+        this.context.fill(Math.round(x + 2), Math.round(y + 3), Math.round(x + w + 2), Math.round(y + h + 3), shadow);
+
+        int baseLo = HudGraphics.argb(Math.round(alpha * 130), 4, 18, 26);
+        this.context.fill(Math.round(x), Math.round(y), Math.round(x + w), Math.round(y + h), baseLo);
+        int baseHi = HudGraphics.argb(Math.round(alpha * 70), 16, 48, 72);
+        this.context.fill(Math.round(x), Math.round(y), Math.round(x + w), Math.round(y + Math.max(6.0f, h * 0.32f)), baseHi);
+
+        int highlight = HudGraphics.argb(Math.round(alpha * 95), 180, 230, 255);
+        this.context.fill(Math.round(x + 4), Math.round(y + 1), Math.round(x + w - 4), Math.round(y + 2), highlight);
+
+        int rim = HudGraphics.alpha(accentColor, alpha * 0.85f);
+        this.arc(x + 5.0f, y + 5.0f, 4.5f, 180.0f, 270.0f, rim);
+        this.arc(x + w - 5.0f, y + 5.0f, 4.5f, 270.0f, 360.0f, rim);
+        this.arc(x + 5.0f, y + h - 5.0f, 4.5f, 90.0f, 180.0f, rim);
+        this.arc(x + w - 5.0f, y + h - 5.0f, 4.5f, 0.0f, 90.0f, rim);
+
+        int edge = HudGraphics.alpha(accentColor, alpha * 0.55f);
+        this.line(x + 5.5f, y, x + w - 5.5f, y, edge);
+        this.line(x + 5.5f, y + h, x + w - 5.5f, y + h, edge);
+        this.line(x, y + 5.5f, x, y + h - 5.5f, edge);
+        this.line(x + w, y + 5.5f, x + w, y + h - 5.5f, edge);
+
+        int innerGlow = HudGraphics.alpha(accentColor, alpha * 0.14f);
+        this.line(x + 6.0f, y + 4.0f, x + w - 6.0f, y + 4.0f, innerGlow);
+    }
+
+    void scanlineVeil(int width, int height, float alpha, int color, int spacing) {
+        if (alpha <= 0.0f) return;
+        int tinted = HudGraphics.alpha(color, alpha);
+        for (int y = 0; y < height; y += spacing) {
+            this.context.fill(0, y, width, y + 1, tinted);
+        }
+    }
+
+    void diagonalSweep(int width, int height, float progress, int color, float alpha) {
+        if (alpha <= 0.0f) return;
+        float span = width + height;
+        float x = -height + progress * span;
+        float bandW = Math.max(20.0f, width * 0.12f);
+        int faint = HudGraphics.alpha(color, alpha * 0.18f);
+        int bright = HudGraphics.alpha(color, alpha * 0.34f);
+        for (int i = 0; i < bandW; i++) {
+            float t = i / bandW;
+            float falloff = 1.0f - Math.abs(0.5f - t) * 2.0f;
+            int tint = HudGraphics.alpha(color, alpha * 0.30f * falloff);
+            this.line(x + i, 0.0f, x + i - height, height, tint);
+        }
+        this.line(x, 0.0f, x - height, height, bright);
+        this.line(x + bandW + 6.0f, 0.0f, x + bandW + 6.0f - height, height, faint);
+    }
+
+    void chromaticText(String value, float x, float y, int color, float intensity) {
+        if (intensity > 0.0f) {
+            int red = HudGraphics.alpha(argb(180, 255, 60, 64), intensity);
+            int cyan = HudGraphics.alpha(argb(180, 60, 220, 255), intensity);
+            this.context.drawText(this.text, value, Math.round(x - 1.0f), Math.round(y), red, false);
+            this.context.drawText(this.text, value, Math.round(x + 1.0f), Math.round(y), cyan, false);
+        }
+        this.context.drawTextWithShadow(this.text, value, Math.round(x), Math.round(y), color);
+    }
+
+    void chromaticCentered(String value, float x, float y, int color, float intensity) {
+        float left = x - this.text.getWidth(value) / 2.0f;
+        this.chromaticText(value, left, y, color, intensity);
+    }
+
+    void pushTranslate(float dx, float dy) {
+        this.context.getMatrices().push();
+        this.context.getMatrices().translate(dx, dy, 0.0f);
+    }
+
+    void pop() {
+        this.context.getMatrices().pop();
+    }
+
     static void applySuitColors(IronManSuit suit) {
         CYAN = suit.getHudPrimaryColor();
         CYAN_DIM = suit.getHudDimColor();

@@ -31,12 +31,12 @@ final class IronManHudAudio {
     }
 
     void update(IronManHudContext context, IronManHudState state) {
-        float bootProgress = state.bootProgress(context);
-        if (!this.bootStarted && bootProgress < 0.05f) {
+        float fade = state.hudFade(context);
+        if (!this.bootStarted && fade < 0.2f) {
             this.bootStarted = true;
             play(TimelessSounds.IRONMAN_POWERUP, 0.85f, 0.35f);
         }
-        if (!this.bootComplete && bootProgress >= 1.0f) {
+        if (!this.bootComplete && fade >= 1.0f) {
             this.bootComplete = true;
             play(SoundEvents.BLOCK_BEACON_ACTIVATE, 1.55f, 0.22f);
         }
