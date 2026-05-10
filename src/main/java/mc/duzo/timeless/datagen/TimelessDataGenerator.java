@@ -2,9 +2,6 @@ package mc.duzo.timeless.datagen;
 
 import dev.amble.lib.datagen.lang.AmbleLanguageProvider;
 import dev.amble.lib.datagen.lang.LanguageType;
-import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-
 import mc.duzo.timeless.Timeless;
 import mc.duzo.timeless.core.TimelessBlocks;
 import mc.duzo.timeless.core.TimelessItems;
@@ -14,6 +11,11 @@ import mc.duzo.timeless.datagen.provider.model.TimelessModelProvider;
 import mc.duzo.timeless.datagen.provider.sound.BasicSoundProvider;
 import mc.duzo.timeless.suit.Suit;
 import mc.duzo.timeless.suit.SuitRegistry;
+import mc.duzo.timeless.suit.ironman.IronManSuit;
+import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+
+import java.util.Map;
 
 public class TimelessDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -35,6 +37,11 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
 
             for (Suit suit : SuitRegistry.REGISTRY) {
                 if (!(suit instanceof AutomaticSuitEnglish)) continue;
+
+                if (suit instanceof IronManSuit) {
+                    provider.addTranslation(suit.getTranslationKey(), "MK " + wordsToRoman(IronManSuit.afterMark(suit.id().getPath())));
+                    continue;
+                }
 
                 provider.addTranslation(suit.getTranslationKey(), convertToName(suit.id().getPath()));
             }
@@ -110,5 +117,93 @@ public class TimelessDataGenerator implements DataGeneratorEntrypoint {
         }
 
         return String.join(" ", split);
+    }
+
+    public static String wordsToRoman(String input) {
+        Map<String, Integer> small = Map.ofEntries(
+                Map.entry("zero", 0),
+                Map.entry("one", 1),
+                Map.entry("two", 2),
+                Map.entry("three", 3),
+                Map.entry("four", 4),
+                Map.entry("five", 5),
+                Map.entry("six", 6),
+                Map.entry("seven", 7),
+                Map.entry("eight", 8),
+                Map.entry("nine", 9),
+                Map.entry("ten", 10),
+                Map.entry("eleven", 11),
+                Map.entry("twelve", 12),
+                Map.entry("thirteen", 13),
+                Map.entry("fourteen", 14),
+                Map.entry("fifteen", 15),
+                Map.entry("sixteen", 16),
+                Map.entry("seventeen", 17),
+                Map.entry("eighteen", 18),
+                Map.entry("nineteen", 19),
+                Map.entry("twenty", 20),
+                Map.entry("thirty", 30),
+                Map.entry("forty", 40),
+                Map.entry("fifty", 50),
+                Map.entry("sixty", 60),
+                Map.entry("seventy", 70),
+                Map.entry("eighty", 80),
+                Map.entry("ninety", 90)
+        );
+
+        String[] parts = input.toLowerCase().replace('-', '_').split("_");
+
+        int total = 0;
+        int current = 0;
+
+        for (String part : parts) {
+            if (part.equals("hundred")) {
+                current *= 100;
+            } else if (part.equals("thousand")) {
+                total += current * 1000;
+                current = 0;
+            } else if (!part.equals("and")) {
+                Integer value = small.get(part);
+                if (value == null) {
+                    throw new IllegalArgumentException("Unknown number word: " + part);
+                }
+                current += value;
+            }
+        }
+
+        int number = total + current;
+
+        if (number <= 0 || number > 3999) {
+            throw new IllegalArgumentException("Roman numerals only support 1-3999 here");
+        }
+
+        return intToRoman(number);
+    }
+
+    private static String intToRoman(int number) {
+        int[] values = {
+                1000, 900, 500, 400,
+                100, 90, 50, 40,
+                10, 9, 5, 4,
+                1
+        };
+
+        String[] romans = {
+                "M", "CM", "D", "CD",
+                "C", "XC", "L", "XL",
+                "X", "IX", "V", "IV",
+                "I"
+        };
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < values.length; i++) {
+            while (number >= values[i]) {
+                result.append(romans[i]);
+                number -= values[i];
+            }
+        }
+
+        return result.toString();
     }
 }

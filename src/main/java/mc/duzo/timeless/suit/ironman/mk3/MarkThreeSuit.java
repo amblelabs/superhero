@@ -16,6 +16,13 @@ import net.minecraft.util.Identifier;
 import java.util.function.Supplier;
 
 public class MarkThreeSuit extends IronManSuit {
+    public static int HUD_PRIMARY = 0xEEDC5F42;
+    public static int HUD_DIM = 0xA8DC5F42;
+    public static int HUD_FAINT = 0x55DC5F42;
+    public static int HUD_ACCENT = 0xF5FFD05D;
+    public static int HUD_ACCENT_DIM = 0x9CFFD05D;
+    public static int HUD_PANEL = 0x3A2A0906;
+
     private final PowerList powers;
 
     public MarkThreeSuit() {
@@ -53,6 +60,36 @@ public class MarkThreeSuit extends IronManSuit {
     @Override
     public float getHoverScale() {
         return 2f;
+    }
+
+    @Override
+    public int getHudPrimaryColor() {
+        return HUD_PRIMARY;
+    }
+
+    @Override
+    public int getHudDimColor() {
+        return HUD_DIM;
+    }
+
+    @Override
+    public int getHudFaintColor() {
+        return HUD_FAINT;
+    }
+
+    @Override
+    public int getHudAccentColor() {
+        return HUD_ACCENT;
+    }
+
+    @Override
+    public int getHudAccentDimColor() {
+        return HUD_ACCENT_DIM;
+    }
+
+    @Override
+    public int getHudPanelColor() {
+        return HUD_PANEL;
     }
 
     @Override

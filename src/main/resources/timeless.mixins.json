@@ -12,6 +12,7 @@
     "client.ArmorFeatureRendererMixin",
     "client.ArmorStandEntityRendererMixin",
     "client.ClientPlayerEntityMixin",
+    "client.InGameHudMixin",
     "client.PlayerEntityRendererMixin",
     "client.animation.ClientPlayerEntityMixin",
     "client.animation.PerspectiveMixin",

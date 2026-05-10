@@ -2,6 +2,7 @@ package mc.duzo.timeless.client;
 
 import mc.duzo.timeless.client.gui.JarvisGui;
 import mc.duzo.timeless.client.gui.UtilityBeltGui;
+import mc.duzo.timeless.client.gui.jarvis.JarvisWorldRenderer;
 import mc.duzo.timeless.client.keybind.TimelessKeybinds;
 import mc.duzo.timeless.client.network.ClientNetwork;
 import mc.duzo.timeless.client.render.TimelessAnimations;
@@ -16,6 +17,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRenderEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.entity.EquipmentSlot;
@@ -36,6 +38,7 @@ public class TimelessClient implements ClientModInitializer {
             JarvisGui.render(stack, delta);
             UtilityBeltGui.render(stack, delta);
         });
+        WorldRenderEvents.AFTER_TRANSLUCENT.register(JarvisWorldRenderer::renderHostileOutlines);
 
         registerRenderers();
         totemPredicate();

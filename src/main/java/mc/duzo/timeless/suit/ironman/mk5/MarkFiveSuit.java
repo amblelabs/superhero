@@ -17,6 +17,13 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public class MarkFiveSuit extends IronManSuit {
+    public static int HUD_PRIMARY = 0xEEF2F2F0;
+    public static int HUD_DIM = 0xA8F2F2F0;
+    public static int HUD_FAINT = 0x54F2F2F0;
+    public static int HUD_ACCENT = 0xF2FF3E2E;
+    public static int HUD_ACCENT_DIM = 0x9BFF3E2E;
+    public static int HUD_PANEL = 0x3A210707;
+
     private final PowerList powers;
 
     public MarkFiveSuit() {
@@ -54,6 +61,36 @@ public class MarkFiveSuit extends IronManSuit {
     @Override
     public int getFlightSpeed(boolean hasBoost) {
         return 50;
+    }
+
+    @Override
+    public int getHudPrimaryColor() {
+        return HUD_PRIMARY;
+    }
+
+    @Override
+    public int getHudDimColor() {
+        return HUD_DIM;
+    }
+
+    @Override
+    public int getHudFaintColor() {
+        return HUD_FAINT;
+    }
+
+    @Override
+    public int getHudAccentColor() {
+        return HUD_ACCENT;
+    }
+
+    @Override
+    public int getHudAccentDimColor() {
+        return HUD_ACCENT_DIM;
+    }
+
+    @Override
+    public int getHudPanelColor() {
+        return HUD_PANEL;
     }
 
     @Override

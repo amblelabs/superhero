@@ -26,6 +26,17 @@ public abstract class IronManSuit extends Suit implements AutomaticSuitEnglish, 
         this(new Identifier(modid, "iron_man_" + mark));
     }
 
+    public static String afterMark(String input) {
+        String prefix = "mark_";
+        int index = input.indexOf(prefix);
+
+        if (index == -1) {
+            return "";
+        }
+
+        return input.substring(index + prefix.length());
+    }
+
     /**
      * For Timeless heroes ONLY
      * Addon mods should use other constructor
@@ -62,6 +73,30 @@ public abstract class IronManSuit extends Suit implements AutomaticSuitEnglish, 
     @Override
     public Optional<SoundEvent> getMaskSound() {
         return Optional.of(TimelessSounds.IRONMAN_MASK);
+    }
+
+    public int getHudPrimaryColor() {
+        return 0xEB50EBFF;
+    }
+
+    public int getHudDimColor() {
+        return 0xA550EBFF;
+    }
+
+    public int getHudFaintColor() {
+        return 0x4850EBFF;
+    }
+
+    public int getHudAccentColor() {
+        return 0xF0FFBC42;
+    }
+
+    public int getHudAccentDimColor() {
+        return 0x9BFFBC42;
+    }
+
+    public int getHudPanelColor() {
+        return 0x3A002026;
     }
 
     @Override
