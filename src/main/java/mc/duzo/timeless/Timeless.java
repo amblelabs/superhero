@@ -35,6 +35,7 @@ public class Timeless implements ModInitializer {
         TimelessItems.init();
 
         TimelessCommands.init();
+        MaskGuardEvents.init();
         // Networking
         Network.init();
     }
